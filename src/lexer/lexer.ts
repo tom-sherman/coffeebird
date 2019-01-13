@@ -42,6 +42,7 @@ export class Lexer {
   }
 
   lexBegin () {
+    this.position++
     return {
       nextFn: this.lexEqualSign,
       token: new Token()
@@ -49,6 +50,7 @@ export class Lexer {
   }
 
   lexEqualSign () {
+    this.position += 2
     return {
       nextFn: this.lexBegin,
       token: new Token()
