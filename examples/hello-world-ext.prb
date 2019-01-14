@@ -1,0 +1,50 @@
+concept Person (type = string)
+concept Country (type = string)
+concept Language (type = string)
+
+rel Person - speaks - Language
+rel Person - lives in - Country
+rel Country - national language - Language (
+  firstForm = Do people from %S speak %O?;
+)
+
+Person(Fred)
+Person(value = Fred, behaviour = mutuallyExclusive)
+Language(English)
+Language(French)
+Language(German)
+Country(England)
+Country(France)
+Country(Germany)
+
+England - national language - English (cf = 100) {}
+France - national language - French {}
+Fred - lives in - England {}
+
+speaks (cf = 75, minimumRuleCertainty = 60) {
+  %S - lives in - %COUNTRY;
+  %COUNTRY - national language - %O;
+}
+
+speaks - German {
+  %S - lives in - Germany;
+}
+
+speaks {
+  %S - lives in - "Ireland";
+  %O = "Irish";
+}
+// Is the same as (we are saying a string of "Ireland" instead of an actual instance)
+speaks {
+  %S - lives in - %COUNTRY;
+  %COUNTRY == "Ireland";
+  %O = "Irish";
+}
+speaks {
+  %S - lives in - * == "Ireland";
+  %O = "Irish";
+}
+speaks {
+  %S - lives in == "Ireland";
+  %O = "Irish";
+}
