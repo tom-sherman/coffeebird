@@ -1,4 +1,4 @@
-import { Token } from './token';
+import { Token, TokenType } from './token';
 import { createReadStream, ReadStream } from 'fs'
 
 export class Lexer {
@@ -9,8 +9,9 @@ export class Lexer {
   position = 0
   // Stream must be an iterator so we can call for-of in Lexer.tokens
   private readonly stream: LexerIterator
-  private nextState: LexerFunction = this.lexBegin
+  private nextState: LexerFunction
   private currentChunk = ''
+  readonly tokens: Token[] = []
   // width: number
 
   constructor (input: string | LexerOptions) {
@@ -22,39 +23,9 @@ export class Lexer {
     }
   }
 
-  /**
-   *
-   */
-  tokens = async function* (this: Lexer) {
-    for await (const chunk of this.stream) {
-      if (typeof chunk !== 'string') {
-        throw this.error(LexerError.CHUNK_NOT_STRING)
-      }
-      this.currentChunk = chunk
-      this.position = 0
-
-      for (let index = 0; index < chunk.length; index++) {
-        const next = this.nextState()
-        this.nextState = next.nextFn
-        yield(next.token)
-      }
-    }
-  }
-
-  lexBegin () {
-    this.position++
-    return {
-      nextFn: this.lexEqualSign,
-      token: new Token()
-    }
-  }
-
-  lexEqualSign () {
-    this.position += 2
-    return {
-      nextFn: this.lexBegin,
-      token: new Token()
-    }
+  addToken (type: TokenType) {
+    const value =
+    this.tokens.push(new Token({ type }))
   }
 
   /**
@@ -79,7 +50,7 @@ export class Lexer {
 }
 
 interface LexerFunction {
-  (): { nextFn: LexerFunction, token: Token }
+  (): LexerFunction
 }
 
 enum LexerError {
