@@ -2,25 +2,18 @@ import { Token, TokenType } from './token';
 import { createReadStream, ReadStream } from 'fs'
 
 export class Lexer {
-  start = 0
-  /**
-   * Position inside the current chunk.
-   */
-  position = 0
-  // Stream must be an iterator so we can call for-of in Lexer.tokens
-  private readonly stream: LexerIterator
   private nextState: LexerFunction
-  private currentChunk = ''
+  input: string
+  width: number
+  start = 0
+  position: number
   readonly tokens: Token[] = []
-  // width: number
+  // Stream must be an iterator so we can call for-of in Lexer.tokens
+  // private readonly stream: LexerIterator
+  // private currentChunk = ''
 
-  constructor (input: string | LexerOptions) {
-    if (typeof input === 'string') {
-      this.stream = [ input ]
-    } else {
-      const { path, ...options } = input
-      this.stream = createReadStream(path, Object.assign({}, options, { encoding: 'utf8' }))
-    }
+  constructor (input: string) {
+    this.input = input
   }
 
   addToken (type: TokenType) {
@@ -49,7 +42,7 @@ export class Lexer {
   }
 }
 
-interface LexerFunction {
+export interface LexerFunction {
   (): LexerFunction
 }
 
