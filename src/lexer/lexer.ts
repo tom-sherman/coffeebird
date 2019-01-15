@@ -1,11 +1,11 @@
-import { Token, TokenType } from './token'
+import { Token, TokenType, TokenMatchers } from './token'
 import { createReadStream, ReadStream } from 'fs'
 import { lexBegin } from './functions'
+import { isSpace, strStartsWith } from '../util';
 
 export class Lexer {
   private nextState: LexerFunction = lexBegin
   readonly input: string
-  width: number
   start = 0
   position = 0
   readonly tokens: Token[] = []
@@ -33,7 +33,35 @@ export class Lexer {
   /**
    * Skip whitepace until we get something meaningful
    */
-  skipWhitespace (): void {}
+  skipWhitespace (): void {
+    while (!isSpace(this.peek(1))) {
+      this.increment()
+    }
+  }
+
+  /**
+   * Returns the rest of the input after the current position
+   */
+  inputToEnd (): string {
+    return this.input.slice(this.position)
+  }
+
+  /**
+   * Tests whether the input starting from the current position starts with a string or regex.
+   */
+  inputStartsWith (test: string | RegExp): boolean {
+    return strStartsWith(this.inputToEnd(), test)
+  }
+
+  /**
+   * Tests whether the input starting from the current position starts with the token type.
+   */
+  inputStartsWithToken (type: TokenType): boolean {
+    if (!TokenMatchers.has(type)) {
+      throw new Error(`Token of type ${ type } does not have a matcher`)
+    }
+    return strStartsWith(this.inputToEnd(), TokenMatchers.get(type)!)
+  }
 
   /**
    * Peek `n` number of characters ahead of the current position and return the resulting string.
@@ -55,7 +83,7 @@ export class Lexer {
 }
 
 export interface LexerFunction {
-  (): LexerFunction
+  (lex: Lexer): LexerFunction
 }
 
 enum LexerError {
@@ -69,4 +97,4 @@ interface LexerOptions {
   highWaterMark?: number
 }
 
-type LexerIterator = string[] | ReadStream
+// type LexerIterator = string[] | ReadStream

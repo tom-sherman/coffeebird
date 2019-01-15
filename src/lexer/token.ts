@@ -21,14 +21,17 @@ export enum TokenType {
   RightBracket,
   EqualSign,
   Number,
-  Keyword
+  Keyword,
+  Hyphen
 }
 
-// export const TokenMatchers = new Map<TokenType, string | RegExp>([
-//   [ TokenType.LeftParen, '(' ],
-//   [ TokenType.RightParen, ')' ],
-//   [ TokenType.LeftBracket, '{' ],
-//   [ TokenType.RightBracket, '}' ],
-//   [ TokenType.EqualSign, '=' ],
-//   [ TokenType.Number, /[0-9]/ ]
-// ])
+export const TokenMatchers = new Map<TokenType, string | RegExp>([
+  [ TokenType.LeftParen, '(' ],
+  [ TokenType.RightParen, ')' ],
+  [ TokenType.LeftBracket, '{' ],
+  [ TokenType.RightBracket, '}' ],
+  [ TokenType.EqualSign, '=' ],
+  [ TokenType.Number, /[0-9]/ ],
+  [ TokenType.Keyword, /(concept|rel)/ ],
+  [ TokenType.Hyphen, '-' ]
+])
