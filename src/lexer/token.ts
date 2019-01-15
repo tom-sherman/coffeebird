@@ -20,7 +20,8 @@ export enum TokenType {
   LeftBracket,
   RightBracket,
   EqualSign,
-  Number
+  Number,
+  Keyword
 }
 
 // export const TokenMatchers = new Map<TokenType, string | RegExp>([
