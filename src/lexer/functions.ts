@@ -1,9 +1,9 @@
 import { LexerFunction, Lexer } from './lexer'
-import { TokenType } from './token'
+import { TokenType, Token } from './token'
 import { isSpace } from '../util'
 
 /**
- * Entry point. Either returns lexKeyword (concept, rel definitions) or an lexIdentifier for relinsts and concinsts
+ * Entry point. Either returns lexKeyword (concept, rel definitions) or an lexWord for relinsts and concinsts
  */
 export const lexBegin: LexerFunction = (lex: Lexer) => {
   lex.skipWhitespace()
@@ -11,7 +11,7 @@ export const lexBegin: LexerFunction = (lex: Lexer) => {
   if (lex.inputStartsWithToken(TokenType.Keyword)) {
     return lexKeyword
   } else {
-    return lexIdentifier
+    return lexWord
   }
 }
 
@@ -24,13 +24,17 @@ export const lexKeyword: LexerFunction = (lex: Lexer) => {
   }
 
   lex.addToken(TokenType.Keyword)
-  return lexIdentifier
+  return lexWord
 }
 
 /**
  * Handles the identifier for a concept, concinst, rel
  */
-export const lexIdentifier: LexerFunction = (lex: Lexer) => {}
+export const lexWord: LexerFunction = (lex: Lexer) => {
+  while (lex.inputStartsWithToken(TokenType.WordCharacter)) {
+    lex.increment()
+  }
+}
 
 /**
  * Handles config keys in a key=value pair (rel, relinst, concept options)

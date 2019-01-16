@@ -24,4 +24,5 @@ Fred - lives in - England {}
 speaks (cf = 75, minimumRuleCertainty = 60) {
   %S - lives in - %COUNTRY;
   %COUNTRY - national language - %O;
+  countRelationshipInstances(%S, dsds, sdsds)
 }

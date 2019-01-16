@@ -22,7 +22,10 @@ export enum TokenType {
   EqualSign,
   Number,
   Keyword,
-  Hyphen
+  Hyphen,
+  Word,
+  Comma,
+  WordCharacter
 }
 
 export const TokenMatchers = new Map<TokenType, string | RegExp>([
@@ -33,5 +36,7 @@ export const TokenMatchers = new Map<TokenType, string | RegExp>([
   [ TokenType.EqualSign, '=' ],
   [ TokenType.Number, /[0-9]/ ],
   [ TokenType.Keyword, /(concept|rel)/ ],
-  [ TokenType.Hyphen, '-' ]
+  [ TokenType.Hyphen, '-' ],
+  [ TokenType.Comma, ',' ],
+  [ TokenType.WordCharacter, /[a-zA-Z]/ ]
 ])
