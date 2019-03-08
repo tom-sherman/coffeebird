@@ -1,17 +1,8 @@
 const P = require('parsimmon')
 
-function _ () {
-  return P.optWhitespace;
-}
+const Num = P.regexp(/\d+\.?(\d+)?/).map(Number)
 
-const Num = P.seq(
-    P.digits,
-    P.string('.'),
-    P.digits
-  )
-  .tieWith('').map(Number)
-
-const Int = P.digits.map(Number)
+const Int = P.regexp(/\d+/).map(Number)
 
 function Keyword () {
   return P.alt(
@@ -55,7 +46,6 @@ const Comment = P.string('//')
   .map(result => result.join(''))
 
 module.exports = {
-  _,
   Num,
   Int,
   Keyword,
@@ -64,5 +54,6 @@ module.exports = {
   Identifier,
   Bool,
   Enum,
-  Str: require('./string')
+  Str: require('./string'),
+  Comment
 }
