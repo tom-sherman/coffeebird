@@ -5,7 +5,7 @@ concept Language // Type is optional, default is string.
 rel Person - speaks - Language
 rel Person - lives in - Country
 rel Country - national language - Language (
-  firstForm = Do people from %S speak %O?;
+  firstForm = 'Do people from %S speak %O?'
 )
 
 Person(Fred)
