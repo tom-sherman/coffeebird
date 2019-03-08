@@ -21,13 +21,13 @@ const ConceptKeysValuePairs = {
 const ConceptDictionary = Dictionary(
   Object.entries(ConceptKeysValuePairs)
     .map(([ key, value ]) => KeyValuePair(P.string(key), value))
-)
+).fallback({})
 
 const Concept = P.seqObj(
   P.string('concept'),
   [ 'name', ConceptName.trim(P.optWhitespace) ],
   [ 'options', ConceptDictionary.or(P.notFollowedBy(ConceptDictionary)).trim(P.optWhitespace) ]
-)
+).skip(P.end)
 
 module.exports = {
   Concept,

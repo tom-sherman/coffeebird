@@ -2,7 +2,7 @@ const P = require('parsimmon')
 const { Dictionary, KeyValuePair, Identifier, Int, Bool, Enum } = require('./shared')
 const { ConceptName } = require('./concept')
 
-const RelName = Identifier
+const RelName = P.regexp(/[a-z ]*[a-z]+/)
 
 const Askable = Enum(
   'all',
@@ -31,7 +31,7 @@ const RelKeyValuePairs = {
 const RelDictionary = Dictionary(
   Object.entries(RelKeyValuePairs)
     .map(([ key, value ]) => KeyValuePair(P.string(key), value))
-)
+).fallback({})
 
 const Rel = P.seqObj(
   P.string('rel'),
@@ -47,7 +47,7 @@ const Rel = P.seqObj(
   [ 'object', RelName.trim(P.optWhitespace) ],
 
   [ 'options', RelDictionary.or(P.notFollowedBy(RelDictionary)).trim(P.optWhitespace) ]
-)
+).skip(P.end)
 
 module.exports = {
   RelName,
