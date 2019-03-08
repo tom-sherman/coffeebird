@@ -50,11 +50,9 @@ function Enum (...strings) {
   )
 }
 
-const Str = P.any.many()
-  .wrap(
-    P.string('"'),
-    P.string('"')
-  )
+const Comment = P.string('//')
+  .then(P.noneOf('\n').many())
+  .map(result => result.join(''))
 
 module.exports = {
   _,
@@ -65,5 +63,6 @@ module.exports = {
   Dictionary,
   Identifier,
   Bool,
-  Enum
+  Enum,
+  Str: require('./string')
 }

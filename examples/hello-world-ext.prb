@@ -9,7 +9,7 @@ rel Country - national language - Language (
 )
 
 Person(Fred)
-Person(value = Fred, behaviour = mutuallyExclusive)
+Person(name = Fred, behaviour = mutuallyExclusive)
 Language(English)
 Language(French)
 Language(German)
