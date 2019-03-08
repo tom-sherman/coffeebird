@@ -51,7 +51,8 @@ describe('concept', function () {
       [ 'concept Language', { name: 'Language', options: {} } ],
       [ 'concept Language ()', { name: 'Language', options: {} } ],
       [ 'concept Foo (type=string)', { name: 'Foo', options: { type: 'string' } } ],
-      [ 'concept Foo( type=string )', { name: 'Foo', options: { type: 'string' } } ]
+      [ 'concept Foo( type=string )', { name: 'Foo', options: { type: 'string' } } ],
+      [ 'concept Foo(\n\ttype=string\n)', { name: 'Foo', options: { type: 'string' } } ]
     ]
 
     for (const [ input, expected ] of validConcepts) {
