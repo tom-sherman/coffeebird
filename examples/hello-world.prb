@@ -8,14 +8,14 @@ rel Country - national language - Language (
   firstForm = Do people from %S speak %O?;
 )
 
-Person(Fred)
+Person("Fred")
 Person(value = Fred, behaviour = mutuallyExclusive)
-Language(English)
-Language(French)
-Language(German)
-Country(England)
-Country(France)
-Country(Germany)
+Language("English")
+Language("French")
+Language("German")
+Country("England")
+Country("France")
+Country("Germany")
 
 England - national language - English (cf = 100) {}
 France - national language - French {}

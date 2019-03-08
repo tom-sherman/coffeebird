@@ -1,6 +1,6 @@
 concept Person (type = string)
 concept Country (type = string)
-concept Language (type = string)
+concept Language // Type is optional, default is string.
 
 rel Person - speaks - Language
 rel Person - lives in - Country
@@ -17,34 +17,26 @@ Country(England)
 Country(France)
 Country(Germany)
 
-England - national language - English (cf = 100) {}
+England - national language - English (cf = 95) {}
 France - national language - French {}
 Fred - lives in - England {}
 
 speaks (cf = 75, minimumRuleCertainty = 60) {
-  %S - lives in - %COUNTRY;
-  %COUNTRY - national language - %O;
+  %S - lives in - %COUNTRY
+  %COUNTRY - national language - %O
 }
 
 speaks - German {
-  %S - lives in - Germany;
+  %S - lives in - Germany
 }
 
 speaks {
-  %S - lives in - "Ireland";
-  %O = "Irish";
+  %S - lives in - "Ireland"
+  %O = "Irish"
 }
 // Is the same as (we are saying a string of "Ireland" instead of an actual instance)
 speaks {
-  %S - lives in - %COUNTRY;
-  %COUNTRY == "Ireland";
-  %O = "Irish";
-}
-speaks {
-  %S - lives in - * == "Ireland";
-  %O = "Irish";
-}
-speaks {
-  %S - lives in == "Ireland";
-  %O = "Irish";
+  %S - lives in - %COUNTRY (alt = This is some alt text)
+  %COUNTRY == "Ireland" (weight = 90)
+  %O = "Irish"
 }
