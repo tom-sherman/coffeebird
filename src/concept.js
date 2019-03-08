@@ -25,6 +25,7 @@ const ConceptDictionary = Dictionary(
 
 const Concept = P.seqObj(
   P.string('concept'),
+  P.whitespace,
   [ 'name', ConceptName.trim(P.optWhitespace) ],
   [ 'options', ConceptDictionary.or(P.notFollowedBy(ConceptDictionary)).trim(P.optWhitespace) ]
 ).skip(P.end)
