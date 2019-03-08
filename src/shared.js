@@ -34,6 +34,7 @@ function Dictionary (keyValuePairs) {
 const Identifier = P.regexp(/[a-zA-Z]+/)
 
 const Bool = Enum('true', 'false')
+  .map(b => b === 'true' ? true : false)
 
 function Enum (...strings) {
   return P.alt(

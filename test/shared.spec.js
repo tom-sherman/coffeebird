@@ -103,8 +103,14 @@ describe('shared :: Literals', function () {
 
   describe('Bool', function () {
     it('should parse valid booleans', function () {
-      assert.ok(Bool.parse('true'))
-      assert.ok(Bool.parse('false'))
+      const trueParsed = Bool.parse('true')
+      const falseParsed = Bool.parse('false')
+
+      assert.ok(trueParsed.status)
+      assert.equal(trueParsed.value, true)
+
+      assert.ok(falseParsed.status)
+      assert.equal(falseParsed.value, false)
     })
 
     it('should not parse non booleans', function () {
