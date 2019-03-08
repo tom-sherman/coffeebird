@@ -7,7 +7,6 @@ const RelName = P.regexp(/[a-z ]*[a-z]+/)
 const Askable = Enum(
   'all',
   'none',
-  'false',
   'secondFormObject',
   'secondFormSubject'
 )
@@ -24,7 +23,7 @@ const RelKeyValuePairs = {
   plural: Bool,
   allowUnknown: Bool,
   askable: Askable,
-  allowCF: Bool,
+  allowCf: Bool,
   canAdd: CanAdd
 }
 
