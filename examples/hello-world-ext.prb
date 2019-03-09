@@ -8,26 +8,25 @@ rel Country - national language - Language (
   firstForm = 'Do people from %S speak %O?'
 )
 
-Person(Fred)
-Person(name = Fred, behaviour = mutuallyExclusive)
-Language(English)
-Language(French)
-Language(German)
-Country(England)
-Country(France)
-Country(Germany)
+Person("Fred")
+Language("English")
+Language("French")
+Language("German")
+Country("England")
+Country("France")
+Country("Germany")
 
-England - national language - English (cf = 95) {}
-France - national language - French {}
-Fred - lives in - England {}
+"England" - national language - "English" (cf = 95) {}
+"France" - national language - "French" {}
+"Fred" - lives in - "England" {}
 
 speaks (cf = 75, minimumRuleCertainty = 60) {
   %S - lives in - %COUNTRY
   %COUNTRY - national language - %O
 }
 
-speaks - German {
-  %S - lives in - Germany
+speaks - "German" {
+  %S - lives in - "Germany"
 }
 
 speaks {
