@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { Num, Int, Str, Bool, Comment } = require('../src/shared')
+const { Num, Int, Str, Bool, Comment, Variable } = require('../src/shared')
 
 
 describe('shared :: Literals', function () {
@@ -159,6 +159,41 @@ describe('shared :: Comments', function () {
 
     for (const input of invalidComments) {
       assert.ok(!Comment.parse(input).status)
+    }
+  })
+})
+
+describe('shared :: Variables', function () {
+  it('should parse valid variables', function () {
+    const validVars = [
+      '%FOO',
+      '%FOO_BAR',
+      '%_FOO_BAR'
+    ]
+
+    for (const input of validVars) {
+      assert.ok(Variable.parse(input).status)
+    }
+  })
+
+  it('should not parse invalid variables', function () {
+    const invalidVars = [
+      '',
+      ' ',
+      '0',
+      '%',
+      '%FOO-%BAR',
+      '%%',
+      '%foo',
+      '%FOO_%BAR',
+      'FOO',
+      '% FOO',
+      '%FOO1',
+      '%Foo'
+    ]
+
+    for (const input of invalidVars) {
+      assert.ok(!Variable.parse(input).status)
     }
   })
 })

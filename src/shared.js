@@ -46,6 +46,9 @@ const Comment = P.string('//')
   .then(P.noneOf('\n').many())
   .map(result => result.join(''))
 
+const Variable = P.string('%')
+  .then(P.regex(/[A-Z_]+/))
+
 module.exports = {
   Num,
   Int,
@@ -56,5 +59,6 @@ module.exports = {
   Bool,
   Enum,
   Str: require('./string'),
-  Comment
+  Comment,
+  Variable
 }
