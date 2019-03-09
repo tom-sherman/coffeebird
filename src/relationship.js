@@ -43,7 +43,7 @@ const Rel = P.seqObj(
 
   P.string('-').trim(P.optWhitespace),
 
-  [ 'object', RelName.trim(P.optWhitespace) ],
+  [ 'object', ConceptName.trim(P.optWhitespace) ],
 
   [ 'options', RelDictionary.or(P.notFollowedBy(RelDictionary)).trim(P.optWhitespace) ]
 ).skip(P.end)
