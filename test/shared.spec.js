@@ -166,13 +166,15 @@ describe('shared :: Comments', function () {
 describe('shared :: Variables', function () {
   it('should parse valid variables', function () {
     const validVars = [
-      '%FOO',
-      '%FOO_BAR',
-      '%_FOO_BAR'
+      [ '%FOO', { name: 'FOO' } ],
+      [ '%FOO_BAR', { name: 'FOO_BAR' } ],
+      [ '%_FOO_BAR', { name: '_FOO_BAR' } ]
     ]
 
-    for (const input of validVars) {
-      assert.ok(Variable.parse(input).status)
+    for (const [ input, expected ] of validVars) {
+      const { status, value } = Variable.parse(input)
+      assert.ok(status)
+      assert.deepEqual(value, expected)
     }
   })
 
