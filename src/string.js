@@ -1,10 +1,9 @@
 const P = require('parsimmon')
 
 // all the characters which can be escaped
-const Escape = P.string('\\')
-  .then(P.oneOf('\\"\''))
+const Escape = P.string('\\').then(P.oneOf('\\"\''))
 
-const NonEscape = P.noneOf('\\\"\0\n\r\v\t\b\f')
+const NonEscape = P.noneOf('\\"\0\n\r\v\t\b\f')
 
 const Character = NonEscape.or(Escape)
 

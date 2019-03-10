@@ -4,19 +4,9 @@ const { ConceptName } = require('./concept')
 
 const RelName = P.regexp(/[a-z ]*[a-z]+/)
 
-const Askable = Enum(
-  'all',
-  'none',
-  'secondFormObject',
-  'secondFormSubject'
-)
+const Askable = Enum('all', 'none', 'secondFormObject', 'secondFormSubject')
 
-const CanAdd = Enum(
-  'all',
-  'none',
-  'subject',
-  'object'
-)
+const CanAdd = Enum('all', 'none', 'subject', 'object')
 
 const RelKeyValuePairs = {
   cf: Int,
@@ -28,24 +18,25 @@ const RelKeyValuePairs = {
 }
 
 const RelDictionary = Dictionary(
-  Object.entries(RelKeyValuePairs)
-    .map(([ key, value ]) => KeyValuePair(P.string(key), value))
+  Object.entries(RelKeyValuePairs).map(([key, value]) =>
+    KeyValuePair(P.string(key), value)
+  )
 ).fallback({})
 
 const Rel = P.seqObj(
   P.string('rel'),
 
-  [ 'subject', ConceptName.trim(_) ],
+  ['subject', ConceptName.trim(_)],
 
   P.string('-').trim(_),
 
-  [ 'name', RelName.trim(_) ],
+  ['name', RelName.trim(_)],
 
   P.string('-').trim(_),
 
-  [ 'object', ConceptName.trim(_) ],
+  ['object', ConceptName.trim(_)],
 
-  [ 'options', RelDictionary.or(P.notFollowedBy(RelDictionary)).trim(_) ]
+  ['options', RelDictionary.or(P.notFollowedBy(RelDictionary)).trim(_)]
 ).skip(P.end)
 
 module.exports = {

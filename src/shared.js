@@ -6,40 +6,30 @@ const Num = P.regexp(/\d+\.?(\d+)?/).map(Number)
 
 const Int = P.regexp(/\d+/).map(Number)
 
-function Keyword () {
-  return P.alt(
-    P.string('rel'),
-    P.string('concept')
-  )
+function Keyword() {
+  return P.alt(P.string('rel'), P.string('concept'))
 }
 
-function KeyValuePair (key, value) {
-  return P.seq(
-    key.trim(_)
-      .skip(P.string('=').trim(_)),
-    value.trim(_)
-  )
+function KeyValuePair(key, value) {
+  return P.seq(key.trim(_).skip(P.string('=').trim(_)), value.trim(_))
 }
 
-function Dictionary (keyValuePairs) {
+function Dictionary(keyValuePairs) {
   return P.string('(')
-    .then(
-      P.sepBy(P.alt(...keyValuePairs), P.string(','))
-    )
+    .then(P.sepBy(P.alt(...keyValuePairs), P.string(',')))
     .skip(P.string(')'))
-    .map(result => result.reduce((prev, [ key, val ]) => {
-      prev[key] = val
-      return prev
-    }, {}))
+    .map(result =>
+      result.reduce((prev, [key, val]) => {
+        prev[key] = val
+        return prev
+      }, {})
+    )
 }
 
-const Bool = Enum('true', 'false')
-  .map(b => b === 'true' ? true : false)
+const Bool = Enum('true', 'false').map(b => (b === 'true' ? true : false))
 
-function Enum (...strings) {
-  return P.alt(
-    ...strings.map(s => P.string(s))
-  )
+function Enum(...strings) {
+  return P.alt(...strings.map(s => P.string(s)))
 }
 
 const Comment = P.string('//')

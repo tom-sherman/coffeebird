@@ -6,9 +6,9 @@ const InstanceName = Str
 const InstanceType = ConceptName
 
 const Instance = P.seqObj(
-  [ 'type', InstanceType.trim(_) ],
+  ['type', InstanceType.trim(_)],
   P.string('('),
-  [ 'name', InstanceName.trim(_) ],
+  ['name', InstanceName.trim(_)],
   P.string(')')
 ).skip(P.end)
 

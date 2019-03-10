@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "prettier --list-different '**/*.js'",
+    "lint:fix": "prettier '**/*.js' --write"
   },
   "author": "Tom Sherman <the.tomsherman@gmail.com>",
   "license": "MIT",
@@ -11,6 +13,7 @@
     "parsimmon": "^1.12.0"
   },
   "devDependencies": {
-    "mocha": "^6.0.2"
+    "mocha": "^6.0.2",
+    "prettier": "1.16.4"
   }
 }

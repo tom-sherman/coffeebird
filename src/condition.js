@@ -1,12 +1,19 @@
 const P = require('parsimmon')
-const { _, Variable, Dictionary, KeyValuePair, Str, Enum, Int, Bool, Num } = require('./shared')
+const {
+  _,
+  Variable,
+  Dictionary,
+  KeyValuePair,
+  Str,
+  Enum,
+  Int,
+  Bool,
+  Num
+} = require('./shared')
 const { RelName } = require('./relationship')
 const { InstanceName } = require('./instance')
 
-const ConditionBehaviour = Enum(
-  'mandatory',
-  'optional'
-)
+const ConditionBehaviour = Enum('mandatory', 'optional')
 
 const ConditionKeyValuePairs = {
   alt: Str,
@@ -15,8 +22,9 @@ const ConditionKeyValuePairs = {
 }
 
 const ConditionDictionary = Dictionary(
-  Object.entries(ConditionKeyValuePairs)
-    .map(([ key, value ]) => KeyValuePair(P.string(key), value))
+  Object.entries(ConditionKeyValuePairs).map(([key, value]) =>
+    KeyValuePair(P.string(key), value)
+  )
 ).fallback({})
 
 const ConditionSubjectObject = P.alt(Str, Num, Bool, Variable)
@@ -24,11 +32,11 @@ const ConditionSubjectObject = P.alt(Str, Num, Bool, Variable)
 const ConditionSep = P.string(';')
 
 const ConditionRel = P.seqObj(
-  [ 'subject', ConditionSubjectObject.trim(_) ],
+  ['subject', ConditionSubjectObject.trim(_)],
   P.string('-'),
-  [ 'rel', RelName.trim(_) ],
+  ['rel', RelName.trim(_)],
   P.string('-'),
-  [ 'object', ConditionSubjectObject.trim(_) ]
+  ['object', ConditionSubjectObject.trim(_)]
 )
 
 const ConditionExpr = null
