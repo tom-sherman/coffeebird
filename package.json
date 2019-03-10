@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "test": "npm run lint && mocha",
-    "lint": "prettier --list-different '**/*.js'",
-    "lint:fix": "prettier '**/*.js' --write"
+    "lint": "prettier --list-different \"./**/*.js\"",
+    "lint:fix": "prettier --write \"./**/*.js\""
   },
   "author": "Tom Sherman <the.tomsherman@gmail.com>",
   "license": "MIT",
