@@ -1,5 +1,5 @@
 const P = require('parsimmon')
-const { Dictionary, KeyValuePair, Identifier, Int, Bool, Enum } = require('./shared')
+const { _, Dictionary, KeyValuePair, Int, Bool, Enum } = require('./shared')
 const { ConceptName } = require('./concept')
 
 const RelName = P.regexp(/[a-z ]*[a-z]+/)
@@ -35,17 +35,17 @@ const RelDictionary = Dictionary(
 const Rel = P.seqObj(
   P.string('rel'),
 
-  [ 'subject', ConceptName.trim(P.optWhitespace) ],
+  [ 'subject', ConceptName.trim(_) ],
 
-  P.string('-').trim(P.optWhitespace),
+  P.string('-').trim(_),
 
-  [ 'name', RelName.trim(P.optWhitespace) ],
+  [ 'name', RelName.trim(_) ],
 
-  P.string('-').trim(P.optWhitespace),
+  P.string('-').trim(_),
 
-  [ 'object', ConceptName.trim(P.optWhitespace) ],
+  [ 'object', ConceptName.trim(_) ],
 
-  [ 'options', RelDictionary.or(P.notFollowedBy(RelDictionary)).trim(P.optWhitespace) ]
+  [ 'options', RelDictionary.or(P.notFollowedBy(RelDictionary)).trim(_) ]
 ).skip(P.end)
 
 module.exports = {

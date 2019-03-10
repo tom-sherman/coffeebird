@@ -1,14 +1,14 @@
 const P = require('parsimmon')
-const { Str, Identifier, Dictionary } = require('./shared')
+const { _, Str } = require('./shared')
 const { ConceptName } = require('./concept')
 
 const InstanceName = Str
 const InstanceType = ConceptName
 
 const Instance = P.seqObj(
-  [ 'type', InstanceType.trim(P.optWhitespace) ],
+  [ 'type', InstanceType.trim(_) ],
   P.string('('),
-  [ 'name', InstanceName.trim(P.optWhitespace) ],
+  [ 'name', InstanceName.trim(_) ],
   P.string(')')
 ).skip(P.end)
 

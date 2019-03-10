@@ -1,8 +1,7 @@
 const P = require('parsimmon')
-const { Dictionary, KeyValuePair, Identifier, Enum } = require('./shared')
+const { _, Dictionary, KeyValuePair, Enum } = require('./shared')
 
-
-const ConceptName = Identifier
+const ConceptName = P.regexp(/[a-zA-Z]+/)
 
 const ConceptType = Enum(
   'string',
@@ -26,8 +25,8 @@ const ConceptDictionary = Dictionary(
 const Concept = P.seqObj(
   P.string('concept'),
   P.whitespace,
-  [ 'name', ConceptName.trim(P.optWhitespace) ],
-  [ 'options', ConceptDictionary.or(P.notFollowedBy(ConceptDictionary)).trim(P.optWhitespace) ]
+  [ 'name', ConceptName.trim(_) ],
+  [ 'options', ConceptDictionary.or(P.notFollowedBy(ConceptDictionary)).trim(_) ]
 ).skip(P.end)
 
 module.exports = {

@@ -1,19 +1,19 @@
 const P = require('parsimmon')
 const { InstanceName } = require('./instance')
 const { RelName } = require('./relationship')
-const { Dictionary, KeyValuePair, Int } = require('./shared')
+const { _, Dictionary, KeyValuePair, Int } = require('./shared')
 
 const FactDictionary = Dictionary([
   KeyValuePair(P.string('cf'), Int)
 ]).fallback({})
 
 const Fact = P.seqObj(
-  [ 'subject', InstanceName.trim(P.optWhitespace) ],
+  [ 'subject', InstanceName.trim(_) ],
   P.string('-'),
-  [ 'rel', RelName.trim(P.optWhitespace) ],
+  [ 'rel', RelName.trim(_) ],
   P.string('-'),
-  [ 'object', InstanceName.trim(P.optWhitespace) ],
-  [ 'options', FactDictionary.or(P.notFollowedBy(FactDictionary)).trim(P.optWhitespace) ]
+  [ 'object', InstanceName.trim(_) ],
+  [ 'options', FactDictionary.or(P.notFollowedBy(FactDictionary)).trim(_) ]
 ).skip(P.end)
 
 

@@ -1,5 +1,5 @@
 const P = require('parsimmon')
-const { Variable, Dictionary, KeyValuePair, Str, Enum, Int, Bool, Num } = require('./shared')
+const { _, Variable, Dictionary, KeyValuePair, Str, Enum, Int, Bool, Num } = require('./shared')
 const { RelName } = require('./relationship')
 const { InstanceName } = require('./instance')
 
@@ -24,11 +24,11 @@ const ConditionSubjectObject = P.alt(Str, Num, Bool, Variable)
 const ConditionSep = P.string(';')
 
 const ConditionRel = P.seqObj(
-  [ 'subject', ConditionSubjectObject.trim(P.optWhitespace) ],
+  [ 'subject', ConditionSubjectObject.trim(_) ],
   P.string('-'),
-  [ 'rel', RelName.trim(P.optWhitespace) ],
+  [ 'rel', RelName.trim(_) ],
   P.string('-'),
-  [ 'object', ConditionSubjectObject.trim(P.optWhitespace) ]
+  [ 'object', ConditionSubjectObject.trim(_) ]
 )
 
 const ConditionExpr = null

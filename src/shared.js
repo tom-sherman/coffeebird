@@ -1,5 +1,7 @@
 const P = require('parsimmon')
 
+const _ = P.optWhitespace
+
 const Num = P.regexp(/\d+\.?(\d+)?/).map(Number)
 
 const Int = P.regexp(/\d+/).map(Number)
@@ -13,9 +15,9 @@ function Keyword () {
 
 function KeyValuePair (key, value) {
   return P.seq(
-    key.trim(P.optWhitespace)
-      .skip(P.string('=').trim(P.optWhitespace)),
-    value.trim(P.optWhitespace)
+    key.trim(_)
+      .skip(P.string('=').trim(_)),
+    value.trim(_)
   )
 }
 
@@ -30,8 +32,6 @@ function Dictionary (keyValuePairs) {
       return prev
     }, {}))
 }
-
-const Identifier = P.regexp(/[a-zA-Z]+/)
 
 const Bool = Enum('true', 'false')
   .map(b => b === 'true' ? true : false)
@@ -51,12 +51,12 @@ const Variable = P.string('%')
   .map(result => ({ name: result }))
 
 module.exports = {
+  _,
   Num,
   Int,
   Keyword,
   KeyValuePair,
   Dictionary,
-  Identifier,
   Bool,
   Enum,
   Str: require('./string'),
