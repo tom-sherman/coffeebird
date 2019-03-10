@@ -30,12 +30,13 @@ speaks - "German" {
 }
 
 speaks {
-  %S - lives in - "Ireland"
-  %O = "Irish"
+  "Fred" - lives in - "England";
+  %S - lives in - "Ireland";
+  %O = "Irish";
 }
 // Is the same as (we are saying a string of "Ireland" instead of an actual instance)
 speaks {
-  %S - lives in - %COUNTRY (alt = This is some alt text)
-  %COUNTRY == "Ireland" (weight = 90)
-  %O = "Irish"
+  %S - lives in - %COUNTRY (alt = This is some alt text);
+  %COUNTRY == "Ireland" (weight = 90);
+  %O = "Irish";
 }
