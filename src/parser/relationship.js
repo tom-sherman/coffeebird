@@ -26,6 +26,8 @@ const RelDictionary = Dictionary(
 const Rel = P.seqObj(
   P.string('rel'),
 
+  P.whitespace,
+
   ['subject', ConceptName.trim(_)],
 
   P.string('-').trim(_),

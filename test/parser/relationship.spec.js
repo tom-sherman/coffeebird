@@ -157,7 +157,8 @@ describe('relationship', function() {
       'rel - speaks -',
       'rel - speaks - Language',
       'rel Person -- speaks - Language',
-      'Person - speaks - Language'
+      'Person - speaks - Language',
+      'relPerson - speaks - Language'
     ]
 
     for (const input of invalidRels) {
