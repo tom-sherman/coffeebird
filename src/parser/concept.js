@@ -22,7 +22,7 @@ const Concept = P.seqObj(
   P.string('concept'),
   P.whitespace,
   ['name', ConceptName.trim(_)],
-  ['options', ConceptDictionary.or(P.notFollowedBy(ConceptDictionary)).trim(_)]
+  ['options', ConceptDictionary.trim(_)]
 ).skip(P.end)
 
 module.exports = {

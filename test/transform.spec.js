@@ -17,7 +17,7 @@ describe('transform', function() {
       ['concept Foo(\n\ttype=number\n)', '<concept name="Foo" type="number" />']
     ]
 
-    for (const [ input, expected ] of inputs) {
+    for (const [input, expected] of inputs) {
       const { status, value } = Concept.map(transformConcept).parse(input)
       assert.ok(status)
       assert.equal(value, expected)
@@ -44,26 +44,34 @@ describe('transform', function() {
       ]
     ]
 
-    for (const [ input, expected ] of inputs) {
+    for (const [input, expected] of inputs) {
       const { status, value } = Rel.map(transformRelationship).parse(input)
       assert.ok(status)
       assert.equal(value, expected)
     }
   })
 
-  it('should transform instances', function () {
-    const { status, value } = Instance.map(transformInstance).parse('Person("Dave")')
+  it('should transform instances', function() {
+    const { status, value } = Instance.map(transformInstance).parse(
+      'Person("Dave")'
+    )
     assert.ok(status)
     assert.equal(value, '<concinst name="Dave" type="Person" />')
   })
 
-  it('should transform facts', function () {
+  it('should transform facts', function() {
     const inputs = [
-      [ '"Dave" - speaks - "English"', '<relinst type="speaks" subject="Dave" object="English" cf="100" />' ],
-      [ '"Dave" - speaks - "English" (cf = 90)', '<relinst type="speaks" subject="Dave" object="English" cf="90" />' ]
+      [
+        '"Dave" - speaks - "English"',
+        '<relinst type="speaks" subject="Dave" object="English" cf="100" />'
+      ],
+      [
+        '"Dave" - speaks - "English" (cf = 90)',
+        '<relinst type="speaks" subject="Dave" object="English" cf="90" />'
+      ]
     ]
 
-    for (const [ input, expected ] of inputs) {
+    for (const [input, expected] of inputs) {
       const { status, value } = Fact.map(transformFact).parse(input)
       assert.ok(status)
       assert.equal(value, expected)
