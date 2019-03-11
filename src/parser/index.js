@@ -1,6 +1,6 @@
-const P = require('parsimmon')
-
-const concept = require('./concept')
-const rel = require('./relationship')
-
-console.log(rel.Rel.parse(`rel Person - speaks - Language`))
+module.exports = {
+  Concept: require('./concept').Concept,
+  Rel: require('./relationship').Rel,
+  Instance: require('./instance').Instance,
+  Fact: require('./fact').Fact
+}
