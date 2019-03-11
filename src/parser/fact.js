@@ -13,7 +13,7 @@ const Fact = P.seqObj(
   ['rel', RelName.trim(_)],
   P.string('-'),
   ['object', InstanceName.trim(_)],
-  ['options', FactDictionary.or(P.notFollowedBy(FactDictionary)).trim(_)]
+  ['options', FactDictionary.trim(_)]
 ).skip(P.end)
 
 module.exports = {

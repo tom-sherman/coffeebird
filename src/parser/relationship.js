@@ -38,7 +38,7 @@ const Rel = P.seqObj(
 
   ['object', ConceptName.trim(_)],
 
-  ['options', RelDictionary.or(P.notFollowedBy(RelDictionary)).trim(_)]
+  ['options', RelDictionary.trim(_)]
 ).skip(P.end)
 
 module.exports = {
