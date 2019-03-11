@@ -5,7 +5,7 @@ concept Language // Type is optional, default is string.
 rel Person - speaks - Language
 rel Person - lives in - Country
 rel Country - national language - Language (
-  firstForm = 'Do people from %S speak %O?'
+  firstForm = "Do people from %S speak %O?"
 )
 
 Person("Fred")
@@ -16,9 +16,9 @@ Country("England")
 Country("France")
 Country("Germany")
 
-"England" - national language - "English" (cf = 95) {}
-"France" - national language - "French" {}
-"Fred" - lives in - "England" {}
+"England" - national language - "English" (cf = 95)
+"France" - national language - "French"
+"Fred" - lives in - "England"
 
 speaks (cf = 75, minimumRuleCertainty = 60) {
   %S - lives in - %COUNTRY
@@ -32,11 +32,16 @@ speaks - "German" {
 speaks {
   "Fred" - lives in - "England";
   %S - lives in - "Ireland";
-  %O = "Irish";
+  %O = "Irish"; // Creating a new instance
 }
-// Is the same as (we are saying a string of "Ireland" instead of an actual instance)
+
 speaks {
   %S - lives in - %COUNTRY (alt = This is some alt text);
   %COUNTRY == "Ireland" (weight = 90);
   %O = "Irish";
+}
+
+// Subject and object specific rule
+"Fred" - speaks - "English" {
+  today() == '1970-01-01'; // Only when today is the 1st Jan 1970
 }

@@ -16,12 +16,12 @@ Country("England")
 Country("France")
 Country("Germany")
 
-"England" - national language - "English" (cf = 100) {}
-"France" - national language - "French" {}
-"Fred" - lives in - "England" {}
+"England" - national language - "English" (cf = 100)
+"France" - national language - "French"
+"Fred" - lives in - "England"
 
 speaks (cf = 75, minimumRuleCertainty = 60) {
   %S - lives in - %COUNTRY;
   %COUNTRY - national language - %O;
-  countRelationshipInstances(%S, dsds, sdsds)
+  countRelationshipInstances("Fred", dsds, *) == 0
 }
