@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "npm run lint && mocha",
+    "test": "npm run lint && mocha \"./test/**/*.spec.js\"",
     "lint": "prettier --list-different \"./**/*.js\"",
     "lint:fix": "prettier --write \"./**/*.js\""
   },

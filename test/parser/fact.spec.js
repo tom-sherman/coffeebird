@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { Fact, FactDictionary } = require('../src/fact')
+const { Fact, FactDictionary } = require('../../src/parser/fact')
 
 describe('fact :: dictionary', function() {
   it('should parse valid dictionaries', function() {

@@ -6,7 +6,7 @@ const {
   ConditionVal,
   ConditionDictionary,
   ConditionSubjectObject
-} = require('../src/condition')
+} = require('../../src/parser/condition')
 
 describe('condition :: dictionary', function() {
   it('should parse valid dictionaries', function() {

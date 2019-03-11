@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { Concept, ConceptDictionary } = require('../src/concept')
+const { Concept, ConceptDictionary } = require('../../src/parser/concept')
 
 describe('concept :: dictionary', function() {
   it('should parse valid dictionaries', function() {

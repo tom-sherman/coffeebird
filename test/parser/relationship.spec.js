@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { Rel, RelDictionary, RelName } = require('../src/relationship')
+const { Rel, RelDictionary, RelName } = require('../../src/parser/relationship')
 
 describe('relationship :: dictionary', function() {
   it('should parse valid dictionaries', function() {

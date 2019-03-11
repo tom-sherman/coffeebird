@@ -21,8 +21,8 @@ Country("Germany")
 "Fred" - lives in - "England"
 
 speaks (cf = 75, minimumRuleCertainty = 60) {
-  %S - lives in - %COUNTRY
-  %COUNTRY - national language - %O
+  %S - lives in - %COUNTRY;
+  %COUNTRY - national language - %O;
 }
 
 speaks - "German" {

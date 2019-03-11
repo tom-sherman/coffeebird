@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { Instance } = require('../src/instance')
+const { Instance } = require('../../src/parser/instance')
 
 describe('instance', function() {
   it('should parse valid instances', function() {

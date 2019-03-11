@@ -1,5 +1,12 @@
 const assert = require('assert')
-const { Num, Int, Str, Bool, Comment, Variable } = require('../src/shared')
+const {
+  Num,
+  Int,
+  Str,
+  Bool,
+  Comment,
+  Variable
+} = require('../../src/parser/shared')
 
 describe('shared :: Literals', function() {
   const invalidNumbers = [
