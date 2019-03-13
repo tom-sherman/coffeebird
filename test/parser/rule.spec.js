@@ -78,7 +78,8 @@ describe('rule', function() {
       'speaks',
       'speaks - () {}',
       '"Tom" - - "English {}',
-      '"Tom" {}'
+      '"Tom" {}',
+      'speaks ()'
     ]
 
     for (const input of invalidRules) {
