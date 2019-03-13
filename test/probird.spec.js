@@ -1,8 +1,8 @@
 const assert = require('assert')
-const { ProBird } = require('../src/probird')
+const { transpile } = require('../src/probird')
 
 it('transform', function() {
-  const transformed = ProBird.parse(`
+  const transformed = transpile(`
 concept Person (type = string)
 concept Country (type = string)
 concept Language (type = string)
@@ -26,5 +26,5 @@ Country("Germany")
 "Fred" - lives in - "England"
 `)
 
-  assert.ok(transformed.status)
+  assert.ok(transformed)
 })

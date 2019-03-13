@@ -4,10 +4,6 @@ const createAttrs = obj =>
     .map(([key, value]) => `${key}="${value}"`)
     .join(' ')
 
-function transformDocument(document) {
-  return document.join('\n')
-}
-
 function transformConcept(concept) {
   const { name, options: { type = 'string', behaviour } = {} } = concept
 
@@ -55,6 +51,5 @@ module.exports = {
   transformConcept,
   transformFact,
   transformInstance,
-  transformRelationship,
-  transformDocument
+  transformRelationship
 }

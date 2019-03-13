@@ -4,35 +4,48 @@ const {
   transformConcept,
   transformFact,
   transformInstance,
-  transformRelationship,
-  transformDocument
+  transformRelationship
 } = require('./transform')
 const { _, Comment } = require('./parser/shared')
 
 const noop = result => result
 
-function parserFactory({ transformers = {}, transform = false } = {}) {
-  const {
-    concept: transConcept = transformConcept,
-    fact: transFact = transformFact,
-    instance: transInstance = transformInstance,
-    relationship: transRel = transformRelationship,
-    document: transDoc = transformDocument
-  } = transformers
-
+function parse(input) {
   return P.alt(
-    Concept.map(transform ? transConcept : noop),
-    Fact.map(transform ? transFact : noop),
-    Instance.map(transform ? transInstance : noop),
-    Rel.map(transform ? transRel : noop)
+    Concept.node('Concept'),
+    Fact.node('Fact'),
+    Instance.node('Instance'),
+    Rel.node('Relationship')
   )
     .skip(Comment.many())
     .sepBy(P.newline.many())
     .trim(_)
-    .map(transform ? transDoc : noop)
+    .parse(input)
+}
+
+function transpile(input) {
+  const result = P.alt(
+    Concept.map(transformConcept),
+    Fact.map(transformFact),
+    Instance.map(transformInstance),
+    Rel.map(transformRelationship)
+  )
+    .skip(Comment.many())
+    .sepBy(P.newline.many())
+    .trim(_)
+    .map(result => result.join('\n'))
+    .tryParse(input)
+
+  return (
+    '<?xml version="1.0" encoding="utf-8"?>\n' +
+    '<rbl:kb xmlns:rbl="http://rbl.io/schema/RBLang">\n' +
+    result +
+    '\n' +
+    '</rbl:kb>'
+  )
 }
 
 module.exports = {
-  parserFactory,
-  ProBird: parserFactory({ transform: true })
+  parse,
+  transpile
 }
