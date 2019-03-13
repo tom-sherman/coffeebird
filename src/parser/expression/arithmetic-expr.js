@@ -12,7 +12,7 @@ const { _, Num, Str, Bool } = require('../shared')
 // A basic value is any parenthesized expression or a literal.
 const Basic = P.lazy(() =>
   P.string('(')
-    .then(ArithmaticExpr)
+    .then(ArithmeticExpr)
     .skip(P.string(')'))
     .or(P.alt(Num, Str, Bool))
 )
@@ -53,8 +53,8 @@ const table = [
 // keep it in a table instead of nesting it all manually.
 
 // This is our version of a math expression.
-const ArithmaticExpr = TableParser(table, Basic).trim(_)
+const ArithmeticExpr = TableParser(table, Basic).trim(_)
 
 module.exports = {
-  ArithmaticExpr
+  ArithmeticExpr
 }
