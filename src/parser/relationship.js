@@ -38,8 +38,8 @@ const Rel = P.seqObj(
 
   ['object', ConceptName.trim(_)],
 
-  ['options', RelDictionary.trim(_)]
-).skip(P.end)
+  ['options', RelDictionary]
+)
 
 module.exports = {
   RelName,

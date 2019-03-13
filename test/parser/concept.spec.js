@@ -56,6 +56,7 @@ describe('concept', function() {
     const validConcepts = [
       ['concept Language', { name: 'Language', options: {} }],
       ['concept Language ()', { name: 'Language', options: {} }],
+      ['concept Language()', { name: 'Language', options: {} }],
       [
         'concept Foo (type=string)',
         { name: 'Foo', options: { type: 'string' } }

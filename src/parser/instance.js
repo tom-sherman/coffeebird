@@ -10,7 +10,7 @@ const Instance = P.seqObj(
   P.string('('),
   ['name', InstanceName.trim(_)],
   P.string(')')
-).skip(P.end)
+)
 
 module.exports = {
   Instance,

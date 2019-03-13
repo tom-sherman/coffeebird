@@ -67,7 +67,7 @@ describe('fact', function() {
         }
       ],
       [
-        '"Dave" - speaks - "English" (\n\tcf=60\n)\n',
+        '"Dave" - speaks - "English" (\n\tcf=60\n)',
         {
           subject: 'Dave',
           rel: 'speaks',
