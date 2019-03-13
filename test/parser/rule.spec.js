@@ -73,7 +73,7 @@ describe('rule', function() {
     }
   })
 
-  it('should not parse invalid rules', function () {
+  it('should not parse invalid rules', function() {
     const invalidRules = [
       'speaks',
       'speaks - () {}',
