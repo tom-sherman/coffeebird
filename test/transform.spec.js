@@ -10,11 +10,14 @@ const { Concept, Rel, Instance, Fact } = require('../src/parser')
 describe('transform', function() {
   it('should transform concepts', function() {
     const inputs = [
-      ['concept Language', '<concept name="Language" type="string" />'],
-      ['concept Language ()', '<concept name="Language" type="string" />'],
-      ['concept Foo (type=string)', '<concept name="Foo" type="string" />'],
-      ['concept Foo( type=truth )', '<concept name="Foo" type="truth" />'],
-      ['concept Foo(\n\ttype=number\n)', '<concept name="Foo" type="number" />']
+      ['concept Language', '\t<concept name="Language" type="string" />'],
+      ['concept Language ()', '\t<concept name="Language" type="string" />'],
+      ['concept Foo (type=string)', '\t<concept name="Foo" type="string" />'],
+      ['concept Foo( type=truth )', '\t<concept name="Foo" type="truth" />'],
+      [
+        'concept Foo(\n\ttype=number\n)',
+        '\t<concept name="Foo" type="number" />'
+      ]
     ]
 
     for (const [input, expected] of inputs) {
@@ -28,19 +31,19 @@ describe('transform', function() {
     const inputs = [
       [
         'rel Person - speaks - Language',
-        '<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all" />'
+        '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all" />'
       ],
       [
         'rel Person - speaks - Language ()',
-        '<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all" />'
+        '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all" />'
       ],
       [
         'rel Person - speaks - Language (askable=none)',
-        '<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" />'
+        '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" />'
       ],
       [
         'rel Person - speaks - Language (\n\taskable=none,\n\tcanAdd=none\n)',
-        '<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" canAdd="none" />'
+        '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" canAdd="none" />'
       ]
     ]
 
@@ -56,18 +59,18 @@ describe('transform', function() {
       'Person("Dave")'
     )
     assert.ok(status)
-    assert.equal(value, '<concinst name="Dave" type="Person" />')
+    assert.equal(value, '\t<concinst name="Dave" type="Person" />')
   })
 
   it('should transform facts', function() {
     const inputs = [
       [
         '"Dave" - speaks - "English"',
-        '<relinst type="speaks" subject="Dave" object="English" cf="100" />'
+        '\t<relinst type="speaks" subject="Dave" object="English" cf="100" />'
       ],
       [
         '"Dave" - speaks - "English" (cf = 90)',
-        '<relinst type="speaks" subject="Dave" object="English" cf="90" />'
+        '\t<relinst type="speaks" subject="Dave" object="English" cf="90" />'
       ]
     ]
 

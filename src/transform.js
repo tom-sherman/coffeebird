@@ -7,7 +7,7 @@ const createAttrs = obj =>
 function transformConcept(concept) {
   const { name, options: { type = 'string', behaviour } = {} } = concept
 
-  return `<concept ${createAttrs({ name, type, behaviour })} />`
+  return `\t<concept ${createAttrs({ name, type, behaviour })} />`
 }
 
 function transformRelationship(rel) {
@@ -24,7 +24,7 @@ function transformRelationship(rel) {
     } = {}
   } = rel
 
-  return `<rel ${createAttrs({
+  return `\t<rel ${createAttrs({
     name,
     subject,
     object,
@@ -38,12 +38,12 @@ function transformRelationship(rel) {
 
 function transformInstance(instance) {
   const { name, type } = instance
-  return `<concinst ${createAttrs({ name, type })} />`
+  return `\t<concinst ${createAttrs({ name, type })} />`
 }
 
 function transformFact(fact) {
   const { subject, rel, object, options: { cf = 100 } = {} } = fact
-  return `<relinst ${createAttrs({ type: rel, subject, object, cf })} />`
+  return `\t<relinst ${createAttrs({ type: rel, subject, object, cf })} />`
 }
 
 module.exports = {
