@@ -43,7 +43,7 @@ const ConditionExpr = null
 
 const ConditionVal = null
 
-const Condition = null
+const Condition = P.alt(ConditionRel)
 
 module.exports = {
   Condition,
@@ -51,5 +51,6 @@ module.exports = {
   ConditionVal,
   ConditionDictionary,
   ConditionExpr,
-  ConditionSubjectObject
+  ConditionSubjectObject,
+  ConditionSep
 }
