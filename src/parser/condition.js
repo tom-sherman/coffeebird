@@ -37,7 +37,7 @@ const ConditionRel = P.seqObj(
   ['rel', RelName.trim(_)],
   P.string('-'),
   ['object', ConditionSubjectObject.trim(_)]
-)
+).map(result => ((result.type = 'rel'), result))
 
 const ConditionExpr = null
 

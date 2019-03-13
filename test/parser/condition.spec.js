@@ -77,31 +77,41 @@ describe('condition', function() {
   const validConditionRels = [
     [
       '%S - speaks - %LANG',
-      { subject: { name: 'S' }, rel: 'speaks', object: { name: 'LANG' } }
+      {
+        type: 'rel',
+        subject: { name: 'S' },
+        rel: 'speaks',
+        object: { name: 'LANG' }
+      }
     ],
     [
       '%S - speaks - "English"',
-      { subject: { name: 'S' }, rel: 'speaks', object: 'English' }
+      { type: 'rel', subject: { name: 'S' }, rel: 'speaks', object: 'English' }
     ],
     [
       '"Dave" - speaks - %LANGUAGE',
-      { subject: 'Dave', rel: 'speaks', object: { name: 'LANGUAGE' } }
+      {
+        type: 'rel',
+        subject: 'Dave',
+        rel: 'speaks',
+        object: { name: 'LANGUAGE' }
+      }
     ],
     [
       '"Dave" - speaks - "English"',
-      { subject: 'Dave', rel: 'speaks', object: 'English' }
+      { type: 'rel', subject: 'Dave', rel: 'speaks', object: 'English' }
     ],
     [
       '%PERSON - is aged - 28',
-      { subject: { name: 'PERSON' }, rel: 'is aged', object: 28 }
+      { type: 'rel', subject: { name: 'PERSON' }, rel: 'is aged', object: 28 }
     ],
     [
       '"Dave" - is eligible - true',
-      { subject: 'Dave', rel: 'is eligible', object: true }
+      { type: 'rel', subject: 'Dave', rel: 'is eligible', object: true }
     ],
     [
       '%O - is eligible - false',
-      { subject: { name: 'O' }, rel: 'is eligible', object: false }
+      { type: 'rel', subject: { name: 'O' }, rel: 'is eligible', object: false }
     ]
   ]
 
