@@ -24,6 +24,11 @@ Country("Germany")
 "England" - national language - "English" (cf = 100)
 "France" - national language - "French"
 "Fred" - lives in - "England"
+
+speaks (cf = 50) {
+  %S - lives in - %COUNTRY (weight=0);
+  %COUNTRY - has national language - %O
+}
 `)
 
   assert.ok(transformed)

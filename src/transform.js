@@ -1,6 +1,6 @@
 const createAttrs = obj =>
   Object.entries(obj)
-    .filter(([_, value]) => typeof value !== 'undefined')
+    .filter(([_, value]) => typeof value !== 'undefined' && value !== null)
     .map(([key, value]) => `${key}="${value}"`)
     .join(' ')
 
@@ -46,10 +46,90 @@ function transformFact(fact) {
   return `\t<relinst ${createAttrs({ type: rel, subject, object, cf })} />`
 }
 
+function transformRule(rule) {
+  const {
+    subject,
+    rel,
+    object,
+    conditions,
+    options: { cf = 100, minimumRuleCertainty, alt } = {}
+  } = rule
+  return `\t<relinst ${createAttrs({
+    type: rel,
+    subject,
+    object,
+    cf,
+    minimumRuleCertainty,
+    alt
+  })}>\n${conditions.map(transformCondition).join('\n')}\n\t</relinst>`
+}
+
+function transformCondition(condition) {
+  if (condition.type === 'rel') {
+    return transformConditionRel(condition)
+  } else if (
+    condition.type === 'expr' &&
+    condition.expression.operator === '='
+  ) {
+    return transformConditionVal(condition)
+  } else if (condition.type === 'expr') {
+    return transformConditionExpr(condition)
+  }
+}
+
+function transformConditionRel(condition) {
+  const {
+    subject,
+    rel,
+    object,
+    options: {
+      weight = 100,
+      behaviour = 'mandatory',
+      alt
+    }
+  } = condition
+  return `\t\t<condition ${createAttrs({
+    rel,
+    subject: transformValue(subject),
+    object: transformValue(object),
+    weight,
+    behaviour,
+    alt
+  })} />`
+}
+
+function transformConditionExpr(condition) {
+  const { expression, weight = 100, behaviour = 'mandatory', alt } = condition
+  return `<condition expression="${transformExpression(
+    expression
+  )}" ${createAttrs({ weight, behaviour })} />`
+}
+
+function transformConditionVal(condition) {
+  const { expression, weight = 100, behaviour = 'mandatory', alt } = condition
+  return `<condition expression="${transformExpression(
+    expression
+  )}" value="${transformValue(expression.left)}" ${createAttrs({
+    weight,
+    behaviour
+  })} />`
+}
+
+function transformExpression(expr) {}
+
+function transformValue(value) {
+  if (value.name) {
+    return '%' + value.name
+  }
+  return value
+}
+
 module.exports = {
   createAttrs,
   transformConcept,
   transformFact,
   transformInstance,
-  transformRelationship
+  transformRelationship,
+  transformRule,
+  transformCondition
 }

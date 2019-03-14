@@ -3,9 +3,18 @@ const {
   transformConcept,
   transformRelationship,
   transformFact,
-  transformInstance
+  transformInstance,
+  transformRule,
+  transformCondition
 } = require('../src/transform')
-const { Concept, Rel, Instance, Fact } = require('../src/parser')
+const {
+  Concept,
+  Rel,
+  Instance,
+  Fact,
+  Rule,
+  Condition
+} = require('../src/parser')
 
 describe('transform', function() {
   it('should transform concepts', function() {
@@ -76,6 +85,41 @@ describe('transform', function() {
 
     for (const [input, expected] of inputs) {
       const { status, value } = Fact.map(transformFact).parse(input)
+      assert.ok(status)
+      assert.equal(value, expected)
+    }
+  })
+
+  it('should transform condition rels', function() {
+    const inputs = [
+      [
+        '%S - speaks - %LANG',
+        '<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '%S - speaks - %LANG (behaviour = optional)',
+        '<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="optional" />'
+      ],
+      [
+        '%S - speaks - %LANG (behaviour = optional, weight = 50)',
+        '<condition rel="speaks" subject="%S" object="%LANG" weight="50" behaviour="optional" />'
+      ]
+    ]
+
+    for (const [input, expected] of inputs) {
+      const { status, value } = Condition.map(transformCondition).parse(input)
+      assert.ok(status)
+      assert.equal(value, expected)
+    }
+  })
+
+  it.skip('should transform rules', function() {
+    const inputs = [
+      ['speaks {}', '<relinst type=speaks" cf="100">\n</relinst>']
+    ]
+
+    for (const [input, expected] of inputs) {
+      const { status, value } = Rule.map(transformRule).parse(input)
       assert.ok(status)
       assert.equal(value, expected)
     }
