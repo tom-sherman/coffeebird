@@ -63,6 +63,29 @@ describe('rule', function() {
           conditions: [],
           options: {}
         }
+      ],
+      [
+        'speaks {\n\t%S - lives in - %COUNTRY;\n\t%COUNTRY - has national language - %O\n}',
+        {
+          subject: null,
+          rel: 'speaks',
+          object: null,
+          conditions: [
+            {
+              type: 'rel',
+              subject: { name: 'S' },
+              rel: 'lives in',
+              object: { name: 'COUNTRY' }
+            },
+            {
+              type: 'rel',
+              subject: { name: 'COUNTRY' },
+              rel: 'has national language',
+              object: { name: 'O' }
+            }
+          ],
+          options: {}
+        }
       ]
     ]
 
@@ -79,7 +102,8 @@ describe('rule', function() {
       'speaks - () {}',
       '"Tom" - - "English {}',
       '"Tom" {}',
-      'speaks ()'
+      'speaks ()',
+      'speaks {\n\t%S - lives in - %COUNTRY\n\t%COUNTRY - has national language - %O\n}'
     ]
 
     for (const input of invalidRules) {
