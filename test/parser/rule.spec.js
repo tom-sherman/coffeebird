@@ -75,13 +75,15 @@ describe('rule', function() {
               type: 'rel',
               subject: { name: 'S' },
               rel: 'lives in',
-              object: { name: 'COUNTRY' }
+              object: { name: 'COUNTRY' },
+              options: {}
             },
             {
               type: 'rel',
               subject: { name: 'COUNTRY' },
               rel: 'has national language',
-              object: { name: 'O' }
+              object: { name: 'O' },
+              options: {}
             }
           ],
           options: {}
