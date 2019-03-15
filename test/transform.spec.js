@@ -94,15 +94,15 @@ describe('transform', function() {
     const inputs = [
       [
         '%S - speaks - %LANG',
-        '<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="mandatory" />'
+        '\t\t<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="mandatory" />'
       ],
       [
         '%S - speaks - %LANG (behaviour = optional)',
-        '<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="optional" />'
+        '\t\t<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="optional" />'
       ],
       [
         '%S - speaks - %LANG (behaviour = optional, weight = 50)',
-        '<condition rel="speaks" subject="%S" object="%LANG" weight="50" behaviour="optional" />'
+        '\t\t<condition rel="speaks" subject="%S" object="%LANG" weight="50" behaviour="optional" />'
       ]
     ]
 
