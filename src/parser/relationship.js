@@ -9,7 +9,6 @@ const Askable = Enum('all', 'none', 'secondFormObject', 'secondFormSubject')
 const CanAdd = Enum('all', 'none', 'subject', 'object')
 
 const RelKeyValuePairs = {
-  cf: Int,
   plural: Bool,
   allowUnknown: Bool,
   askable: Askable,
