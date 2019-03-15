@@ -82,11 +82,7 @@ function transformConditionRel(condition) {
     subject,
     rel,
     object,
-    options: {
-      weight = 100,
-      behaviour = 'mandatory',
-      alt
-    }
+    options: { weight = 100, behaviour = 'mandatory', alt }
   } = condition
   return `\t\t<condition ${createAttrs({
     rel,

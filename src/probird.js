@@ -31,7 +31,7 @@ function transpile(input) {
     Rule.map(transformRule),
     Fact.map(transformFact),
     Instance.map(transformInstance),
-    Rel.map(transformRelationship),
+    Rel.map(transformRelationship)
   )
     .skip(Comment.many())
     .sepBy(P.newline.many())
