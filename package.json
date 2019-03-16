@@ -1,7 +1,8 @@
 {
   "name": "probird",
   "version": "1.0.0",
-  "description": "",
+  "description": "A DSL that compiles to RBLang.",
+  "main": "./src/coffeebird.js",
   "scripts": {
     "test": "npm run lint && mocha \"./test/**/*.spec.js\"",
     "lint": "prettier --list-different \"./**/*.js\"",

@@ -1,5 +1,5 @@
 const assert = require('assert')
-const { transpile } = require('../src/probird')
+const { transpile } = require('../src/coffeebird')
 
 it('transform', function() {
   const transformed = transpile(`
