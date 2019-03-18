@@ -1,6 +1,6 @@
 {
   "name": "probird",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A DSL that compiles to RBLang.",
   "main": "./src/coffeebird.js",
   "scripts": {
@@ -9,6 +9,14 @@
     "lint:fix": "prettier --write \"./**/*.js\""
   },
   "author": "Tom Sherman <the.tomsherman@gmail.com>",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/tom-sherman/coffeebird.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tom-sherman/coffeebird/issues"
+  },
+  "homepage": "https://github.com/tom-sherman/coffeebird#readme",
   "license": "MIT",
   "dependencies": {
     "parsimmon": "^1.12.0"
