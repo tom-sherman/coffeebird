@@ -185,7 +185,7 @@ Expressions follow the order of operations and support parenthesis.
 | `>`, `>=`, `<`, `<=` | Number comparison `3 < 6 == true` |
 | `!` | Boolean not eg. `!true == false` |
 | `&&` | Boolean and eg. `true && false == false` |
-| `||` | Boolean or eg. `true || false == true` |
+| `\|\|` | Boolean or eg. `true || false == true` |
 
 ### Condition-value
 
@@ -199,7 +199,7 @@ Condition-values are variable assignments. On the left of the `=` there is a var
 %FOO = 9;
 %BAR = true;
 %BAZ = %BAR;
-%BOO = %BAZ && %FOO < (2 + 3) * 2
+%BOO = %BAZ && %FOO < (2 + 3) * 2;
 %STR = "a string";
 ```
 
