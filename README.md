@@ -28,9 +28,10 @@ Country("France")
 "England" - national language - "English" (cf = 100)
 "France" - national language - "French"
 
+// This is a comment
 speaks (cf = 75, minimumRuleCertainty = 60) {
   %S - lives in - %COUNTRY;
-  %COUNTRY - national language - %O
+  %COUNTRY - national language - %O;
 }
 ```
 

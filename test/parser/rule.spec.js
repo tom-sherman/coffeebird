@@ -88,6 +88,31 @@ describe('rule', function() {
           ],
           options: {}
         }
+      ],
+      [
+        'speaks {\n\t%S - lives in - %COUNTRY;\n\t%COUNTRY - has national language - %O;\n}',
+        {
+          subject: null,
+          rel: 'speaks',
+          object: null,
+          conditions: [
+            {
+              type: 'rel',
+              subject: { name: 'S' },
+              rel: 'lives in',
+              object: { name: 'COUNTRY' },
+              options: {}
+            },
+            {
+              type: 'rel',
+              subject: { name: 'COUNTRY' },
+              rel: 'has national language',
+              object: { name: 'O' },
+              options: {}
+            }
+          ],
+          options: {}
+        }
       ]
     ]
 

@@ -26,7 +26,12 @@ const Rule = P.seqObj(
   ['object', RuleObject.fallback(null)],
   ['options', RuleDictionary],
   P.string('{').trim(_),
-  ['conditions', Condition.sepBy(ConditionSep).trim(_)],
+  [
+    'conditions',
+    Condition.sepBy(ConditionSep)
+      .skip(ConditionSep.times(0, 1))
+      .trim(_)
+  ],
   P.string('}')
 )
 
