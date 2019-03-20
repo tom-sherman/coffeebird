@@ -9,8 +9,7 @@ const argv = require('yargs')
   })
   .option('output', {
     alias: 'o'
-  })
-  .argv
+  }).argv
 
 const file = fs.readFileSync(argv.input, { encoding: 'utf8' })
 
