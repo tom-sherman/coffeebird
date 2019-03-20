@@ -5,7 +5,7 @@ concept Language (type = string)
 rel Person - speaks - Language
 rel Person - lives in - Country
 rel Country - national language - Language (
-  firstForm = Do people from %S speak %O?;
+  askable = none
 )
 
 Person("Fred")
@@ -23,5 +23,4 @@ Country("Germany")
 speaks (cf = 75, minimumRuleCertainty = 60) {
   %S - lives in - %COUNTRY;
   %COUNTRY - national language - %O;
-  countRelationshipInstances("Fred", dsds, *) == 0
 }
