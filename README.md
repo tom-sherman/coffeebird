@@ -35,6 +35,60 @@ speaks (cf = 75, minimumRuleCertainty = 60) {
 }
 ```
 
+## CLI
+
+You can install `coffeebird` globally to invoke the transpiler from the command line.
+
+
+### Install it globally from NPM
+
+```
+npm i coffeebird -g
+```
+
+### Usage
+
+```
+coffeebird [input]
+
+transpile a file to RBLang
+
+Commands:
+  coffeebird transpile [input]  transpile a file to RBLang             [default]
+
+Positionals:
+  input  The file to transpile.
+
+Options:
+  --help        Show help                                              [boolean]
+  --version     Show version number                                    [boolean]
+  --output, -o
+```
+
+
+
+## API
+
+You can use CoffeeBird programmatically by installing it via NPM and requiring it.
+
+```
+npm i coffeebird
+```
+
+The CoffeeBird module exports two functions `parse`, and `transpile`.
+
+```javascript
+const { parse, transpile } = require('coffeebird')
+```
+
+### `transpile(input)`
+
+Take an `input` string and output the transpiled RBLang.
+
+### `parse(input)`
+
+Take an `input` CoffeeBird string and outputs an AST.
+
 ## Development
 
 Ensure you have Node and `npm` installed.
