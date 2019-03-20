@@ -1,6 +1,6 @@
 {
   "name": "coffeebird",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A DSL that compiles to RBLang.",
   "main": "./src/coffeebird.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "lint": "prettier --list-different \"./**/*.js\"",
     "lint:fix": "prettier --write \"./**/*.js\""
   },
-  "bin": "./src/cli.js",
+  "bin": "node ./src/cli.js",
   "author": "Tom Sherman <the.tomsherman@gmail.com>",
   "repository": {
     "type": "git",
