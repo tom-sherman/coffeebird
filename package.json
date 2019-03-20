@@ -1,5 +1,5 @@
 {
-  "name": "probird",
+  "name": "coffeebird",
   "version": "0.1.0",
   "description": "A DSL that compiles to RBLang.",
   "main": "./src/coffeebird.js",
