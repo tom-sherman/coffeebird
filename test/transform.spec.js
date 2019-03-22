@@ -70,6 +70,13 @@ describe('transform', function() {
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all">\n' +
           '\t\t<firstForm>Does %S live in %O?</firstForm>\n' +
           '\t</rel>'
+      ],
+      [
+        'rel Person - speaks - Language (firstForm = "Does %S live in %O?", secondFormObject="Where does %S live?")',
+        '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all">\n' +
+          '\t\t<firstForm>Does %S live in %O?</firstForm>\n' +
+          '\t\t<secondFormObject>Where does %S live?</secondFormObject>\n' +
+          '\t</rel>'
       ]
     ]
 
