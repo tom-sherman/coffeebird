@@ -11,7 +11,6 @@ const {
 describe('condition :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
-      ['', {}],
       ['()', {}],
       [
         '(behaviour = mandatory, weight = 100, alt = "Alt")',
@@ -41,7 +40,8 @@ describe('condition :: dictionary', function() {
       '(weight = "100")',
       '(alt = 100)',
       '(weight=behaviour)',
-      'weight = 100'
+      'weight = 100',
+      ''
     ]
 
     for (const input of invalidDictionaries) {

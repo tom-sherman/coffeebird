@@ -25,7 +25,7 @@ const ConditionDictionary = Dictionary(
   Object.entries(ConditionKeyValuePairs).map(([key, value]) =>
     KeyValuePair(P.string(key), value)
   )
-).fallback({})
+)
 
 const ConditionSubjectObject = P.alt(Str, Num, Bool, Variable)
 
@@ -37,7 +37,7 @@ const ConditionRel = P.seqObj(
   ['rel', RelName.trim(_)],
   P.string('-'),
   ['object', ConditionSubjectObject.trim(_)],
-  ['options', ConditionDictionary]
+  ['options', ConditionDictionary.fallback({})]
 ).map(result => ((result.type = 'rel'), result))
 
 const ConditionExpr = null

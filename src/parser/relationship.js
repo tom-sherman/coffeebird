@@ -20,7 +20,7 @@ const RelDictionary = Dictionary(
   Object.entries(RelKeyValuePairs).map(([key, value]) =>
     KeyValuePair(P.string(key), value)
   )
-).fallback({})
+)
 
 const Rel = P.seqObj(
   P.string('rel'),
@@ -35,9 +35,9 @@ const Rel = P.seqObj(
 
   P.string('-').trim(_),
 
-  ['object', ConceptName.trim(_)],
+  ['object', ConceptName],
 
-  ['options', RelDictionary]
+  ['options', P.whitespace.then(RelDictionary).fallback({})]
 )
 
 module.exports = {

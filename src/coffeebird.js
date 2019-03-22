@@ -9,7 +9,11 @@ const {
 } = require('./transform')
 const { _, Comment } = require('./parser/shared')
 
-const noop = result => result
+const EmptyLine = P.newline.atLeast(2)
+
+function reduceLines(lines) {
+  return lines.join('\n')
+}
 
 function parse(input) {
   return P.alt(
@@ -27,6 +31,7 @@ function parse(input) {
 
 function transpile(input) {
   const result = P.alt(
+    P.newline,
     Concept.map(transformConcept),
     Rule.map(transformRule),
     Fact.map(transformFact),
@@ -34,9 +39,8 @@ function transpile(input) {
     Rel.map(transformRelationship)
   )
     .skip(Comment.many())
-    .sepBy(P.newline.many())
-    .trim(_)
-    .map(result => result.join('\n'))
+    .many()
+    .tie()
     .tryParse(input)
 
   return (

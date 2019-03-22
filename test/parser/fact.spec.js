@@ -4,8 +4,6 @@ const { Fact, FactDictionary } = require('../../src/parser/fact')
 describe('fact :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
-      ['', {}],
-      ['()', {}],
       ['(cf=100)', { cf: 100 }],
       ['(cf=99)', { cf: 99 }],
       ['(cf=1)', { cf: 1 }]
@@ -28,7 +26,8 @@ describe('fact :: dictionary', function() {
       'foo',
       '0',
       '(',
-      ')'
+      ')',
+      ''
     ]
 
     for (const input of invalidDictionaries) {
@@ -68,6 +67,15 @@ describe('fact', function() {
       ],
       [
         '"Dave" - speaks - "English" (\n\tcf=60\n)',
+        {
+          subject: 'Dave',
+          rel: 'speaks',
+          object: 'English',
+          options: { cf: 60 }
+        }
+      ],
+      [
+        '"Dave" - speaks - "English"(\n\tcf=60\n)',
         {
           subject: 'Dave',
           rel: 'speaks',

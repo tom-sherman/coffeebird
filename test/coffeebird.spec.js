@@ -2,9 +2,9 @@ const assert = require('assert')
 const { transpile } = require('../src/coffeebird')
 
 it('transform', function() {
-  const transformed = transpile(`
+  const input = `
 concept Person (type = string)
-concept Country (type = string)
+concept Country
 concept Language (type = string)
 
 rel Person - speaks - Language
@@ -29,7 +29,9 @@ speaks (cf = 50) {
   %S - lives in - %COUNTRY (weight=0);
   %COUNTRY - has national language - %O
 }
-`)
+`
+
+  const transformed = transpile(input)
 
   assert.ok(transformed)
 })

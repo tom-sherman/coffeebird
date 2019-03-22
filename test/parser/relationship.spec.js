@@ -5,7 +5,6 @@ describe('relationship :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
       ['()', {}],
-      ['', {}],
       ['( askable=none,allowCf=false )', { askable: 'none', allowCf: false }]
     ]
 

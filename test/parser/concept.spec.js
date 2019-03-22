@@ -5,7 +5,6 @@ describe('concept :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
       ['()', {}],
-      ['', {}],
       ['(type=string)', { type: 'string' }],
       ['( type = string )', { type: 'string' }],
       ['( type=string )', { type: 'string' }],
@@ -42,7 +41,8 @@ describe('concept :: dictionary', function() {
       '(true = string)',
       '(,)',
       '(,,)',
-      '(type = string,)'
+      '(type = string,)',
+      ''
     ]
 
     for (const input of invalidDictionaries) {

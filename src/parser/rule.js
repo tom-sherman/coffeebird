@@ -14,7 +14,7 @@ const RuleDictionary = Dictionary(
   Object.entries(RuleKeyValuePairs).map(([key, value]) =>
     KeyValuePair(P.string(key), value)
   )
-).fallback({})
+)
 
 const RuleSubject = InstanceName.trim(_).skip(P.string('-'))
 
@@ -24,7 +24,7 @@ const Rule = P.seqObj(
   ['subject', RuleSubject.fallback(null)],
   ['rel', RelName.trim(_)],
   ['object', RuleObject.fallback(null)],
-  ['options', RuleDictionary],
+  ['options', RuleDictionary.fallback({})],
   P.string('{').trim(_),
   [
     'conditions',
