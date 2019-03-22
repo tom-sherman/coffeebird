@@ -5,7 +5,15 @@ describe('relationship :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
       ['()', {}],
-      ['( askable=none,allowCf=false )', { askable: 'none', allowCf: false }]
+      ['( askable=none,allowCf=false )', { askable: 'none', allowCf: false }],
+      [
+        '(askable = secondFormObject, secondFormObject = "Where does %S live?")',
+        { askable: 'secondFormObject', secondFormObject: 'Where does %S live?' }
+      ],
+      [
+        '(askable = all, firstForm = "Does %S live in %O?")',
+        { askable: 'all', firstForm: 'Does %S live in %O?' }
+      ]
     ]
 
     for (const [input, expected] of validDictionaries) {

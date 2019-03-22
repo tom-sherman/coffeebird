@@ -63,6 +63,23 @@ describe('transform', function() {
     }
   })
 
+  it('should transform relationships with question wording', function() {
+    const inputs = [
+      [
+        'rel Person - speaks - Language (firstForm = "Does %S live in %O?")',
+        '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all">\n' +
+          '\t\t<firstForm>Does %S live in %O?</firstForm>\n' +
+          '\t</rel>'
+      ]
+    ]
+
+    for (const [input, expected] of inputs) {
+      const { status, value } = Rel.map(transformRelationship).parse(input)
+      assert.ok(status)
+      assert.equal(value, expected)
+    }
+  })
+
   it('should transform instances', function() {
     const { status, value } = Instance.map(transformInstance).parse(
       'Person("Dave")'

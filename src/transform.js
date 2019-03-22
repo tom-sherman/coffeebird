@@ -20,11 +20,14 @@ function transformRelationship(rel) {
       plural = false,
       allowUnknown = false,
       canAdd,
-      allowCf
+      allowCf,
+      firstForm,
+      secondFormObject,
+      secondFormSubject
     } = {}
   } = rel
 
-  return `\t<rel ${createAttrs({
+  let xml = `\t<rel ${createAttrs({
     name,
     subject,
     object,
@@ -33,7 +36,40 @@ function transformRelationship(rel) {
     askable,
     canAdd,
     allowCf
-  })} />`
+  })}`
+
+  if (firstForm || secondFormObject || secondFormSubject) {
+    xml += `>\n${transformQuestionWordings({
+      firstForm,
+      secondFormObject,
+      secondFormSubject
+    })}\n\t</rel>`
+  } else {
+    xml += ' />'
+  }
+
+  return xml
+}
+
+function transformQuestionWordings(questions) {
+  const { firstForm, secondFormObject, secondFormSubject } = questions
+  let questionTags = []
+
+  if (firstForm) {
+    questionTags.push(`\t\t<firstForm>${firstForm}</firstForm>`)
+  }
+  if (secondFormObject) {
+    questionTags.push(
+      `\t\t<secondFormObject>${secondFormObject}</secondFormObject>`
+    )
+  }
+  if (secondFormSubject) {
+    questionTags.push(
+      `\t\t<secondFormSubject>${secondFormSubject}</secondFormSubject>`
+    )
+  }
+
+  return questionTags.join('\n')
 }
 
 function transformInstance(instance) {

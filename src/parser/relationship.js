@@ -1,5 +1,5 @@
 const P = require('parsimmon')
-const { _, Dictionary, KeyValuePair, Int, Bool, Enum } = require('./shared')
+const { _, Dictionary, KeyValuePair, Str, Bool, Enum } = require('./shared')
 const { ConceptName } = require('./concept')
 
 const RelName = P.regexp(/[a-z ]*[a-z]+/)
@@ -13,7 +13,10 @@ const RelKeyValuePairs = {
   allowUnknown: Bool,
   askable: Askable,
   allowCf: Bool,
-  canAdd: CanAdd
+  canAdd: CanAdd,
+  firstForm: Str,
+  secondFormObject: Str,
+  secondFormSubject: Str
 }
 
 const RelDictionary = Dictionary(
