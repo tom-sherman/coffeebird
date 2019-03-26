@@ -9,12 +9,6 @@ const {
 } = require('./transform')
 const { _, Comment } = require('./parser/shared')
 
-const EmptyLine = P.newline.atLeast(2)
-
-function reduceLines(lines) {
-  return lines.join('\n')
-}
-
 function parse(input) {
   return P.alt(
     Concept.node('Concept'),
