@@ -1,5 +1,5 @@
 const P = require('parsimmon')
-const { _ } = require('../shared')
+const { _, Num, Str, Bool, Variable } = require('../shared')
 
 // Operators should allow whitespace around them, but not require it. This
 // helper combines multiple operators together with names.
@@ -86,8 +86,12 @@ function BinaryLeft(operatorsParser, nextParser) {
     P.seq(operatorsParser, nextParser).many(),
     (first, rest) => {
       return rest.reduce((acc, ch) => {
-        let [op, another] = ch
-        return [op, acc, another]
+        let [operator, another] = ch
+        return {
+          operator,
+          left: acc,
+          right: another
+        }
       }, first)
     }
   )
@@ -99,11 +103,54 @@ function TableParser(table, value) {
   return table.reduce((acc, level) => level.type(level.ops, acc), value)
 }
 
+// Now we can describe the operators in order by precedence. You just need to
+// re-order the table.
+const table = [
+  { type: Prefix, ops: Operators({ Negate: '-' }) },
+  { type: Postfix, ops: Operators({ Factorial: '!' }) },
+  { type: BinaryRight, ops: Operators({ Exponentiate: '^' }) },
+  { type: BinaryLeft, ops: Operators({ Multiply: '*', Divide: '/' }) },
+  { type: BinaryLeft, ops: Operators({ Add: '+', Subtract: '-' }) },
+  {
+    type: BinaryLeft,
+    ops: Operators({
+      Equal: '==',
+      NotEqual: '!=',
+      GreaterThan: '>',
+      LessThan: '<',
+      GreaterThanOrEqualTo: '>=',
+      LessThanOrEqualTo: '<='
+    })
+  },
+  { type: Prefix, ops: Operators({ Not: '!' }) },
+  { type: BinaryLeft, ops: Operators({ And: '&&' }) },
+  { type: BinaryLeft, ops: Operators({ Or: '||' }) }
+]
+
+// The above is equivalent to:
+//
+// TYPE(operators({...}),
+//   TYPE(operators({...}),
+//     TYPE(operators({...})),
+//       TYPE(operators({...}),
+//         TYPE(operators({...}), ...))))
+//
+// But it's easier if to see what's going on and reorder the precedence if we
+// keep it in a table instead of nesting it all manually.
+
+// A basic value is any parenthesized expression or a literal.
+const Basic = P.lazy(() =>
+  P.string('(')
+    .then(ConditionExpr)
+    .skip(P.string(')'))
+    .or(P.alt(Num, Str, Bool, Variable))
+)
+
+// This is our version of a math expression.
+const ConditionExpr = TableParser(table, Basic).trim(_)
+
+ConditionExpr.parse('3 * 4 + 2')
+
 module.exports = {
-  BinaryLeft,
-  BinaryRight,
-  Operators,
-  Postfix,
-  Prefix,
-  TableParser
+  ConditionExpr
 }
