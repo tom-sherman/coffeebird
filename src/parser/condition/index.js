@@ -6,7 +6,7 @@ const { ConditionVal } = require('./condition-val')
 
 const ConditionSep = P.string(';')
 
-const Condition = P.alt(ConditionRel)
+const Condition = P.alt(ConditionRel, ConditionExpr, ConditionVal)
 
 module.exports = {
   Condition,

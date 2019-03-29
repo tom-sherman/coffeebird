@@ -317,14 +317,14 @@ describe('condition', function() {
   ]
 
   const validConditionVal = [
-    ['%FOO = 1', {}],
-    ['%FOO = 0', {}],
-    ['%FOO = true', {}],
-    ['%FOO = false', {}],
-    ['%FOO = 1.1', {}],
-    ['%FOO = "bar"', {}],
-    ['%FOO = %BAR == 5', {}],
-    ['%FOO = %BAR * 6', {}]
+    ['%FOO = 1', {assignment: { name: 'FOO' }, expression: 1, options: {}}],
+    ['%FOO = 0', { assignment: { name: 'FOO' }, expression: 0, options: {} }],
+    ['%FOO = true', { assignment: { name: 'FOO' }, expression: true, options: {} }],
+    ['%FOO = false', { assignment: { name: 'FOO' }, expression: false, options: {} }],
+    ['%FOO = 1.1', { assignment: { name: 'FOO' }, expression: 1.1, options: {} }],
+    ['%FOO = "bar"', { assignment: { name: 'FOO' }, expression: 'bar', options: {} }],
+    ['%FOO = %BAR == 5', { assignment: { name: 'FOO' }, expression: {left: {name: 'BAR'},operator: '==', right: 5}, options: {} }],
+    ['%FOO = %BAR * 6', { assignment: { name: 'FOO' }, expression: {left: {name: 'BAR'},operator: '*', right: 6}, options: {} }]
   ]
 
   it.skip('should parse valid condition rels', function() {
@@ -346,6 +346,28 @@ describe('condition', function() {
   it('should parse valid condition expressions', function() {
     for (const [input, expected] of validConditionExpr) {
       const { status, value } = ConditionExpr.parse(input)
+      assert.ok(status)
+      assert.deepEqual(value, expected)
+    }
+  })
+
+  it('should parse valid condition values', function() {
+    for (const [input, expected] of validConditionVal) {
+      const { status, value } = ConditionVal.parse(input)
+      assert.ok(status)
+      assert.deepEqual(value, expected)
+    }
+  })
+
+  it.skip('should parse valid conditions', function () {
+    const validConditions = [
+      ...validConditionRels,
+      ...validConditionExpr,
+      ...validConditionVal
+    ]
+
+    for (const [input, expected] of validConditions) {
+      const { status, value } = Condition.parse(input)
       assert.ok(status)
       assert.deepEqual(value, expected)
     }
