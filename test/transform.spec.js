@@ -114,7 +114,7 @@ describe('transform', function() {
     }
   })
 
-  it('should transform condition rels', function() {
+  it('should transform conditions', function() {
     const inputs = [
       [
         '%S - speaks - %LANG',
@@ -127,6 +127,18 @@ describe('transform', function() {
       [
         '%S - speaks - %LANG (behaviour: optional, weight: 50)',
         '\t\t<condition rel="speaks" subject="%S" object="%LANG" weight="50" behaviour="optional" />'
+      ],
+      [
+        '%FOO = 0',
+        '\t\t<condition expression="0" value="%FOO" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '%FOO = 3 * %BAR',
+        '\t\t<condition expression="3 * %BAR" value="%FOO" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '%FOO = 3 * %BAR - 3',
+        '\t\t<condition expression="3 * %BAR - 3" value="%FOO" weight="100" behaviour="mandatory" />'
       ]
     ]
 

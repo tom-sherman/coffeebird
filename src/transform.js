@@ -103,13 +103,10 @@ function transformRule(rule) {
 function transformCondition(condition) {
   if (condition.type === 'rel') {
     return transformConditionRel(condition)
-  } else if (
-    condition.type === 'expr' &&
-    condition.expression.operator === '='
-  ) {
-    return transformConditionVal(condition)
   } else if (condition.type === 'expr') {
     return transformConditionExpr(condition)
+  } else if (condition.type === 'val') {
+    return transformConditionVal(condition)
   }
 }
 
@@ -132,22 +129,61 @@ function transformConditionRel(condition) {
 
 function transformConditionExpr(condition) {
   const { expression, weight = 100, behaviour = 'mandatory', alt } = condition
-  return `<condition expression="${transformExpression(
+  return `\t\t<condition expression="${transformExpression(
     expression
-  )}" ${createAttrs({ weight, behaviour })} />`
+  )}" ${createAttrs({ weight, behaviour, alt })} />`
 }
 
 function transformConditionVal(condition) {
-  const { expression, weight = 100, behaviour = 'mandatory', alt } = condition
-  return `<condition expression="${transformExpression(
+  const {
+    expression,
+    assignment,
+    weight = 100,
+    behaviour = 'mandatory',
+    alt
+  } = condition
+  return `\t\t<condition expression="${transformExpression(
     expression
-  )}" value="${transformValue(expression.left)}" ${createAttrs({
+  )}" value="${transformValue(assignment)}" ${createAttrs({
     weight,
-    behaviour
+    behaviour,
+    alt
   })} />`
 }
 
-function transformExpression(expr) {}
+function transformExpression(expr, transformed = '') {
+  if (expr.left) {
+    transformed += transformValue(expr.left) + ' '
+  }
+  if (expr.operator) {
+    transformed += transformOperator(expr.operator) + ' '
+  }
+  if (expr.right && expr.right.operator) {
+    return transformExpression(expr.right, transformed)
+  }
+  // At this point, either we have reached the end of the expression or the expression was a literal value.
+  transformed += transformValue(expr.right ? expr.right : expr)
+
+  return transformed
+}
+
+function transformOperator(operator) {
+  const operatorMap = {
+    '+': '+',
+    '-': '-',
+    '*': '*',
+    '/': '/',
+    '==': '=',
+    '!=': 'is not equal to',
+    '>=': 'gte',
+    '<=': 'lte',
+    '>': 'gt',
+    '<': 'lt',
+    '&&': 'and',
+    '||': 'or'
+  }
+  return operatorMap[operator]
+}
 
 function transformValue(value) {
   if (value.name) {
