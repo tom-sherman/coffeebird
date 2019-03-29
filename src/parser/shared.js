@@ -11,7 +11,7 @@ function Keyword() {
 }
 
 function KeyValuePair(key, value) {
-  return P.seq(key.trim(_).skip(P.string('=').trim(_)), value.trim(_))
+  return P.seq(key.trim(_).skip(P.string(':').trim(_)), value.trim(_))
 }
 
 function Dictionary(keyValuePairs) {

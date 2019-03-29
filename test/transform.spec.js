@@ -21,10 +21,10 @@ describe('transform', function() {
     const inputs = [
       ['concept Language', '\t<concept name="Language" type="string" />'],
       ['concept Language ()', '\t<concept name="Language" type="string" />'],
-      ['concept Foo (type=string)', '\t<concept name="Foo" type="string" />'],
-      ['concept Foo( type=truth )', '\t<concept name="Foo" type="truth" />'],
+      ['concept Foo (type: string)', '\t<concept name="Foo" type="string" />'],
+      ['concept Foo( type: truth )', '\t<concept name="Foo" type="truth" />'],
       [
-        'concept Foo(\n\ttype=number\n)',
+        'concept Foo(\n\ttype: number\n)',
         '\t<concept name="Foo" type="number" />'
       ]
     ]
@@ -47,11 +47,11 @@ describe('transform', function() {
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all" />'
       ],
       [
-        'rel Person - speaks - Language (askable=none)',
+        'rel Person - speaks - Language (askable:none)',
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" />'
       ],
       [
-        'rel Person - speaks - Language (\n\taskable=none,\n\tcanAdd=none\n)',
+        'rel Person - speaks - Language (\n\taskable: none,\n\tcanAdd: none\n)',
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" canAdd="none" />'
       ]
     ]
@@ -66,13 +66,13 @@ describe('transform', function() {
   it('should transform relationships with question wording', function() {
     const inputs = [
       [
-        'rel Person - speaks - Language (firstForm = "Does %S live in %O?")',
+        'rel Person - speaks - Language (firstForm: "Does %S live in %O?")',
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all">\n' +
           '\t\t<firstForm>Does %S live in %O?</firstForm>\n' +
           '\t</rel>'
       ],
       [
-        'rel Person - speaks - Language (firstForm = "Does %S live in %O?", secondFormObject="Where does %S live?")',
+        'rel Person - speaks - Language (firstForm: "Does %S live in %O?", secondFormObject:"Where does %S live?")',
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="all">\n' +
           '\t\t<firstForm>Does %S live in %O?</firstForm>\n' +
           '\t\t<secondFormObject>Where does %S live?</secondFormObject>\n' +
@@ -102,7 +102,7 @@ describe('transform', function() {
         '\t<relinst type="speaks" subject="Dave" object="English" cf="100" />'
       ],
       [
-        '"Dave" - speaks - "English" (cf = 90)',
+        '"Dave" - speaks - "English" (cf: 90)',
         '\t<relinst type="speaks" subject="Dave" object="English" cf="90" />'
       ]
     ]
@@ -121,11 +121,11 @@ describe('transform', function() {
         '\t\t<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="mandatory" />'
       ],
       [
-        '%S - speaks - %LANG (behaviour = optional)',
+        '%S - speaks - %LANG (behaviour: optional)',
         '\t\t<condition rel="speaks" subject="%S" object="%LANG" weight="100" behaviour="optional" />'
       ],
       [
-        '%S - speaks - %LANG (behaviour = optional, weight = 50)',
+        '%S - speaks - %LANG (behaviour: optional, weight: 50)',
         '\t\t<condition rel="speaks" subject="%S" object="%LANG" weight="50" behaviour="optional" />'
       ]
     ]

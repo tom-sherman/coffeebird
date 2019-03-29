@@ -13,16 +13,16 @@ describe('condition :: dictionary', function() {
     const validDictionaries = [
       ['()', {}],
       [
-        '(behaviour = mandatory, weight = 100, alt = "Alt")',
+        '(behaviour: mandatory, weight: 100, alt: "Alt")',
         { behaviour: 'mandatory', weight: 100, alt: 'Alt' }
       ],
       [
-        '(behaviour = mandatory, weight = 100)',
+        '(behaviour: mandatory, weight: 100)',
         { behaviour: 'mandatory', weight: 100 }
       ],
-      ['(behaviour = mandatory)', { behaviour: 'mandatory' }],
-      ['(weight = 100)', { weight: 100 }],
-      ['(alt = "Alt text")', { alt: 'Alt text' }]
+      ['(behaviour: mandatory)', { behaviour: 'mandatory' }],
+      ['(weight: 100)', { weight: 100 }],
+      ['(alt: "Alt text")', { alt: 'Alt text' }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -34,6 +34,7 @@ describe('condition :: dictionary', function() {
 
   it('should not parse invalid dictionaries', function() {
     const invalidDictionaries = [
+      '(alt:)',
       '(alt)',
       '(behaviour=)',
       '(behaviour=test)',

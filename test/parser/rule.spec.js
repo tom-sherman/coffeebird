@@ -10,12 +10,12 @@ describe('rule :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
       ['()', {}],
-      ['(cf = 100)', { cf: 100 }],
+      ['(cf: 100)', { cf: 100 }],
       [
-        '(cf = 100, minimumRuleCertainty = 50)',
+        '(cf: 100, minimumRuleCertainty: 50)',
         { cf: 100, minimumRuleCertainty: 50 }
       ],
-      ['(alt = "Test")', { alt: 'Test' }]
+      ['(alt: "Test")', { alt: 'Test' }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -26,7 +26,7 @@ describe('rule :: dictionary', function() {
   })
 
   it('should not parse invalid dictionaries', function() {
-    const invalidDictionaries = ['(', ')', '(alt=)', '(cf = 20.4)']
+    const invalidDictionaries = ['(', ')', '(alt=)', '(alt:)', '(cf : 20.4)']
 
     for (const input of invalidDictionaries) {
       assert.ok(!RuleDictionary.parse(input).status)

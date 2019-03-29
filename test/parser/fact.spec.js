@@ -4,9 +4,9 @@ const { Fact, FactDictionary } = require('../../src/parser/fact')
 describe('fact :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
-      ['(cf=100)', { cf: 100 }],
-      ['(cf=99)', { cf: 99 }],
-      ['(cf=1)', { cf: 1 }]
+      ['(cf:100)', { cf: 100 }],
+      ['(cf:99)', { cf: 99 }],
+      ['(cf:1)', { cf: 1 }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -18,11 +18,11 @@ describe('fact :: dictionary', function() {
 
   it('should not parse invalid dictionaries', function() {
     const invalidDictionaries = [
-      '(certainty=100)',
+      '(certainty:100)',
       '(foo)',
-      '(cf=100',
-      'cf=100)',
-      '((cf=100))',
+      '(cf:100',
+      'cf:100)',
+      '((cf:100))',
       'foo',
       '0',
       '(',
@@ -48,7 +48,7 @@ describe('fact', function() {
         { subject: 'Dave', rel: 'speaks', object: 'English', options: {} }
       ],
       [
-        '"Dave" - speaks lang - "English" (cf=60)',
+        '"Dave" - speaks lang - "English" (cf: 60)',
         {
           subject: 'Dave',
           rel: 'speaks lang',
@@ -57,7 +57,7 @@ describe('fact', function() {
         }
       ],
       [
-        '"Dave" - speaks - "English" (cf=60)',
+        '"Dave" - speaks - "English" (cf: 60)',
         {
           subject: 'Dave',
           rel: 'speaks',
@@ -66,7 +66,7 @@ describe('fact', function() {
         }
       ],
       [
-        '"Dave" - speaks - "English" (\n\tcf=60\n)',
+        '"Dave" - speaks - "English" (\n\tcf: 60\n)',
         {
           subject: 'Dave',
           rel: 'speaks',
@@ -75,7 +75,7 @@ describe('fact', function() {
         }
       ],
       [
-        '"Dave" - speaks - "English"(\n\tcf=60\n)',
+        '"Dave" - speaks - "English"(\n\tcf: 60\n)',
         {
           subject: 'Dave',
           rel: 'speaks',
@@ -96,10 +96,10 @@ describe('fact', function() {
     const invalidFacts = [
       '',
       '()',
-      'rel "Dave" - speaks - "English" (cf=60)',
-      'Dave - speaks - English (cf=60)',
-      '"Dave" - speaks - "English"" (cf=60)',
-      '""Dave" - speaks - "English"" (cf=60)'
+      'rel "Dave" - speaks - "English" (cf:60)',
+      'Dave - speaks - English (cf:60)',
+      '"Dave" - speaks - "English"" (cf:60)',
+      '""Dave" - speaks - "English"" (cf:60)'
     ]
 
     for (const input of invalidFacts) {

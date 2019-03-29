@@ -21,12 +21,12 @@ They are used to specify options for concepts, relationships, facts, and rules. 
 **Examples:**
 
 ```
-(askable = none)
+(askable: none)
 ```
 A dictionary with an enum type as the value, set to `none`.
 
 ```
-(weight = 100, behaviour = optional, alt = "This is some alt text.")
+(weight: 100, behaviour: optional, alt: "This is some alt text.")
 ```
 
 A dictionary containing multiple pairs.
@@ -59,8 +59,8 @@ Creates a concept with a default type of `string`.
 
 ```
 concept Person
-concept Age (type = number)
-concept Time of Day (behaviour = mutuallyExclusive)
+concept Age (type: number)
+concept Time of Day (behaviour: mutuallyExclusive)
 ```
 
 ## Relationships
@@ -85,8 +85,8 @@ Create a relationship with a subject and object concept.
 
 ```
 rel Country - has national language - Language
-rel Person - speaks - Language (plural = true, askable = secondFormObject)
-rel Person - lives in - Country (allowCf = false)
+rel Person - speaks - Language (plural: true, askable: secondFormObject)
+rel Person - lives in - Country (allowCf: false)
 ```
 
 ## Instances
@@ -118,7 +118,7 @@ Create a fact between a subject and an object instance.
 
 ```
 "England" - has national language - "English"
-"Dave" - speaks - "English" (cf = 68)
+"Dave" - speaks - "English" (cf: 68)
 ```
 
 ## Variables
@@ -157,8 +157,8 @@ Condition-relationships look similar to facts, but as well as having instances a
 ```
 %S - speaks - %O;
 %S - lives in - "England";
-%PERSON - is aged - 25;
-%O - is active - true;
+%PERSON - is aged - 25 (alt: "{{%PERSON}} is 25 years old.");
+%O - is active - true (weight: 50, behaviour: optional);
 ```
 
 ### Condition-expression

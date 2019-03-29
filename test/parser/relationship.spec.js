@@ -5,13 +5,13 @@ describe('relationship :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
       ['()', {}],
-      ['( askable=none,allowCf=false )', { askable: 'none', allowCf: false }],
+      ['( askable:none,allowCf:false )', { askable: 'none', allowCf: false }],
       [
-        '(askable = secondFormObject, secondFormObject = "Where does %S live?")',
+        '(askable : secondFormObject, secondFormObject : "Where does %S live?")',
         { askable: 'secondFormObject', secondFormObject: 'Where does %S live?' }
       ],
       [
-        '(askable = all, firstForm = "Does %S live in %O?")',
+        '(askable : all, firstForm : "Does %S live in %O?")',
         { askable: 'all', firstForm: 'Does %S live in %O?' }
       ]
     ]
@@ -25,10 +25,10 @@ describe('relationship :: dictionary', function() {
 
   it('should parse valid askables', function() {
     const validDictionaries = [
-      ['(askable=none)', { askable: 'none' }],
-      ['(askable=all)', { askable: 'all' }],
-      ['(askable=secondFormObject)', { askable: 'secondFormObject' }],
-      ['(askable=secondFormSubject)', { askable: 'secondFormSubject' }]
+      ['(askable: none)', { askable: 'none' }],
+      ['(askable: all)', { askable: 'all' }],
+      ['(askable: secondFormObject)', { askable: 'secondFormObject' }],
+      ['(askable: secondFormSubject)', { askable: 'secondFormSubject' }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -40,10 +40,10 @@ describe('relationship :: dictionary', function() {
 
   it('should parse valid canAdd', function() {
     const validDictionaries = [
-      ['(canAdd=none)', { canAdd: 'none' }],
-      ['(canAdd=all)', { canAdd: 'all' }],
-      ['(canAdd=object)', { canAdd: 'object' }],
-      ['(canAdd=subject)', { canAdd: 'subject' }]
+      ['(canAdd: none)', { canAdd: 'none' }],
+      ['(canAdd: all)', { canAdd: 'all' }],
+      ['(canAdd: object)', { canAdd: 'object' }],
+      ['(canAdd: subject)', { canAdd: 'subject' }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -55,8 +55,8 @@ describe('relationship :: dictionary', function() {
 
   it('should parse valid plural', function() {
     const validDictionaries = [
-      ['(plural=true)', { plural: true }],
-      ['(plural=false)', { plural: false }]
+      ['(plural: true)', { plural: true }],
+      ['(plural: false)', { plural: false }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -68,8 +68,8 @@ describe('relationship :: dictionary', function() {
 
   it('should parse valid allowCf', function() {
     const validDictionaries = [
-      ['(allowCf=true)', { allowCf: true }],
-      ['(allowCf=false)', { allowCf: false }]
+      ['(allowCf: true)', { allowCf: true }],
+      ['(allowCf: false)', { allowCf: false }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -81,8 +81,8 @@ describe('relationship :: dictionary', function() {
 
   it('should parse valid allowUnknown', function() {
     const validDictionaries = [
-      ['(allowUnknown=true)', { allowUnknown: true }],
-      ['(allowUnknown=false)', { allowUnknown: false }]
+      ['(allowUnknown: true)', { allowUnknown: true }],
+      ['(allowUnknown: false)', { allowUnknown: false }]
     ]
 
     for (const [input, expected] of validDictionaries) {
@@ -125,7 +125,7 @@ describe('relationship', function() {
         { subject: 'Person', name: 'speaks', object: 'Language', options: {} }
       ],
       [
-        'rel Person - speaks - Language (askable=none)',
+        'rel Person - speaks - Language (askable: none)',
         {
           subject: 'Person',
           name: 'speaks',
@@ -134,7 +134,7 @@ describe('relationship', function() {
         }
       ],
       [
-        'rel Person - speaks - Language (\n\taskable=none\n)',
+        'rel Person - speaks - Language (\n\taskable: none\n)',
         {
           subject: 'Person',
           name: 'speaks',

@@ -5,20 +5,20 @@ describe('concept :: dictionary', function() {
   it('should parse valid dictionaries', function() {
     const validDictionaries = [
       ['()', {}],
-      ['(type=string)', { type: 'string' }],
-      ['( type = string )', { type: 'string' }],
-      ['( type=string )', { type: 'string' }],
-      ['(type = string)', { type: 'string' }],
-      ['(type = number)', { type: 'number' }],
-      ['(type = truth)', { type: 'truth' }],
-      ['(type = date)', { type: 'date' }],
-      ['(behaviour = mutuallyExclusive)', { behaviour: 'mutuallyExclusive' }],
+      ['(type:string)', { type: 'string' }],
+      ['( type: string )', { type: 'string' }],
+      ['( type:string )', { type: 'string' }],
+      ['(type : string)', { type: 'string' }],
+      ['(type : number)', { type: 'number' }],
+      ['(type: truth)', { type: 'truth' }],
+      ['(type: date)', { type: 'date' }],
+      ['(behaviour: mutuallyExclusive)', { behaviour: 'mutuallyExclusive' }],
       [
-        '(type = string, behaviour = mutuallyExclusive)',
+        '(type : string, behaviour : mutuallyExclusive)',
         { behaviour: 'mutuallyExclusive', type: 'string' }
       ],
       [
-        '(behaviour = mutuallyExclusive, type = string)',
+        '(behaviour: mutuallyExclusive, type: string)',
         { behaviour: 'mutuallyExclusive', type: 'string' }
       ]
     ]
@@ -32,6 +32,7 @@ describe('concept :: dictionary', function() {
 
   it('should not parse invalid dictionaries', function() {
     const invalidDictionaries = [
+      '(:)',
       '(string)',
       '(type)',
       'type=string',
@@ -58,15 +59,15 @@ describe('concept', function() {
       ['concept Language ()', { name: 'Language', options: {} }],
       ['concept Language()', { name: 'Language', options: {} }],
       [
-        'concept Foo (type=string)',
+        'concept Foo (type: string)',
         { name: 'Foo', options: { type: 'string' } }
       ],
       [
-        'concept Foo( type=string )',
+        'concept Foo( type: string )',
         { name: 'Foo', options: { type: 'string' } }
       ],
       [
-        'concept Foo(\n\ttype=string\n)',
+        'concept Foo(\n\ttype: string\n)',
         { name: 'Foo', options: { type: 'string' } }
       ]
     ]
