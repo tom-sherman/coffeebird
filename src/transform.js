@@ -5,7 +5,11 @@ const createAttrs = obj =>
     .join(' ')
 
 function transformConcept(concept) {
-  const { name, options: { type = 'string', behaviour } = {} } = concept
+  let { name, options: { type = 'string', behaviour } = {} } = concept
+
+  if (behaviour === 'mutuallyExclusive') {
+    behaviour = 'mutually-exclusive'
+  }
 
   return `\t<concept ${createAttrs({ name, type, behaviour })} />`
 }
@@ -106,7 +110,7 @@ function transformRule(rule) {
   })}>\n${conditions.map(transformCondition).join('\n')}\n\t</relinst>`
 }
 
-function transformRuleBehaviour (behaviour) {
+function transformRuleBehaviour(behaviour) {
   const behaviourMap = {
     topDown: 'top-down',
     topDownStrict: 'top-down-strict'

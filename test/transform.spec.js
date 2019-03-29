@@ -26,6 +26,10 @@ describe('transform', function() {
       [
         'concept Foo(\n\ttype: number\n)',
         '\t<concept name="Foo" type="number" />'
+      ],
+      [
+        'concept Foo (behaviour: mutuallyExclusive)',
+        '\t<concept name="Foo" type="string" behaviour="mutually-exclusive" />'
       ]
     ]
 
