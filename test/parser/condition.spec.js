@@ -7,6 +7,7 @@ const {
   ConditionDictionary,
   ConditionSubjectObject
 } = require('../../src/parser/condition')
+const { Expression } = require('../../src/parser/condition/condition-expr')
 
 describe('condition :: dictionary', function() {
   it('should parse valid dictionaries', function() {
@@ -158,32 +159,161 @@ describe('condition', function() {
     ]
   ]
 
-  const validBooleanExpr = [
-    ['%FOO > 5', {}],
-    ['5 > %FOO', {}],
-    ['%FOO >= 5', {}],
-    ['%FOO < 5', {}],
-    ['%FOO <= 5', {}],
-    ['%FOO == 5', {}],
-    ['%FOO != 5', {}],
-    ['(%FOO > 5)', {}],
-    ['%FOO == "bar"', {}],
-    ['%FOO != "bar"', {}],
-    ['%FOO', {}],
-    ['true', {}],
-    ['false', {}],
-    ['true and false', {}],
-    ['true or false', {}],
-    ['%FOO == 3 or %FOO == 2', {}],
-    ['%FOO == 3 and %FOO == 2', {}],
-    ['%FOO == 3 and %BAR == 2', {}],
-    ['%FOO and (%BAR or %BAZ)', {}],
-    ['(%FOO == 1) and ((%BAR == 2) or (%BAZ == 3))', {}],
-    ['(%FOO == 1) and ((%BAR == 2) or (%BAZ == 3)) == false', {}],
-    ['%FOO != false', {}],
-    ['false == %FOO', {}],
-    ['%FOO == %BAR + 5', {}],
-    ['%BAR + 5 == %FOO', {}]
+  const validExpressions = [
+    ['%FOO > 5', { left: { name: 'FOO' }, operator: '>', right: 5 }],
+    ['5 > %FOO', { left: 5, operator: '>', right: { name: 'FOO' } }],
+    ['%FOO >= 5.3', { left: { name: 'FOO' }, operator: '>=', right: 5.3 }],
+    ['%FOO < 5', { left: { name: 'FOO' }, operator: '<', right: 5 }],
+    ['%FOO <= 5', { left: { name: 'FOO' }, operator: '<=', right: 5 }],
+    ['%FOO == 5', { left: { name: 'FOO' }, operator: '==', right: 5 }],
+    ['%FOO != 5', { left: { name: 'FOO' }, operator: '!=', right: 5 }],
+    ['%FOO == "bar"', { left: { name: 'FOO' }, operator: '==', right: 'bar' }],
+    ['%FOO != "bar"', { left: { name: 'FOO' }, operator: '!=', right: 'bar' }],
+    ['%FOO', { name: 'FOO' }],
+    ['true', true],
+    ['false', false],
+    ['true && false', { left: true, operator: '&&', right: false }],
+    ['true || false', { left: true, operator: '||', right: false }],
+    [
+      '%FOO == 3 || %FOO == 2',
+      {
+        left: {
+          name: 'FOO'
+        },
+        operator: '==',
+        right: {
+          left: 3,
+          operator: '||',
+          right: {
+            left: {
+              name: 'FOO'
+            },
+            operator: '==',
+            right: 2
+          }
+        }
+      }
+    ],
+    [
+      '%FOO == 3 && %FOO == 2',
+      {
+        left: {
+          name: 'FOO'
+        },
+        operator: '==',
+        right: {
+          left: 3,
+          operator: '&&',
+          right: {
+            left: {
+              name: 'FOO'
+            },
+            operator: '==',
+            right: 2
+          }
+        }
+      }
+    ],
+    [
+      '%FOO == 3 && %BAR == 2',
+      {
+        left: {
+          name: 'FOO'
+        },
+        operator: '==',
+        right: {
+          left: 3,
+          operator: '&&',
+          right: {
+            left: {
+              name: 'BAR'
+            },
+            operator: '==',
+            right: 2
+          }
+        }
+      }
+    ],
+    // ['%FOO && (%BAR || %BAZ)', {}],
+    // ['(%FOO > 5)', {}],
+    // ['(%FOO == 1) && ((%BAR == 2) || (%BAZ == 3))', {}],
+    // ['(%FOO == 1) && ((%BAR == 2) || (%BAZ == 3)) == false', {}],
+    [
+      '%FOO != false',
+      {
+        left: {
+          name: 'FOO'
+        },
+        operator: '!=',
+        right: false
+      }
+    ],
+    [
+      'false == %FOO',
+      {
+        left: false,
+        operator: '==',
+        right: {
+          name: 'FOO'
+        }
+      }
+    ],
+    [
+      '%FOO == %BAR + 5',
+      {
+        left: {
+          name: 'FOO'
+        },
+        operator: '==',
+        right: {
+          left: {
+            name: 'BAR'
+          },
+          operator: '+',
+          right: 5
+        }
+      }
+    ],
+    [
+      '%BAR + 5 == %FOO',
+      {
+        left: {
+          name: 'BAR'
+        },
+        operator: '+',
+        right: {
+          left: 5,
+          operator: '==',
+          right: {
+            name: 'FOO'
+          }
+        }
+      }
+    ]
+  ]
+
+  const validConditionExpr = [
+    [
+      '%FOO == 3 (weight: 50)',
+      {
+        expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        options: { weight: 50 }
+      }
+    ],
+    [
+      '%FOO == 3',
+      {
+        expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        options: {}
+      }
+    ],
+    [
+      '%FOO == 3 ()',
+      {
+        expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        options: {}
+      }
+    ]
   ]
 
   const validConditionVal = [
@@ -200,6 +330,22 @@ describe('condition', function() {
   it.skip('should parse valid condition rels', function() {
     for (const [input, expected] of validConditionRels) {
       const { status, value } = ConditionRel.parse(input)
+      assert.ok(status)
+      assert.deepEqual(value, expected)
+    }
+  })
+
+  it('should parse valid expressions', function() {
+    for (const [input, expected] of validExpressions) {
+      const { status, value } = Expression.parse(input)
+      assert.ok(status)
+      assert.deepEqual(value, expected)
+    }
+  })
+
+  it('should parse valid condition expressions', function() {
+    for (const [input, expected] of validConditionExpr) {
+      const { status, value } = ConditionExpr.parse(input)
       assert.ok(status)
       assert.deepEqual(value, expected)
     }
