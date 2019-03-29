@@ -88,13 +88,13 @@ describe('condition', function() {
       }
     ],
     [
-      '%S - speaks - %LANG (behaviour= optional, weight = 20)',
+      '%S - speaks - %LANG (behaviour: optional, weight: 20)',
       {
         type: 'rel',
         subject: { name: 'S' },
         rel: 'speaks',
         object: { name: 'LANG' },
-        options: { weight: 20 }
+        options: { weight: 20, behaviour: 'optional' }
       }
     ],
     [
@@ -317,17 +317,43 @@ describe('condition', function() {
   ]
 
   const validConditionVal = [
-    ['%FOO = 1', {assignment: { name: 'FOO' }, expression: 1, options: {}}],
+    ['%FOO = 1', { assignment: { name: 'FOO' }, expression: 1, options: {} }],
     ['%FOO = 0', { assignment: { name: 'FOO' }, expression: 0, options: {} }],
-    ['%FOO = true', { assignment: { name: 'FOO' }, expression: true, options: {} }],
-    ['%FOO = false', { assignment: { name: 'FOO' }, expression: false, options: {} }],
-    ['%FOO = 1.1', { assignment: { name: 'FOO' }, expression: 1.1, options: {} }],
-    ['%FOO = "bar"', { assignment: { name: 'FOO' }, expression: 'bar', options: {} }],
-    ['%FOO = %BAR == 5', { assignment: { name: 'FOO' }, expression: {left: {name: 'BAR'},operator: '==', right: 5}, options: {} }],
-    ['%FOO = %BAR * 6', { assignment: { name: 'FOO' }, expression: {left: {name: 'BAR'},operator: '*', right: 6}, options: {} }]
+    [
+      '%FOO = true',
+      { assignment: { name: 'FOO' }, expression: true, options: {} }
+    ],
+    [
+      '%FOO = false',
+      { assignment: { name: 'FOO' }, expression: false, options: {} }
+    ],
+    [
+      '%FOO = 1.1',
+      { assignment: { name: 'FOO' }, expression: 1.1, options: {} }
+    ],
+    [
+      '%FOO = "bar"',
+      { assignment: { name: 'FOO' }, expression: 'bar', options: {} }
+    ],
+    [
+      '%FOO = %BAR == 5',
+      {
+        assignment: { name: 'FOO' },
+        expression: { left: { name: 'BAR' }, operator: '==', right: 5 },
+        options: {}
+      }
+    ],
+    [
+      '%FOO = %BAR * 6',
+      {
+        assignment: { name: 'FOO' },
+        expression: { left: { name: 'BAR' }, operator: '*', right: 6 },
+        options: {}
+      }
+    ]
   ]
 
-  it.skip('should parse valid condition rels', function() {
+  it('should parse valid condition rels', function() {
     for (const [input, expected] of validConditionRels) {
       const { status, value } = ConditionRel.parse(input)
       assert.ok(status)
@@ -359,7 +385,7 @@ describe('condition', function() {
     }
   })
 
-  it.skip('should parse valid conditions', function () {
+  it.skip('should parse valid conditions', function() {
     const validConditions = [
       ...validConditionRels,
       ...validConditionExpr,
