@@ -153,9 +153,17 @@ describe('transform', function() {
     }
   })
 
-  it.skip('should transform rules', function() {
+  it('should transform rules', function() {
     const inputs = [
-      ['speaks {}', '<relinst type=speaks" cf="100">\n</relinst>']
+      ['speaks {}', '\t<relinst type="speaks" cf="100">\n\n\t</relinst>'],
+      [
+        'speaks - "English" {}',
+        '\t<relinst type="speaks" object="English" cf="100">\n\n\t</relinst>'
+      ],
+      [
+        '"Dave" - speaks - "English" {}',
+        '\t<relinst type="speaks" subject="Dave" object="English" cf="100">\n\n\t</relinst>'
+      ]
     ]
 
     for (const [input, expected] of inputs) {
