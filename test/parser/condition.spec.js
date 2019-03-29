@@ -385,7 +385,7 @@ describe('condition', function() {
     }
   })
 
-  it.skip('should parse valid conditions', function() {
+  it('should parse valid conditions', function() {
     const validConditions = [
       ...validConditionRels,
       ...validConditionExpr,
