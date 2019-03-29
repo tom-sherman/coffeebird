@@ -83,21 +83,36 @@ function transformFact(fact) {
 }
 
 function transformRule(rule) {
-  const {
+  let {
     subject,
     rel,
     object,
     conditions,
-    options: { cf = 100, minimumRuleCertainty, alt } = {}
+    options: { cf = 100, minimumRuleCertainty, alt, behaviour } = {}
   } = rule
+
+  if (behaviour) {
+    behaviour = transformRuleBehaviour(behaviour)
+  }
+
   return `\t<relinst ${createAttrs({
     type: rel,
     subject,
     object,
     cf,
     minimumRuleCertainty,
-    alt
+    alt,
+    behaviour
   })}>\n${conditions.map(transformCondition).join('\n')}\n\t</relinst>`
+}
+
+function transformRuleBehaviour (behaviour) {
+  const behaviourMap = {
+    topDown: 'top-down',
+    topDownStrict: 'top-down-strict'
+  }
+
+  return behaviourMap[behaviour]
 }
 
 function transformCondition(condition) {

@@ -30,7 +30,7 @@ speaks (cf: 50) {
   %COUNTRY - has national language - %O
 }
 
-speaks (cf: 100) {
+speaks (cf: 100, behaviour: topDownStrict) {
   %S - lives in - %COUNTRY;
   %COUNTRY == "Ireland";
   %O = "Irish";
