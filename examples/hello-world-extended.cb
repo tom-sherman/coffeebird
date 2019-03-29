@@ -1,8 +1,5 @@
-const assert = require('assert')
-const { transpile } = require('../src/coffeebird')
+// The purpose of this example is to show all of the features of CoffeeBird.
 
-it('transform', function() {
-  const input = `
 concept Person (type: string)
 concept Country
 concept Language (type: string)
@@ -35,9 +32,3 @@ speaks (cf: 100) {
   %COUNTRY == "Ireland";
   %O = "Irish";
 }
-`
-
-  const transformed = transpile(input)
-
-  assert.ok(transformed)
-})
