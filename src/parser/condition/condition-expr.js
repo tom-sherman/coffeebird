@@ -26,7 +26,7 @@ const Expression = P.seqObj(
 const ConditionExpr = P.seqObj(
   ['expression', Expression.trim(_)],
   ['options', ConditionDictionary.fallback({})]
-)
+).map(result => ((result.type = 'expr'), result))
 
 module.exports = {
   ConditionExpr,

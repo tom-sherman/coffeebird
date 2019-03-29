@@ -297,6 +297,7 @@ describe('condition', function() {
       '%FOO == 3 (weight: 50)',
       {
         expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        type: 'expr',
         options: { weight: 50 }
       }
     ],
@@ -304,6 +305,7 @@ describe('condition', function() {
       '%FOO == 3',
       {
         expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        type: 'expr',
         options: {}
       }
     ],
@@ -311,35 +313,58 @@ describe('condition', function() {
       '%FOO == 3 ()',
       {
         expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        type: 'expr',
         options: {}
       }
     ]
   ]
 
   const validConditionVal = [
-    ['%FOO = 1', { assignment: { name: 'FOO' }, expression: 1, options: {} }],
-    ['%FOO = 0', { assignment: { name: 'FOO' }, expression: 0, options: {} }],
+    [
+      '%FOO = 1',
+      { assignment: { name: 'FOO' }, expression: 1, type: 'val', options: {} }
+    ],
+    [
+      '%FOO = 0',
+      { assignment: { name: 'FOO' }, expression: 0, type: 'val', options: {} }
+    ],
     [
       '%FOO = true',
-      { assignment: { name: 'FOO' }, expression: true, options: {} }
+      {
+        assignment: { name: 'FOO' },
+        expression: true,
+        type: 'val',
+        options: {}
+      }
     ],
     [
       '%FOO = false',
-      { assignment: { name: 'FOO' }, expression: false, options: {} }
+      {
+        assignment: { name: 'FOO' },
+        expression: false,
+        type: 'val',
+        options: {}
+      }
     ],
     [
       '%FOO = 1.1',
-      { assignment: { name: 'FOO' }, expression: 1.1, options: {} }
+      { assignment: { name: 'FOO' }, expression: 1.1, type: 'val', options: {} }
     ],
     [
       '%FOO = "bar"',
-      { assignment: { name: 'FOO' }, expression: 'bar', options: {} }
+      {
+        assignment: { name: 'FOO' },
+        expression: 'bar',
+        type: 'val',
+        options: {}
+      }
     ],
     [
       '%FOO = %BAR == 5',
       {
         assignment: { name: 'FOO' },
         expression: { left: { name: 'BAR' }, operator: '==', right: 5 },
+        type: 'val',
         options: {}
       }
     ],
@@ -348,6 +373,7 @@ describe('condition', function() {
       {
         assignment: { name: 'FOO' },
         expression: { left: { name: 'BAR' }, operator: '*', right: 6 },
+        type: 'val',
         options: {}
       }
     ]
