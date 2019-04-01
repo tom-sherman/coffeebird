@@ -7,10 +7,12 @@ const { Expression } = require('./condition-expr')
 const FunctionArgumentSeparator = P.string(',')
 
 function FunctionCall(name, ...args) {
-  return P.lazy(() => P.seqObj(
-    ['function', P.string(name).trim(_)],
-    ['arguments', FunctionArguments(...args)]
-  ))
+  return P.lazy(() =>
+    P.seqObj(
+      ['function', P.string(name).trim(_)],
+      ['arguments', FunctionArguments(...args)]
+    )
+  )
 }
 
 // TODO: Optional arguments
@@ -40,12 +42,7 @@ const rblangFunctions = () => ({
     RelName,
     InstanceOrWildcard
   ),
-  sumObjects: FunctionCall(
-    'sumObjects',
-    InstanceOrWildcard,
-    RelName,
-    Wildcard
-  ),
+  sumObjects: FunctionCall('sumObjects', InstanceOrWildcard, RelName, Wildcard)
   // round: FunctionCall('round', Expression)
 })
 

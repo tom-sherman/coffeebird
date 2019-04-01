@@ -17,11 +17,13 @@ const Operator = Enum(
   '||'
 )
 
+const Basic = P.alt(Num, Str, Bool, Variable)
+
 const Expression = P.seqObj(
-  ['left', P.alt(Num, Str, Bool, Variable).trim(_)],
+  ['left', Basic.trim(_)],
   ['operator', Operator.trim(_)],
-  ['right', P.lazy(() => P.alt(Expression, Num, Str, Bool, Variable))]
-).or(P.alt(Num, Str, Bool, Variable))
+  ['right', P.lazy(() => P.alt(Expression, Basic))]
+).or(Basic)
 
 const ConditionExpr = P.seqObj(
   ['expression', Expression.trim(_)],
