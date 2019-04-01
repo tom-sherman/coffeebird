@@ -205,6 +205,13 @@ function transformOperator(operator) {
 }
 
 function transformValue(value) {
+  if (typeof value === 'string') {
+    // We only need to worry about escaping single quotes currently as Rainbird cannot handle escaped backslashes.
+    value = value.replace("'", "\\'")
+    // Transform escaped quotes to literal quotes.
+    value = value.replace('\\"', '"')
+    return `'${value}'`
+  }
   if (value.name) {
     return '%' + value.name
   }

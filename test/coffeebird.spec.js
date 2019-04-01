@@ -32,7 +32,7 @@ speaks (cf: 50) {
 
 speaks (cf: 100, behaviour: topDownStrict) {
   %S - lives in - %COUNTRY;
-  %COUNTRY == "Ireland";
+  %COUNTRY == "\\"Ireland's\\"";
   %O = "Irish";
 }
 `
