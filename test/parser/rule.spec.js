@@ -35,10 +35,10 @@ describe('rule :: dictionary', function() {
 })
 
 describe('rule :: triple', function() {
-  it('should parse valid subjects')
-  it('should not parse invalid subjects')
-  it('should parse valid objects')
-  it('should not parse invalid objects')
+  it.todo('should parse valid subjects')
+  it.todo('should not parse invalid subjects')
+  it.todo('should parse valid objects')
+  it.todo('should not parse invalid objects')
 })
 
 describe('rule', function() {
