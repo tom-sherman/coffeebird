@@ -1,9 +1,8 @@
 const P = require('parsimmon')
-const assert = require('assert')
 const { FunctionArguments } = require('../../src/parser/condition/function')
 
-describe('functions', function() {
-  it('should parse function arguments with single argument', function() {
+describe('functions', () => {
+  it('should parse function arguments with single argument', () => {
     const oneArgument = FunctionArguments(P.string('foo'))
 
     const validInputs = ['(foo)', '( foo )']
@@ -11,13 +10,13 @@ describe('functions', function() {
     const expected = ['foo']
 
     for (const input of validInputs) {
-      const parsed = oneArgument.parse(input)
-      assert.ok(parsed.status)
-      assert.deepEqual(parsed.value, expected)
+      const { status, value } = oneArgument.parse(input)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should parse function arguments with multiple arguments', function() {
+  it('should parse function arguments with multiple arguments', () => {
     const twoArguments = FunctionArguments(P.string('foo'), P.string('bar'))
     const threeArguments = FunctionArguments(
       P.string('foo'),
@@ -35,9 +34,9 @@ describe('functions', function() {
     const expectedTwoArguments = ['foo', 'bar']
 
     for (const input of twoArgumentInputs) {
-      const parsed = twoArguments.parse(input)
-      assert.ok(parsed.status)
-      assert.deepEqual(parsed.value, expectedTwoArguments)
+      const { status, value } = twoArguments.parse(input)
+      expect(status).toBe(true)
+      expect(value).toEqual(expectedTwoArguments)
     }
 
     const threeArgumentInputs = [
@@ -51,9 +50,9 @@ describe('functions', function() {
     const expectedThreeArguments = ['foo', 'bar', 'baz']
 
     for (const input of threeArgumentInputs) {
-      const parsed = threeArguments.parse(input)
-      assert.ok(parsed.status)
-      assert.deepEqual(parsed.value, expectedThreeArguments)
+      const { status, value } = threeArguments.parse(input)
+      expect(status).toBe(true)
+      expect(value).toEqual(expectedThreeArguments)
     }
   })
 })

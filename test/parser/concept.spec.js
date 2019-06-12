@@ -1,8 +1,7 @@
-const assert = require('assert')
 const { Concept, ConceptDictionary } = require('../../src/parser/concept')
 
-describe('concept :: dictionary', function() {
-  it('should parse valid dictionaries', function() {
+describe('concept :: dictionary', () => {
+  it('should parse valid dictionaries', () => {
     const validDictionaries = [
       ['()', {}],
       ['(type:string)', { type: 'string' }],
@@ -25,12 +24,12 @@ describe('concept :: dictionary', function() {
 
     for (const [input, expected] of validDictionaries) {
       const { status, value } = ConceptDictionary.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid dictionaries', function() {
+  it('should not parse invalid dictionaries', () => {
     const invalidDictionaries = [
       '(:)',
       '(string)',
@@ -47,13 +46,13 @@ describe('concept :: dictionary', function() {
     ]
 
     for (const input of invalidDictionaries) {
-      assert.ok(!ConceptDictionary.parse(input).status)
+      expect(ConceptDictionary.parse(input).status).toBe(false)
     }
   })
 })
 
-describe('concept', function() {
-  it('should parse valid concepts', function() {
+describe('concept', () => {
+  it('should parse valid concepts', () => {
     const validConcepts = [
       ['concept Language', { name: 'Language', options: {} }],
       ['concept Language ()', { name: 'Language', options: {} }],
@@ -74,12 +73,12 @@ describe('concept', function() {
 
     for (const [input, expected] of validConcepts) {
       const { status, value } = Concept.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid concepts', function() {
+  it('should not parse invalid concepts', () => {
     const invalidConcepts = [
       '',
       '()',
@@ -92,7 +91,7 @@ describe('concept', function() {
     ]
 
     for (const input of invalidConcepts) {
-      assert.ok(!Concept.parse(input).status)
+      expect(Concept.parse(input).status).toBe(false)
     }
   })
 })

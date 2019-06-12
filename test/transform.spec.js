@@ -1,4 +1,3 @@
-const assert = require('assert')
 const {
   transformConcept,
   transformRelationship,
@@ -16,8 +15,8 @@ const {
   Condition
 } = require('../src/parser')
 
-describe('transform', function() {
-  it('should transform concepts', function() {
+describe('transform', () => {
+  it('should transform concepts', () => {
     const inputs = [
       ['concept Language', '\t<concept name="Language" type="string" />'],
       ['concept Language ()', '\t<concept name="Language" type="string" />'],
@@ -35,12 +34,12 @@ describe('transform', function() {
 
     for (const [input, expected] of inputs) {
       const { status, value } = Concept.map(transformConcept).parse(input)
-      assert.ok(status)
-      assert.equal(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should transform relationships', function() {
+  it('should transform relationships', () => {
     const inputs = [
       [
         'rel Person - speaks - Language',
@@ -62,12 +61,12 @@ describe('transform', function() {
 
     for (const [input, expected] of inputs) {
       const { status, value } = Rel.map(transformRelationship).parse(input)
-      assert.ok(status)
-      assert.equal(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should transform relationships with question wording', function() {
+  it('should transform relationships with question wording', () => {
     const inputs = [
       [
         'rel Person - speaks - Language (firstForm: "Does %S live in %O?")',
@@ -86,20 +85,20 @@ describe('transform', function() {
 
     for (const [input, expected] of inputs) {
       const { status, value } = Rel.map(transformRelationship).parse(input)
-      assert.ok(status)
-      assert.equal(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should transform instances', function() {
+  it('should transform instances', () => {
     const { status, value } = Instance.map(transformInstance).parse(
       'Person("Dave")'
     )
-    assert.ok(status)
-    assert.equal(value, '\t<concinst name="Dave" type="Person" />')
+    expect(status).toBe(true)
+    expect(value).toBe('\t<concinst name="Dave" type="Person" />')
   })
 
-  it('should transform facts', function() {
+  it('should transform facts', () => {
     const inputs = [
       [
         '"Dave" - speaks - "English"',
@@ -113,12 +112,12 @@ describe('transform', function() {
 
     for (const [input, expected] of inputs) {
       const { status, value } = Fact.map(transformFact).parse(input)
-      assert.ok(status)
-      assert.equal(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should transform conditions', function() {
+  it('should transform conditions', () => {
     const inputs = [
       [
         '%S - speaks - %LANG',
@@ -148,12 +147,12 @@ describe('transform', function() {
 
     for (const [input, expected] of inputs) {
       const { status, value } = Condition.map(transformCondition).parse(input)
-      assert.ok(status)
-      assert.equal(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should transform rules', function() {
+  it('should transform rules', () => {
     const inputs = [
       ['speaks {}', '\t<relinst type="speaks" cf="100">\n\n\t</relinst>'],
       [
@@ -168,8 +167,8 @@ describe('transform', function() {
 
     for (const [input, expected] of inputs) {
       const { status, value } = Rule.map(transformRule).parse(input)
-      assert.ok(status)
-      assert.equal(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 })

@@ -1,4 +1,3 @@
-const assert = require('assert')
 const {
   Condition,
   ConditionRel,
@@ -9,8 +8,8 @@ const {
 } = require('../../src/parser/condition')
 const { Expression } = require('../../src/parser/condition/condition-expr')
 
-describe('condition :: dictionary', function() {
-  it('should parse valid dictionaries', function() {
+describe('condition :: dictionary', () => {
+  it('should parse valid dictionaries', () => {
     const validDictionaries = [
       ['()', {}],
       [
@@ -28,12 +27,12 @@ describe('condition :: dictionary', function() {
 
     for (const [input, expected] of validDictionaries) {
       const { status, value } = ConditionDictionary.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid dictionaries', function() {
+  it('should not parse invalid dictionaries', () => {
     const invalidDictionaries = [
       '(alt:)',
       '(alt)',
@@ -47,13 +46,13 @@ describe('condition :: dictionary', function() {
     ]
 
     for (const input of invalidDictionaries) {
-      assert.ok(!ConditionDictionary.parse(input).status)
+      expect(ConditionDictionary.parse(input).status).toBe(false)
     }
   })
 })
 
-describe('condition :: subject/object', function() {
-  it('should parse valid subject/object', function() {
+describe('condition :: subject/object', () => {
+  it('should parse valid subject/object', () => {
     const validSubjectsObjects = [
       ['0', 0],
       ['1', 1],
@@ -69,13 +68,13 @@ describe('condition :: subject/object', function() {
 
     for (const [input, expected] of validSubjectsObjects) {
       const { status, value } = ConditionSubjectObject.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 })
 
-describe('condition', function() {
+describe('condition', () => {
   const validConditionRels = [
     [
       '%S - speaks - %LANG',
@@ -379,39 +378,39 @@ describe('condition', function() {
     ]
   ]
 
-  it('should parse valid condition rels', function() {
+  it('should parse valid condition rels', () => {
     for (const [input, expected] of validConditionRels) {
       const { status, value } = ConditionRel.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should parse valid expressions', function() {
+  it('should parse valid expressions', () => {
     for (const [input, expected] of validExpressions) {
       const { status, value } = Expression.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should parse valid condition expressions', function() {
+  it('should parse valid condition expressions', () => {
     for (const [input, expected] of validConditionExpr) {
       const { status, value } = ConditionExpr.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should parse valid condition values', function() {
+  it('should parse valid condition values', () => {
     for (const [input, expected] of validConditionVal) {
       const { status, value } = ConditionVal.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should parse valid conditions', function() {
+  it('should parse valid conditions', () => {
     const validConditions = [
       ...validConditionRels,
       ...validConditionExpr,
@@ -420,8 +419,8 @@ describe('condition', function() {
 
     for (const [input, expected] of validConditions) {
       const { status, value } = Condition.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 })

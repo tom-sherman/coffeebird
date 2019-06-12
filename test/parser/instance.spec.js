@@ -1,8 +1,7 @@
-const assert = require('assert')
 const { Instance } = require('../../src/parser/instance')
 
-describe('instance', function() {
-  it('should parse valid instances', function() {
+describe('instance', () => {
+  it('should parse valid instances', () => {
     const validInstances = [
       ['Person("Dave")', { name: 'Dave', type: 'Person' }],
       ['Person ("Dave")', { name: 'Dave', type: 'Person' }],
@@ -13,16 +12,16 @@ describe('instance', function() {
 
     for (const [input, expected] of validInstances) {
       const { status, value } = Instance.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid instances', function() {
+  it('should not parse invalid instances', () => {
     const invalidInstances = ['Person', 'Person()', 'Person("Dave", more)']
 
     for (const input of invalidInstances) {
-      assert.ok(!Instance.parse(input).status)
+      expect(Instance.parse(input).status).toBe(false)
     }
   })
 })

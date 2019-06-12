@@ -1,4 +1,3 @@
-const assert = require('assert')
 const {
   Num,
   Int,
@@ -8,7 +7,7 @@ const {
   Variable
 } = require('../../src/parser/shared')
 
-describe('shared :: Literals', function() {
+describe('shared :: Literals', () => {
   const invalidNumbers = [
     '',
     ' ',
@@ -33,102 +32,85 @@ describe('shared :: Literals', function() {
     ['00123.100200', 123.1002]
   ]
 
-  describe('Num', function() {
-    it('should parse valid numbers', function() {
+  describe('Num', () => {
+    it('should parse valid numbers', () => {
       for (const [input, expected] of validNumbers) {
-        assert.equal(Num.parse(input).value, expected)
+        expect(Num.parse(input).value).toBeCloseTo(expected, 10)
       }
     })
 
-    it('should not parse invalid numbers', function() {
+    it('should not parse invalid numbers', () => {
       for (const input of invalidNumbers) {
-        assert.equal(
-          Num.parse(input).status,
-          false,
-          `${JSON.stringify(
-            input
-          )} is not a valid number but has been parsed as one`
-        )
+        expect(Num.parse(input).status).toBe(false)
       }
     })
   })
 
-  describe('Int', function() {
-    it('should parse integers', function() {
+  describe('Int', () => {
+    it('should parse integers', () => {
       for (const [input, expected] of validInts) {
-        assert.equal(Int.parse(input).value, expected)
+        expect(Int.parse(input).value).toBe(expected)
       }
     })
 
-    it('should not parse invalid numbers', function() {
+    it('should not parse invalid numbers', () => {
       for (const input of invalidNumbers) {
-        assert.equal(
-          Int.parse(input).status,
-          false,
-          `${JSON.stringify(
-            input
-          )} is not a valid number but has been parsed as one`
-        )
+        expect(Int.parse(input).status).toBe(false)
       }
     })
 
-    it('should not parse decimals and floats', function() {
+    it('should not parse decimals and floats', () => {
       const numbersNotInt = ['1.0', '1.1', '25.555555']
 
       for (const input of numbersNotInt) {
-        assert.equal(
-          Int.parse(input).status,
-          false,
-          `${JSON.stringify(
-            input
-          )} is not an integer but has been parsed as one`
-        )
+        expect(Int.parse(input).status).toBe(false)
       }
     })
   })
 
-  describe('Str', function() {
-    it('should parse valid strings', function() {
-      const validStrings = ['""', '"foo"', '"   "']
+  describe('Str', () => {
+    it('should parse valid strings', () => {
+      const validStrings = [['""', ''], ['"foo"', 'foo'], ['"   "', '   ']]
 
-      for (const string of validStrings) {
-        assert.ok(Str.parse(string).status)
+      for (const [input, expected] of validStrings) {
+        const { status, value } = Str.parse(input)
+        expect(status).toBe(true)
+        expect(value).toBe(expected)
       }
     })
 
-    it('should not parse invalid strings', function() {
+    it('should not parse invalid strings', () => {
       const invalidStrings = ['', '0', 'null', '"no close', '"', 'no open"']
 
       for (const string of invalidStrings) {
-        assert.ok(!Str.parse(string).status)
+        expect(Str.parse(string).status).toBe(false)
       }
     })
   })
 
-  describe('Bool', function() {
-    it('should parse valid booleans', function() {
+  describe('Bool', () => {
+    it('should parse valid booleans', () => {
       const trueParsed = Bool.parse('true')
+      expect(trueParsed.status).toBe(true)
+      expect(trueParsed.value).toBe(true)
+
       const falseParsed = Bool.parse('false')
-
-      assert.ok(trueParsed.status)
-      assert.equal(trueParsed.value, true)
-
-      assert.ok(falseParsed.status)
-      assert.equal(falseParsed.value, false)
+      expect(falseParsed.status).toBe(true)
+      expect(falseParsed.value).toBe(false)
     })
 
-    it('should not parse non booleans', function() {
+    it('should not parse non booleans', () => {
       const nonBools = ['', '0', '1', 'maybe', '()', '!!', ' ']
 
       for (const input of nonBools) {
-        assert.ok(!Bool.parse(input).status)
+        expect(Bool.parse(input).status).toBe(false)
       }
     })
   })
 })
 
-describe('shared :: Comments', function() {
-  it('should parse valid comments', function() {
+describe('shared :: Comments', () => {
+  it('should parse valid comments', () => {
     const validComments = [
       ['//', ''],
       ['//foo', 'foo'],
@@ -137,12 +119,13 @@ describe('shared :: Comments', function() {
     ]
 
     for (const [input, expected] of validComments) {
-      assert.ok(Comment.parse(input).status)
-      assert.equal(Comment.parse(input).value, expected)
+      const { status, value } = Comment.parse(input)
+      expect(status).toBe(true)
+      expect(value).toBe(expected)
     }
   })
 
-  it('should not parse invalid comments', function() {
+  it('should not parse invalid comments', () => {
     const invalidComments = [
       '/ hello',
       'hello // test',
@@ -154,13 +137,13 @@ describe('shared :: Comments', function() {
     ]
 
     for (const input of invalidComments) {
-      assert.ok(!Comment.parse(input).status)
+      expect(Comment.parse(input).status).toBe(false)
     }
   })
 })
 
-describe('shared :: Variables', function() {
-  it('should parse valid variables', function() {
+describe('shared :: Variables', () => {
+  it('should parse valid variables', () => {
     const validVars = [
       ['%FOO', { name: 'FOO' }],
       ['%FOO_BAR', { name: 'FOO_BAR' }],
@@ -169,12 +152,12 @@ describe('shared :: Variables', function() {
 
     for (const [input, expected] of validVars) {
       const { status, value } = Variable.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid variables', function() {
+  it('should not parse invalid variables', () => {
     const invalidVars = [
       '',
       ' ',
@@ -191,7 +174,7 @@ describe('shared :: Variables', function() {
     ]
 
     for (const input of invalidVars) {
-      assert.ok(!Variable.parse(input).status)
+      expect(Variable.parse(input).status).toBe(false)
     }
   })
 })
