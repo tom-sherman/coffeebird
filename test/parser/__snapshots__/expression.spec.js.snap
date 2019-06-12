@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`expression should parse arithmetic expressions 1`] = `
+Array [
+  "Add",
+  1,
+  1,
+]
+`;
+
+exports[`expression should parse arithmetic expressions 2`] = `
+Array [
+  "Multiply",
+  1,
+  1,
+]
+`;
+
+exports[`expression should parse arithmetic expressions 3`] = `
+Array [
+  "Subtract",
+  1,
+  1,
+]
+`;
+
+exports[`expression should parse arithmetic expressions 4`] = `
+Array [
+  "Divide",
+  1,
+  1,
+]
+`;
+
+exports[`expression should parse arithmetic expressions 5`] = `
+Array [
+  "Modulus",
+  1,
+  1,
+]
+`;
+
+exports[`expression should parse arithmetic expressions 6`] = `
+Array [
+  "Add",
+  2,
+  Array [
+    "Multiply",
+    3,
+    4,
+  ],
+]
+`;
+
+exports[`expression should parse arithmetic expressions 7`] = `
+Array [
+  "Multiply",
+  Array [
+    "Add",
+    2,
+    3,
+  ],
+  4,
+]
+`;
+
+exports[`expression should parse boolean expressions 1`] = `
+Array [
+  "And",
+  true,
+  false,
+]
+`;
+
+exports[`expression should parse boolean expressions 2`] = `
+Array [
+  "Or",
+  true,
+  false,
+]
+`;
+
+exports[`expression should parse boolean expressions 3`] = `
+Array [
+  "Or",
+  true,
+  Array [
+    "And",
+    false,
+    false,
+  ],
+]
+`;
+
+exports[`expression should parse boolean expressions 4`] = `
+Array [
+  "And",
+  Array [
+    "Or",
+    true,
+    false,
+  ],
+  false,
+]
+`;
+
+exports[`expression should parse comparative expressions 1`] = `
+Array [
+  "GreaterThan",
+  4,
+  3,
+]
+`;
+
+exports[`expression should parse comparative expressions 2`] = `
+Array [
+  "LessThan",
+  2,
+  1,
+]
+`;
+
+exports[`expression should parse comparative expressions 3`] = `
+Array [
+  "GreaterThanOrEqual",
+  1,
+  2,
+]
+`;
+
+exports[`expression should parse comparative expressions 4`] = `
+Array [
+  "LessThanOrEqual",
+  1,
+  2,
+]
+`;
+
+exports[`expression should parse comparative expressions 5`] = `
+Array [
+  "Equal",
+  "foo",
+  "foo",
+]
+`;
+
+exports[`expression should parse comparative expressions 6`] = `
+Array [
+  "NotEqual",
+  "foo",
+  "bar",
+]
+`;
+
+exports[`expression should parse mixed expressions 1`] = `
+Array [
+  "Equal",
+  Array [
+    "Multiply",
+    Object {
+      "name": "FOO",
+    },
+    3,
+  ],
+  24,
+]
+`;
+
+exports[`expression should parse mixed expressions 2`] = `
+Array [
+  "Negate",
+  Array [
+    "Subtract",
+    Object {
+      "name": "FOO",
+    },
+    4,
+  ],
+]
+`;
+
+exports[`expression should parse mixed expressions 3`] = `
+Array [
+  "Not",
+  Array [
+    "Subtract",
+    Object {
+      "name": "FOO",
+    },
+    4,
+  ],
+]
+`;
+
+exports[`expression should parse mixed expressions 4`] = `
+Array [
+  "And",
+  Array [
+    "NotEqual",
+    Object {
+      "name": "FOO",
+    },
+    "foo",
+  ],
+  Array [
+    "GreaterThan",
+    Object {
+      "name": "BAR",
+    },
+    2,
+  ],
+]
+`;
+
+exports[`expression should parse prefix operators 1`] = `
+Array [
+  "Not",
+  true,
+]
+`;
+
+exports[`expression should parse prefix operators 2`] = `
+Array [
+  "Not",
+  Object {
+    "name": "BAR",
+  },
+]
+`;
+
+exports[`expression should parse prefix operators 3`] = `
+Array [
+  "Negate",
+  5,
+]
+`;
+
+exports[`expression should parse with variables 1`] = `
+Object {
+  "name": "FOO",
+}
+`;
+
+exports[`expression should parse with variables 2`] = `
+Array [
+  "Add",
+  Object {
+    "name": "FOO",
+  },
+  Object {
+    "name": "BAR",
+  },
+]
+`;
+
+exports[`expression should parse with variables 3`] = `
+Array [
+  "Equal",
+  Object {
+    "name": "FOO",
+  },
+  Object {
+    "name": "BAR",
+  },
+]
+`;
