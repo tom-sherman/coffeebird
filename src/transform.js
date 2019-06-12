@@ -195,10 +195,7 @@ function transformExpression(expr, transformed = '') {
     case 'Equal': {
       const left = transformExpression(operands[0])
       const right = transformExpression(operands[1])
-      // Rainbird doesn't follow the natural order of operations but instead goes left to right (madness, I know!)
-      // Each sub expression is wrapped in () so we can preserve order of operations
-      // Unfortunately this introduces a lot of redundant parens eg. 1 + 2 + 3 => ((1 + 2) + 3)
-      transformed += `(${left} ${transformedOperator} ${right})`
+      transformed += `${left} ${transformedOperator} ${right}`
       break
     }
 
@@ -207,7 +204,10 @@ function transformExpression(expr, transformed = '') {
     }
   }
 
-  return transformed
+  // Rainbird doesn't follow the natural order of operations but instead goes left to right (madness, I know!)
+  // Each sub expression is wrapped in () so we can preserve order of operations
+  // Unfortunately this introduces a lot of redundant parens eg. 1 + 2 + 3 => ((1 + 2) + 3)
+  return `(${transformed})`
 }
 
 function transformOperator(operator) {
