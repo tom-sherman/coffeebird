@@ -170,6 +170,21 @@ function transformConditionVal(condition) {
   })} />`
 }
 
+const INFIX_OPERATOR_MAP = {
+  Add: '+',
+  Subtract: '-',
+  Multiply: '*',
+  Divide: '/',
+  Equal: '=',
+  NotEqual: 'is not equal to',
+  GreaterThanOrEqual: 'gte',
+  LessThanOrEqual: 'lte',
+  GreaterThan: 'gt',
+  LessThan: 'lt',
+  And: 'and',
+  Or: 'or'
+}
+
 function transformExpression(expr, transformed = '') {
   if (!Array.isArray(expr)) {
     transformed += transformValue(expr)
@@ -177,7 +192,6 @@ function transformExpression(expr, transformed = '') {
   }
 
   const [operator, ...operands] = expr
-  const transformedOperator = transformOperator(operator)
 
   switch (operator) {
     case 'Multiply':
@@ -195,7 +209,17 @@ function transformExpression(expr, transformed = '') {
     case 'Equal': {
       const left = transformExpression(operands[0])
       const right = transformExpression(operands[1])
-      transformed += `${left} ${transformedOperator} ${right}`
+      transformed += `${left} ${INFIX_OPERATOR_MAP[operator]} ${right}`
+      break
+    }
+
+    case 'Negate': {
+      transformed += `-${transformExpression(operands[0])}`
+      break
+    }
+
+    case 'Not': {
+      transformed += `${transformExpression(operands[0])} = false`
       break
     }
 
@@ -208,24 +232,6 @@ function transformExpression(expr, transformed = '') {
   // Each sub expression is wrapped in () so we can preserve order of operations
   // Unfortunately this introduces a lot of redundant parens eg. 1 + 2 + 3 => ((1 + 2) + 3)
   return `(${transformed})`
-}
-
-function transformOperator(operator) {
-  const operatorMap = {
-    Add: '+',
-    Subtract: '-',
-    Multiply: '*',
-    Divide: '/',
-    Equal: '=',
-    NotEqual: 'is not equal to',
-    GreaterThanOrEqual: 'gte',
-    LessThanOrEqual: 'lte',
-    GreaterThan: 'gt',
-    LessThan: 'lt',
-    And: 'and',
-    Or: 'or'
-  }
-  return operatorMap[operator]
 }
 
 function transformValue(value) {

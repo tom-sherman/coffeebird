@@ -151,6 +151,14 @@ describe('transform', () => {
       [
         '1 + 2 + 3',
         '\t\t<condition expression="((1 + 2) + 3)" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '-1',
+        '\t\t<condition expression="(-1)" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '!%FOO',
+        '\t\t<condition expression="(%FOO = false)" weight="100" behaviour="mandatory" />'
       ]
     ]
 
