@@ -17,6 +17,13 @@ function FunctionCall(name, ...args) {
 // TODO: Optional arguments
 
 function FunctionArguments(...args) {
+  if (args.length === 0) {
+    return P.string('(')
+      .then(_)
+      .then(P.string(')'))
+      .map(_ => [])
+  }
+
   const lastArg = args.splice(args.length - 1, 1)[0]
   // Our arguments parser must be lazy as an argument can be an expression, not just literal values.
   // This creates a circular reference as an expression can itself contain function call
