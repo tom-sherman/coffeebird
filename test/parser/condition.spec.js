@@ -159,144 +159,11 @@ describe('condition', () => {
     ]
   ]
 
-  const validExpressions = [
-    ['%FOO > 5', { left: { name: 'FOO' }, operator: '>', right: 5 }],
-    ['5 > %FOO', { left: 5, operator: '>', right: { name: 'FOO' } }],
-    ['%FOO >= 5.3', { left: { name: 'FOO' }, operator: '>=', right: 5.3 }],
-    ['%FOO < 5', { left: { name: 'FOO' }, operator: '<', right: 5 }],
-    ['%FOO <= 5', { left: { name: 'FOO' }, operator: '<=', right: 5 }],
-    ['%FOO == 5', { left: { name: 'FOO' }, operator: '==', right: 5 }],
-    ['%FOO != 5', { left: { name: 'FOO' }, operator: '!=', right: 5 }],
-    ['%FOO == "bar"', { left: { name: 'FOO' }, operator: '==', right: 'bar' }],
-    ['%FOO != "bar"', { left: { name: 'FOO' }, operator: '!=', right: 'bar' }],
-    ['%FOO', { name: 'FOO' }],
-    ['true', true],
-    ['false', false],
-    ['true && false', { left: true, operator: '&&', right: false }],
-    ['true || false', { left: true, operator: '||', right: false }],
-    [
-      '%FOO == 3 || %FOO == 2',
-      {
-        left: {
-          name: 'FOO'
-        },
-        operator: '==',
-        right: {
-          left: 3,
-          operator: '||',
-          right: {
-            left: {
-              name: 'FOO'
-            },
-            operator: '==',
-            right: 2
-          }
-        }
-      }
-    ],
-    [
-      '%FOO == 3 && %FOO == 2',
-      {
-        left: {
-          name: 'FOO'
-        },
-        operator: '==',
-        right: {
-          left: 3,
-          operator: '&&',
-          right: {
-            left: {
-              name: 'FOO'
-            },
-            operator: '==',
-            right: 2
-          }
-        }
-      }
-    ],
-    [
-      '%FOO == 3 && %BAR == 2',
-      {
-        left: {
-          name: 'FOO'
-        },
-        operator: '==',
-        right: {
-          left: 3,
-          operator: '&&',
-          right: {
-            left: {
-              name: 'BAR'
-            },
-            operator: '==',
-            right: 2
-          }
-        }
-      }
-    ],
-    // ['%FOO && (%BAR || %BAZ)', {}],
-    // ['(%FOO > 5)', {}],
-    // ['(%FOO == 1) && ((%BAR == 2) || (%BAZ == 3))', {}],
-    // ['(%FOO == 1) && ((%BAR == 2) || (%BAZ == 3)) == false', {}],
-    [
-      '%FOO != false',
-      {
-        left: {
-          name: 'FOO'
-        },
-        operator: '!=',
-        right: false
-      }
-    ],
-    [
-      'false == %FOO',
-      {
-        left: false,
-        operator: '==',
-        right: {
-          name: 'FOO'
-        }
-      }
-    ],
-    [
-      '%FOO == %BAR + 5',
-      {
-        left: {
-          name: 'FOO'
-        },
-        operator: '==',
-        right: {
-          left: {
-            name: 'BAR'
-          },
-          operator: '+',
-          right: 5
-        }
-      }
-    ],
-    [
-      '%BAR + 5 == %FOO',
-      {
-        left: {
-          name: 'BAR'
-        },
-        operator: '+',
-        right: {
-          left: 5,
-          operator: '==',
-          right: {
-            name: 'FOO'
-          }
-        }
-      }
-    ]
-  ]
-
   const validConditionExpr = [
     [
       '%FOO == 3 (weight: 50)',
       {
-        expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        expression: ['Equal', { name: 'FOO' }, 3],
         type: 'expr',
         options: { weight: 50 }
       }
@@ -304,7 +171,7 @@ describe('condition', () => {
     [
       '%FOO == 3',
       {
-        expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        expression: ['Equal', { name: 'FOO' }, 3],
         type: 'expr',
         options: {}
       }
@@ -312,7 +179,31 @@ describe('condition', () => {
     [
       '%FOO == 3 ()',
       {
-        expression: { left: { name: 'FOO' }, operator: '==', right: 3 },
+        expression: ['Equal', { name: 'FOO' }, 3],
+        type: 'expr',
+        options: {}
+      }
+    ],
+    [
+      '(2 + 3) * 4 (weight: 50)',
+      {
+        expression: ['Multiply', ['Add', 2, 3], 4],
+        type: 'expr',
+        options: { weight: 50 }
+      }
+    ],
+    [
+      '((2 + 3) * 4) (weight: 50)',
+      {
+        expression: ['Multiply', ['Add', 2, 3], 4],
+        type: 'expr',
+        options: { weight: 50 }
+      }
+    ],
+    [
+      '((2 + 3) * 4) ()',
+      {
+        expression: ['Multiply', ['Add', 2, 3], 4],
         type: 'expr',
         options: {}
       }
@@ -363,7 +254,7 @@ describe('condition', () => {
       '%FOO = %BAR == 5',
       {
         assignment: { name: 'FOO' },
-        expression: { left: { name: 'BAR' }, operator: '==', right: 5 },
+        expression: ['Equal', { name: 'BAR' }, 5],
         type: 'val',
         options: {}
       }
@@ -372,7 +263,7 @@ describe('condition', () => {
       '%FOO = %BAR * 6',
       {
         assignment: { name: 'FOO' },
-        expression: { left: { name: 'BAR' }, operator: '*', right: 6 },
+        expression: ['Multiply', { name: 'BAR' }, 6],
         type: 'val',
         options: {}
       }
@@ -382,14 +273,6 @@ describe('condition', () => {
   it('should parse valid condition rels', () => {
     for (const [input, expected] of validConditionRels) {
       const { status, value } = ConditionRel.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expected)
-    }
-  })
-
-  it('should parse valid expressions', () => {
-    for (const [input, expected] of validExpressions) {
-      const { status, value } = Expression.parse(input)
       expect(status).toBe(true)
       expect(value).toEqual(expected)
     }

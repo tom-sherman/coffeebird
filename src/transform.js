@@ -171,35 +171,56 @@ function transformConditionVal(condition) {
 }
 
 function transformExpression(expr, transformed = '') {
-  if (expr.left) {
-    transformed += transformValue(expr.left) + ' '
+  if (!Array.isArray(expr)) {
+    transformed += transformValue(expr)
+    return transformed
   }
-  if (expr.operator) {
-    transformed += transformOperator(expr.operator) + ' '
+
+  const [operator, ...operands] = expr
+  const transformedOperator = transformOperator(operator)
+
+  switch (operator) {
+    case 'Multiply':
+    case 'Add':
+    case 'Subtract':
+    case 'Divide':
+    case 'GreaterThan':
+    case 'LessThan':
+    case 'GreaterThanOrEqual':
+    case 'LessThanOrEqual':
+    case 'Equal':
+    case 'NotEqual':
+    case 'And':
+    case 'Or':
+    case 'Equal': {
+      const left = transformExpression(operands[0])
+      const right = transformExpression(operands[1])
+      transformed += `${left} ${transformedOperator} ${right}`
+      break
+    }
+
+    default: {
+      throw new Error(`"${operator}" is not a valid operator.`)
+    }
   }
-  if (expr.right && expr.right.operator) {
-    return transformExpression(expr.right, transformed)
-  }
-  // At this point, either we have reached the end of the expression or the expression was a literal value.
-  transformed += transformValue(expr.right ? expr.right : expr)
 
   return transformed
 }
 
 function transformOperator(operator) {
   const operatorMap = {
-    '+': '+',
-    '-': '-',
-    '*': '*',
-    '/': '/',
-    '==': '=',
-    '!=': 'is not equal to',
-    '>=': 'gte',
-    '<=': 'lte',
-    '>': 'gt',
-    '<': 'lt',
-    '&&': 'and',
-    '||': 'or'
+    And: '+',
+    Subtract: '-',
+    Multiply: '*',
+    Divide: '/',
+    Equal: '=',
+    NotEqual: 'is not equal to',
+    GreaterThanOrEqual: 'gte',
+    LessThanOrEqual: 'lte',
+    GreaterThan: 'gt',
+    LessThan: 'lt',
+    And: 'and',
+    Or: 'or'
   }
   return operatorMap[operator]
 }
