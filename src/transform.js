@@ -185,6 +185,11 @@ const INFIX_OPERATOR_MAP = {
   Or: 'or'
 }
 
+const OPERATOR_FUNCTION_MAP = {
+  Modulus: 'mod',
+  Exponentiate: 'pow'
+}
+
 function transformExpression(expr, transformed = '') {
   if (!Array.isArray(expr)) {
     transformed += transformValue(expr)
@@ -220,6 +225,14 @@ function transformExpression(expr, transformed = '') {
 
     case 'Not': {
       transformed += `${transformExpression(operands[0])} = false`
+      break
+    }
+
+    case 'Modulus':
+    case 'Exponentiate': {
+      transformed += `${OPERATOR_FUNCTION_MAP[operator]}(${transformExpression(
+        operands[0]
+      )}, ${transformExpression(operands[1])})`
       break
     }
 

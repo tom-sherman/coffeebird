@@ -159,6 +159,22 @@ describe('transform', () => {
       [
         '!%FOO',
         '\t\t<condition expression="(%FOO = false)" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '3 % 4',
+        '\t\t<condition expression="(mod(3, 4))" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '3 ^ 4',
+        '\t\t<condition expression="(pow(3, 4))" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '3 ^ (4 + 2)',
+        '\t\t<condition expression="(pow(3, (4 + 2)))" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '3 ^ 4 + 2',
+        '\t\t<condition expression="((pow(3, 4)) + 2)" weight="100" behaviour="mandatory" />'
       ]
     ]
 
