@@ -70,7 +70,7 @@ speaks (cf: 100, behaviour: topDownStrict) {
 
     	<relinst type=\\"speaks\\" cf=\\"100\\" behaviour=\\"top-down-strict\\">
     		<condition rel=\\"lives in\\" subject=\\"%S\\" object=\\"%COUNTRY\\" weight=\\"100\\" behaviour=\\"mandatory\\" />
-    		<condition expression=\\"%COUNTRY = '\\"Ireland\\\\'s\\"'\\" weight=\\"100\\" behaviour=\\"mandatory\\" />
+    		<condition expression=\\"(%COUNTRY = '\\"Ireland\\\\'s\\"')\\" weight=\\"100\\" behaviour=\\"mandatory\\" />
     		<condition expression=\\"'Irish'\\" value=\\"%O\\" weight=\\"100\\" behaviour=\\"mandatory\\" />
     	</relinst>
 

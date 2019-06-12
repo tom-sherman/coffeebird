@@ -138,11 +138,15 @@ describe('transform', () => {
       ],
       [
         '%FOO = 3 * %BAR',
-        '\t\t<condition expression="3 * %BAR" value="%FOO" weight="100" behaviour="mandatory" />'
+        '\t\t<condition expression="(3 * %BAR)" value="%FOO" weight="100" behaviour="mandatory" />'
       ],
       [
         '%FOO = 3 * %BAR - 3',
-        '\t\t<condition expression="3 * %BAR - 3" value="%FOO" weight="100" behaviour="mandatory" />'
+        '\t\t<condition expression="((3 * %BAR) - 3)" value="%FOO" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '3 + 2 * 3',
+        '\t\t<condition expression="(3 + (2 * 3))" weight="100" behaviour="mandatory" />'
       ]
     ]
 

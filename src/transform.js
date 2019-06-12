@@ -181,9 +181,9 @@ function transformExpression(expr, transformed = '') {
 
   switch (operator) {
     case 'Multiply':
+    case 'Divide':
     case 'Add':
     case 'Subtract':
-    case 'Divide':
     case 'GreaterThan':
     case 'LessThan':
     case 'GreaterThanOrEqual':
@@ -195,7 +195,7 @@ function transformExpression(expr, transformed = '') {
     case 'Equal': {
       const left = transformExpression(operands[0])
       const right = transformExpression(operands[1])
-      transformed += `${left} ${transformedOperator} ${right}`
+      transformed += `(${left} ${transformedOperator} ${right})`
       break
     }
 
@@ -209,7 +209,7 @@ function transformExpression(expr, transformed = '') {
 
 function transformOperator(operator) {
   const operatorMap = {
-    And: '+',
+    Add: '+',
     Subtract: '-',
     Multiply: '*',
     Divide: '/',
