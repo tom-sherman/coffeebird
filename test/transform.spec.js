@@ -147,6 +147,10 @@ describe('transform', () => {
       [
         '3 + 2 * 3',
         '\t\t<condition expression="(3 + (2 * 3))" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '1 + 2 + 3',
+        '\t\t<condition expression="((1 + 2) + 3)" weight="100" behaviour="mandatory" />'
       ]
     ]
 
