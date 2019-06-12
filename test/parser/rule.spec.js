@@ -1,9 +1,5 @@
-const {
-  Rule,
-  RuleDictionary,
-  RuleSubject,
-  RuleObject
-} = require('../../src/parser/rule')
+/* global describe, it, expect */
+const { Rule, RuleDictionary } = require('../../src/parser/rule')
 
 describe('rule :: dictionary', () => {
   it('should parse valid dictionaries', () => {

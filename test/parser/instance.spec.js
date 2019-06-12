@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 const { Instance } = require('../../src/parser/instance')
 
 describe('instance', () => {

@@ -42,6 +42,5 @@ module.exports = {
   Rule,
   RuleDictionary,
   RuleSubject,
-  RuleObject,
-  Rule
+  RuleObject
 }

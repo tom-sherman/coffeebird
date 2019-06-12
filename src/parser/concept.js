@@ -1,5 +1,5 @@
 const P = require('parsimmon')
-const { _, Dictionary, KeyValuePair, Enum } = require('./shared')
+const { Dictionary, KeyValuePair, Enum } = require('./shared')
 
 const ConceptName = P.regexp(/[a-zA-Z]+/)
 

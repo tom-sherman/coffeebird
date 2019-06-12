@@ -8,7 +8,10 @@ const ConditionVal = P.seqObj(
   P.string('=').trim(_),
   ['expression', Expression.trim(_)],
   ['options', ConditionDictionary.fallback({})]
-).map(result => ((result.type = 'val'), result))
+).map(result => {
+  result.type = 'val'
+  return result
+})
 
 module.exports = {
   ConditionVal

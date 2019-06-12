@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs')
-const { parse, transpile } = require('./coffeebird')
+const { transpile } = require('./coffeebird')
 
 const argv = require('yargs')
   .command(['transpile [input]', '*'], 'transpile a file to RBLang', yargs => {

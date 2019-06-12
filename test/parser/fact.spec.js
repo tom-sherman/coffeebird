@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 const { Fact, FactDictionary } = require('../../src/parser/fact')
 
 describe('fact :: dictionary', () => {

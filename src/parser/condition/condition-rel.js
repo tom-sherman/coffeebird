@@ -12,7 +12,10 @@ const ConditionRel = P.seqObj(
   P.string('-'),
   ['object', ConditionSubjectObject.trim(_)],
   ['options', ConditionDictionary.fallback({})]
-).map(result => ((result.type = 'rel'), result))
+).map(result => {
+  result.type = 'rel'
+  return result
+})
 
 module.exports = {
   ConditionRel,

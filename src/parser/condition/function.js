@@ -2,7 +2,6 @@ const P = require('parsimmon')
 const { _, Variable } = require('../shared')
 const { RelName } = require('../relationship')
 const { InstanceName } = require('../instance')
-const { Expression } = require('./condition-expr')
 
 const FunctionArgumentSeparator = P.string(',')
 

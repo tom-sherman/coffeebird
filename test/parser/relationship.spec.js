@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 const { Rel, RelDictionary, RelName } = require('../../src/parser/relationship')
 
 describe('relationship :: dictionary', () => {

@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 const P = require('parsimmon')
 const { FunctionArguments } = require('../../src/parser/condition/function')
 

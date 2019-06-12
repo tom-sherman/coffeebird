@@ -1,3 +1,4 @@
+/* global it, expect */
 const { transpile } = require('../src/coffeebird')
 
 it('transform', () => {

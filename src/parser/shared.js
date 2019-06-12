@@ -26,7 +26,7 @@ function Dictionary(keyValuePairs) {
     )
 }
 
-const Bool = Enum('true', 'false').map(b => (b === 'true' ? true : false))
+const Bool = Enum('true', 'false').map(b => b === 'true')
 
 function Enum(...strings) {
   return P.alt(...strings.map(s => P.string(s)))

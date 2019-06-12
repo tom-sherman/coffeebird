@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 const { Concept, ConceptDictionary } = require('../../src/parser/concept')
 
 describe('concept :: dictionary', () => {
