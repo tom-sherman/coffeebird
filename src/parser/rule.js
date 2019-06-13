@@ -17,24 +17,30 @@ const RuleSubject = InstanceName.trim(_).skip(P.string('-'))
 
 const RuleObject = P.string('-').then(InstanceName.trim(_))
 
-const Rule = P.seqObj(
-  ['subject', RuleSubject.fallback(null)],
-  ['rel', RelName.trim(_)],
-  ['object', RuleObject.fallback(null)],
-  ['options', RuleDictionary.fallback({})],
-  P.string('{').trim(_),
-  [
-    'conditions',
-    Condition.sepBy(ConditionSep)
-      .skip(ConditionSep.times(0, 1))
-      .trim(_)
-  ],
-  P.string('}')
-)
+const createRuleParser = cond =>
+  P.seqObj(
+    ['subject', RuleSubject.fallback(null)],
+    ['rel', RelName.trim(_)],
+    ['object', RuleObject.fallback(null)],
+    ['options', RuleDictionary.fallback({})],
+    P.string('{').trim(_),
+    [
+      'conditions',
+      cond
+        .sepBy(ConditionSep)
+        .skip(ConditionSep.times(0, 1))
+        .trim(_)
+    ],
+    P.string('}')
+  )
+
+const Rule = createRuleParser(Condition)
+const RuleNode = createRuleParser(Condition.node('condition')).node('rule')
 
 module.exports = {
   Rule,
   RuleDictionary,
   RuleSubject,
-  RuleObject
+  RuleObject,
+  RuleNode
 }

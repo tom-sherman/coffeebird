@@ -4,6 +4,26 @@ const createAttrs = obj =>
     .map(([key, value]) => `${key}="${value}"`)
     .join(' ')
 
+function transformNode(node) {
+  switch (node.name) {
+    case 'concept': {
+      return transformConcept(node.value)
+    }
+    case 'relationship': {
+      return transformRelationship(node.value)
+    }
+    case 'instance': {
+      return transformInstance(node.value)
+    }
+    case 'fact': {
+      return transformFact(node.value)
+    }
+    case 'rule': {
+      return transformRule(node.value)
+    }
+  }
+}
+
 function transformConcept(concept) {
   let { name, options: { type = 'string', behaviour } = {} } = concept
 
@@ -99,6 +119,8 @@ function transformRule(rule) {
     behaviour = transformRuleBehaviour(behaviour)
   }
 
+  // TODO: Catch errors thrown from transforming conditions with invalid function calls
+
   return `\t<relinst ${createAttrs({
     type: rel,
     subject,
@@ -107,7 +129,9 @@ function transformRule(rule) {
     minimumRuleCertainty,
     alt,
     behaviour
-  })}>\n${conditions.map(transformCondition).join('\n')}\n\t</relinst>`
+  })}>\n${conditions
+    .map(cond => transformCondition(cond.value ? cond.value : cond))
+    .join('\n')}\n\t</relinst>`
 }
 
 function transformRuleBehaviour(behaviour) {
@@ -267,5 +291,6 @@ module.exports = {
   transformInstance,
   transformRelationship,
   transformRule,
-  transformCondition
+  transformCondition,
+  transformNode
 }

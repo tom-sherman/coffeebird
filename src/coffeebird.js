@@ -1,22 +1,18 @@
 const P = require('parsimmon')
-const { Concept, Fact, Rel, Instance, Rule } = require('./parser')
-const {
-  transformConcept,
-  transformFact,
-  transformInstance,
-  transformRelationship,
-  transformRule
-} = require('./transform')
+const { Concept, Fact, Rel, Instance, RuleNode } = require('./parser')
+const { transformNode } = require('./transform')
 const { _, Comment } = require('./parser/shared')
 
+const parsers = [
+  Concept.node('concept'),
+  Fact.node('fact'),
+  Instance.node('instance'),
+  Rel.node('relationship'),
+  RuleNode
+]
+
 function parse(input) {
-  return P.alt(
-    Concept.node('Concept'),
-    Fact.node('Fact'),
-    Instance.node('Instance'),
-    Rel.node('Relationship'),
-    Rule.node('Rule')
-  )
+  return P.alt(...parsers)
     .skip(Comment.many())
     .sepBy(P.newline.many())
     .trim(_)
@@ -24,14 +20,8 @@ function parse(input) {
 }
 
 function transpile(input) {
-  const result = P.alt(
-    P.newline,
-    Concept.map(transformConcept),
-    Rule.map(transformRule),
-    Fact.map(transformFact),
-    Instance.map(transformInstance),
-    Rel.map(transformRelationship)
-  )
+  const transformParsers = parsers.map(p => p.map(transformNode))
+  const result = P.alt(P.newline, ...transformParsers)
     .skip(Comment.many())
     .many()
     .tie()
