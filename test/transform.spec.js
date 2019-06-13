@@ -108,6 +108,14 @@ describe('transform', () => {
       [
         '"Dave" - speaks - "English" (cf: 90)',
         '\t<relinst type="speaks" subject="Dave" object="English" cf="90" />'
+      ],
+      [
+        '"Dave" - has age - 18',
+        '\t<relinst type="has age" subject="Dave" object="18" cf="100" />'
+      ],
+      [
+        '"Dave" - is eligible - true',
+        '\t<relinst type="is eligible" subject="Dave" object="true" cf="100" />'
       ]
     ]
 

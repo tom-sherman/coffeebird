@@ -82,6 +82,24 @@ describe('fact', () => {
           object: 'English',
           options: { cf: 60 }
         }
+      ],
+      [
+        '"Dave" - has age - 18',
+        {
+          subject: 'Dave',
+          rel: 'has age',
+          object: 18,
+          options: {}
+        }
+      ],
+      [
+        '"Dave" - is eligible - true',
+        {
+          subject: 'Dave',
+          rel: 'is eligible',
+          object: true,
+          options: {}
+        }
       ]
     ]
 
