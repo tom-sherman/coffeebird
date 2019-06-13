@@ -1,5 +1,5 @@
 const P = require('parsimmon')
-const { Dictionary, KeyValuePair, Enum } = require('./shared')
+const { Dictionary, Enum } = require('./shared')
 
 const ConceptName = P.regexp(/[a-zA-Z]+/)
 
@@ -7,16 +7,10 @@ const ConceptType = Enum('string', 'number', 'date', 'truth')
 
 const ConceptBehaviour = P.string('mutuallyExclusive')
 
-const ConceptKeysValuePairs = {
+const ConceptDictionary = Dictionary({
   type: ConceptType,
   behaviour: ConceptBehaviour
-}
-
-const ConceptDictionary = Dictionary(
-  Object.entries(ConceptKeysValuePairs).map(([key, value]) =>
-    KeyValuePair(P.string(key), value)
-  )
-)
+})
 
 const Concept = P.seqObj(
   P.string('concept'),

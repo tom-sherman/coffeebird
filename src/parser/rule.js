@@ -2,22 +2,16 @@ const P = require('parsimmon')
 const { InstanceName } = require('./instance')
 const { RelName } = require('./relationship')
 const { Condition, ConditionSep } = require('./condition')
-const { _, Dictionary, KeyValuePair, Int, Str, Enum } = require('./shared')
+const { _, Dictionary, Int, Str, Enum } = require('./shared')
 
 const RuleBehaviour = Enum('topDownStrict', 'topDown')
 
-const RuleKeyValuePairs = {
+const RuleDictionary = Dictionary({
   cf: Int,
   alt: Str,
   minimumRuleCertainty: Int,
   behaviour: RuleBehaviour
-}
-
-const RuleDictionary = Dictionary(
-  Object.entries(RuleKeyValuePairs).map(([key, value]) =>
-    KeyValuePair(P.string(key), value)
-  )
-)
+})
 
 const RuleSubject = InstanceName.trim(_).skip(P.string('-'))
 

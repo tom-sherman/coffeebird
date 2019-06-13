@@ -14,7 +14,11 @@ function KeyValuePair(key, value) {
   return P.seq(key.trim(_).skip(P.string(':').trim(_)), value.trim(_))
 }
 
-function Dictionary(keyValuePairs) {
+function Dictionary(dict) {
+  const keyValuePairs = Object.entries(dict).map(([key, value]) =>
+    KeyValuePair(P.string(key), value)
+  )
+
   return P.string('(')
     .then(P.sepBy(P.alt(...keyValuePairs), P.string(',')))
     .skip(P.string(')'))

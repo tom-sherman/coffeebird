@@ -1,9 +1,9 @@
 const P = require('parsimmon')
 const { InstanceName } = require('./instance')
 const { RelName } = require('./relationship')
-const { _, Dictionary, KeyValuePair, Int, Num, Bool } = require('./shared')
+const { _, Dictionary, Int, Num, Bool } = require('./shared')
 
-const FactDictionary = Dictionary([KeyValuePair(P.string('cf'), Int)])
+const FactDictionary = Dictionary({ cf: Int })
 const SubjectObject = P.alt(InstanceName, Num, Bool)
 
 const Fact = P.seqObj(

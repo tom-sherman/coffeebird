@@ -18,7 +18,7 @@ describe.skip('function validation', () => {
       expect(() =>
         round.validate({
           function: 'round',
-          arguments: [{ name: 'FOO', name: 'BAR' }]
+          arguments: [{ name: 'FOO' }, { name: 'BAR' }]
         })
       ).not.toThrow()
     })
