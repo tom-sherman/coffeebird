@@ -1,76 +1,107 @@
 /* global describe, it, expect */
-const P = require('parsimmon')
-const { FunctionArguments } = require('../../src/parser/condition/function')
+const {
+  FunctionArguments,
+  FunctionCall
+} = require('../../src/parser/condition/function')
 
 describe('functions arguments', () => {
-  const noArguments = FunctionArguments()
-  const oneArgument = FunctionArguments(P.string('foo'))
-  const twoArguments = FunctionArguments(P.string('foo'), P.string('bar'))
-  const threeArguments = FunctionArguments(
-    P.string('foo'),
-    P.string('bar'),
-    P.string('baz')
-  )
-
   it('should parse function arguments with 0 arguments', () => {
-    const validInputs = ['()', '( )', '(\n)']
-
-    for (const input of validInputs) {
-      const { status, value } = noArguments.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual([])
-    }
+    expect(FunctionArguments.tryParse('')).toEqual([])
+    expect(FunctionArguments.tryParse(' ')).toEqual([])
+    expect(FunctionArguments.tryParse('\n')).toEqual([])
   })
 
   it('should parse function arguments with single argument', () => {
-    const validInputs = ['(foo)', '( foo )']
-
     const expected = ['foo']
+    expect(FunctionArguments.tryParse('"foo"')).toEqual(expected)
+    expect(FunctionArguments.tryParse(' "foo" ')).toEqual(expected)
 
-    for (const input of validInputs) {
-      const { status, value } = oneArgument.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expected)
-    }
+    expect(FunctionArguments.tryParse('*')).toEqual(['*'])
+    expect(FunctionArguments.tryParse('1')).toEqual([1])
+    expect(FunctionArguments.tryParse('1.1')).toEqual([1.1])
+    expect(FunctionArguments.tryParse('3 + 1')).toEqual([['Add', 3, 1]])
   })
 
   it('should parse function arguments with multiple arguments', () => {
-    const twoArgumentInputs = [
-      '(foo,bar)',
-      '(foo, bar)',
-      '( foo, bar )',
-      '( foo , bar )'
-    ]
-
     const expectedTwoArguments = ['foo', 'bar']
+    expect(FunctionArguments.tryParse('"foo","bar"')).toEqual(
+      expectedTwoArguments
+    )
+    expect(FunctionArguments.tryParse('"foo", "bar"')).toEqual(
+      expectedTwoArguments
+    )
+    expect(FunctionArguments.tryParse(' "foo", "bar" ')).toEqual(
+      expectedTwoArguments
+    )
+    expect(FunctionArguments.tryParse(' "foo" , "bar" ')).toEqual(
+      expectedTwoArguments
+    )
 
-    for (const input of twoArgumentInputs) {
-      const { status, value } = twoArguments.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expectedTwoArguments)
-    }
-
-    const threeArgumentInputs = [
-      '(foo, bar, baz)',
-      '(foo,bar, baz)',
-      '(foo,bar,baz)',
-      '(foo, bar,baz)',
-      '( foo , bar , baz )'
-    ]
+    expect(FunctionArguments.tryParse('3 + 1, 4 + 2')).toEqual([
+      ['Add', 3, 1],
+      ['Add', 4, 2]
+    ])
 
     const expectedThreeArguments = ['foo', 'bar', 'baz']
-
-    for (const input of threeArgumentInputs) {
-      const { status, value } = threeArguments.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expectedThreeArguments)
-    }
+    expect(FunctionArguments.tryParse('"foo", "bar", "baz"')).toEqual(
+      expectedThreeArguments
+    )
+    expect(FunctionArguments.tryParse('"foo","bar", "baz"')).toEqual(
+      expectedThreeArguments
+    )
+    expect(FunctionArguments.tryParse('"foo","bar","baz"')).toEqual(
+      expectedThreeArguments
+    )
+    expect(FunctionArguments.tryParse('"foo", "bar","baz" ')).toEqual(
+      expectedThreeArguments
+    )
+    expect(FunctionArguments.tryParse(' "foo" , "bar" , "baz" ')).toEqual(
+      expectedThreeArguments
+    )
   })
 
-  it('should fail when passing more than the expected arguments', () => {
-    expect(noArguments.parse('(foo)').status).toBe(false)
-    expect(oneArgument.parse('(foo, bar)').status).toBe(false)
-    expect(twoArguments.parse('(foo, bar, baz)').status).toBe(false)
-    expect(threeArguments.parse('(foo, bar, baz, boo)').status).toBe(false)
+  it('should throw with invalid arguments', () => {
+    expect(() => FunctionArguments.tryParse('invalidArgument')).toThrow()
+    expect(() => FunctionArguments.tryParse('"trailing comma",')).toThrow()
+    expect(() => FunctionArguments.tryParse(',"trailing comma"')).toThrow()
+  })
+})
+
+describe('function call', () => {
+  it('should parse valid function calls', () => {
+    expect(FunctionCall.tryParse('foo()')).toEqual({
+      function: 'foo',
+      arguments: []
+    })
+    expect(FunctionCall.tryParse('foo(  )')).toEqual({
+      function: 'foo',
+      arguments: []
+    })
+    expect(FunctionCall.tryParse('foo(1)')).toEqual({
+      function: 'foo',
+      arguments: [1]
+    })
+    expect(FunctionCall.tryParse('foo(1.1, "bar")')).toEqual({
+      function: 'foo',
+      arguments: [1.1, 'bar']
+    })
+    expect(FunctionCall.tryParse('foo(3 + 1)')).toEqual({
+      function: 'foo',
+      arguments: [['Add', 3, 1]]
+    })
+  })
+
+  it('should throw on invalid function calls', () => {
+    expect(() => FunctionCall.tryParse('foo')).toThrow()
+    expect(() => FunctionCall.tryParse('foo(')).toThrow()
+    expect(() => FunctionCall.tryParse('foo(  ')).toThrow()
+    expect(() => FunctionCall.tryParse('foo)')).toThrow()
+    expect(() => FunctionCall.tryParse('foo(1')).toThrow()
+    expect(() => FunctionCall.tryParse('foo(1,')).toThrow()
+    expect(() => FunctionCall.tryParse('foo(1,2')).toThrow()
+    expect(() => FunctionCall.tryParse('foo(1,)')).toThrow()
+    expect(() => FunctionCall.tryParse('foo(1,2,)')).toThrow()
+    expect(() => FunctionCall.tryParse('(1,2)')).toThrow()
+    expect(() => FunctionCall.tryParse('()')).toThrow()
   })
 })

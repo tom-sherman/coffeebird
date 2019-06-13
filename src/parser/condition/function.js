@@ -1,59 +1,25 @@
 const P = require('parsimmon')
-const { _, Variable } = require('../shared')
-const { RelName } = require('../relationship')
-const { InstanceName } = require('../instance')
+const { Expression } = require('./expression')
+const { _ } = require('../shared')
 
 const FunctionArgumentSeparator = P.string(',')
 
-function FunctionCall(name, ...args) {
-  return P.lazy(() =>
-    P.seqObj(
-      ['function', P.string(name).trim(_)],
-      ['arguments', FunctionArguments(...args)]
-    )
-  )
-}
-
-// TODO: Optional arguments
-
-function FunctionArguments(...args) {
-  if (args.length === 0) {
-    return P.string('(')
-      .then(_)
-      .then(P.string(')'))
-      .map(_ => [])
-  }
-
-  const lastArg = args.splice(args.length - 1, 1)[0]
-  // Our arguments parser must be lazy as an argument can be an expression, not just literal values.
-  // This creates a circular reference as an expression can itself contain function call
-  return P.string('(')
-    .then(
-      P.seq(
-        ...args.map(arg => arg.trim(_).skip(FunctionArgumentSeparator)),
-        lastArg.trim(_)
-      )
-    )
-    .skip(P.string(')'))
-}
-
 const Wildcard = P.string('*')
 
-const InstanceOrWildcard = P.alt(Wildcard, Variable, InstanceName)
+const FunctionName = P.regexp(/[a-zA-Z]+/)
 
-const rblangFunctions = () => ({
-  countRelationshipInstances: FunctionCall(
-    'countRelationshipInstances',
-    InstanceOrWildcard,
-    RelName,
-    InstanceOrWildcard
-  ),
-  sumObjects: FunctionCall('sumObjects', InstanceOrWildcard, RelName, Wildcard)
-  // round: FunctionCall('round', Expression)
-})
+const FunctionArguments = P.alt(Wildcard, Expression)
+  .sepBy(FunctionArgumentSeparator)
+  .trim(_)
+
+const FunctionCall = P.seqObj(
+  ['function', FunctionName],
+  P.string('('),
+  ['arguments', FunctionArguments],
+  P.string(')')
+)
 
 module.exports = {
   FunctionCall,
-  FunctionArguments,
-  rblangFunctions
+  FunctionArguments
 }
