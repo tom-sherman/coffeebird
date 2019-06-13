@@ -20,6 +20,7 @@
   "homepage": "https://github.com/tom-sherman/coffeebird#readme",
   "license": "MIT",
   "dependencies": {
+    "ow": "^0.13.2",
     "parsimmon": "^1.12.0",
     "yargs": "^13.2.2"
   },
