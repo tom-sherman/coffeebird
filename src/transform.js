@@ -210,8 +210,7 @@ function transformExpression(expr, transformed = '') {
     case 'Equal':
     case 'NotEqual':
     case 'And':
-    case 'Or':
-    case 'Equal': {
+    case 'Or': {
       const left = transformExpression(operands[0])
       const right = transformExpression(operands[1])
       transformed += `${left} ${INFIX_OPERATOR_MAP[operator]} ${right}`

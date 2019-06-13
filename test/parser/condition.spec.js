@@ -7,7 +7,6 @@ const {
   ConditionDictionary,
   ConditionSubjectObject
 } = require('../../src/parser/condition')
-const { Expression } = require('../../src/parser/condition/condition-expr')
 
 describe('condition :: dictionary', () => {
   it('should parse valid dictionaries', () => {

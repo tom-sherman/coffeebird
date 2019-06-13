@@ -50,20 +50,20 @@ function PREFIX(operatorsParser, nextParser) {
 // takes the first possible match, even if subsequent matches are longer, so the
 // parser will never actually look far enough ahead to see the postfix
 // operators.
-function POSTFIX(operatorsParser, nextParser) {
-  // Because we can't use recursion like stated above, we just match a flat list
-  // of as many occurrences of the postfix operator as possible, then use
-  // `.reduce` to manually nest the list.
-  //
-  // Example:
-  //
-  // INPUT  :: "4!!!"
-  // PARSE  :: [4, "factorial", "factorial", "factorial"]
-  // REDUCE :: ["factorial", ["factorial", ["factorial", 4]]]
-  return P.seqMap(nextParser, operatorsParser.many(), (x, suffixes) =>
-    suffixes.reduce((acc, x) => [x, acc], x)
-  )
-}
+// function POSTFIX(operatorsParser, nextParser) {
+//   // Because we can't use recursion like stated above, we just match a flat list
+//   // of as many occurrences of the postfix operator as possible, then use
+//   // `.reduce` to manually nest the list.
+//   //
+//   // Example:
+//   //
+//   // INPUT  :: "4!!!"
+//   // PARSE  :: [4, "factorial", "factorial", "factorial"]
+//   // REDUCE :: ["factorial", ["factorial", ["factorial", 4]]]
+//   return P.seqMap(nextParser, operatorsParser.many(), (x, suffixes) =>
+//     suffixes.reduce((acc, x) => [x, acc], x)
+//   )
+// }
 
 // Takes a parser for all the operators at this precedence level, and a parser
 // that parsers everything at the next precedence level, and returns a parser
