@@ -4,13 +4,13 @@
 
 ## Types
 
-|Type|Literal example|Notes|
-|---|---|---|
-|`String`|`"foo"`||
-|`Number`|`3.45`||
-|`Integer`|`3`|Some dictionary keys require integer values.|
-|`Boolean`|`true`||
-|`Enum`|`secondFormObject`|Many dictionary values are specified using the `enum` type.|
+| Type      | Literal example    | Notes                                                       |
+| --------- | ------------------ | ----------------------------------------------------------- |
+| `String`  | `"foo"`            |                                                             |
+| `Number`  | `3.45`             |                                                             |
+| `Integer` | `3`                | Some dictionary keys require integer values.                |
+| `Boolean` | `true`             |                                                             |
+| `Enum`    | `secondFormObject` | Many dictionary values are specified using the `enum` type. |
 
 ## Dictionaries
 
@@ -23,6 +23,7 @@ They are used to specify options for concepts, relationships, facts, and rules. 
 ```
 (askable: none)
 ```
+
 A dictionary with an enum type as the value, set to `none`.
 
 ```
@@ -50,10 +51,10 @@ Creates a concept with a default type of `string`.
 
 **Concept dictionary**
 
-| Key | Values | Default |
-| --- | --- | --- |
-| `type` | `string`\|`number`\|`date`\|`truth` | `string`|
-| `behaviour` | `mutuallyExclusive` | n/a |
+| Key         | Values                              | Default  |
+| ----------- | ----------------------------------- | -------- |
+| `type`      | `string`\|`number`\|`date`\|`truth` | `string` |
+| `behaviour` | `mutuallyExclusive`                 | n/a      |
 
 **Examples:**
 
@@ -73,13 +74,13 @@ Create a relationship with a subject and object concept.
 
 **Relationship dictionary**
 
-| Key | Values | Default |
-| --- | --- | --- |
-| `plural` | Boolean | `true` |
-| `allowUnknown` | Boolean | `false` |
-| `askable` | `all`\|`none`\|`secondFormObject`\|`secondFormSubject` | `all` |
-| `allowCf` | Boolean | `true` |
-| `canAdd` | `all`\|`none`\|`object`\|`subject` | `all` |
+| Key            | Values                                                 | Default |
+| -------------- | ------------------------------------------------------ | ------- |
+| `plural`       | Boolean                                                | `true`  |
+| `allowUnknown` | Boolean                                                | `false` |
+| `askable`      | `all`\|`none`\|`secondFormObject`\|`secondFormSubject` | `all`   |
+| `allowCf`      | Boolean                                                | `true`  |
+| `canAdd`       | `all`\|`none`\|`object`\|`subject`                     | `all`   |
 
 **Examples:**
 
@@ -110,9 +111,9 @@ Create a fact between a subject and an object instance.
 
 **Fact dictionary**
 
-| Key | Values | Default |
-| --- | --- | --- |
-| `cf` | Integer | `100` |
+| Key  | Values  | Default |
+| ---- | ------- | ------- |
+| `cf` | Integer | `100`   |
 
 **Examples:**
 
@@ -140,11 +141,11 @@ Conditions come in three forms: condition-relationships, condition-expressions, 
 
 **Condition Dictionary**
 
-| Key | Values | Default |
-| --- | --- | --- |
-| `weight` | Integer | `100` |
-| `behaviour` | `mandatory`\|`optional` |`mandatory`|
-| `alt` | String | n/a |
+| Key         | Values                  | Default     |
+| ----------- | ----------------------- | ----------- |
+| `weight`    | Integer                 | `100`       |
+| `behaviour` | `mandatory`\|`optional` | `mandatory` |
+| `alt`       | String                  | n/a         |
 
 ### Condition-relationship
 
@@ -163,29 +164,25 @@ Condition-relationships look similar to facts, but as well as having instances a
 
 ### Condition-expression
 
-*NB: Currently not supported.*
-
 Condition-expressions are statements which can use a mixture of numbers, strings, operators, and variables. These work the same as in any C-like language.
 
 Expressions follow the order of operations and support parenthesis.
 
-| Operator | Meaning | 
-| --- | --- | 
-| `==` | Equal-to eg. `%FOO == %BAR` |
-| `!=` | Not-equal-to eg. `%FOO != %BAR` |
-| `+` | Addition eg. `4 + 2 == 6`, string concatenation eg. `"Hello, " + %NAME` |
-| `-` | Subtraction eg. `3 - 6 == 3`, negation eg. `-5` |
-| `*` | Multiplication eg. `2 * 4 == 8` |
-| `/` | Division eg. `6 / 3 == 2` |
-| `^` | Exponentiate eg. `2^4 == 2 * 2 * 2 * 2` |
-| `>`, `>=`, `<`, `<=` | Number comparison `3 < 6 == true` |
-| `!` | Boolean not eg. `!true == false` |
-| `&&` | Boolean and eg. `true && false == false` |
-| `\|\|` | Boolean or eg. `true || false == true` |
+| Operator             | Meaning                                                                 |
+| -------------------- | ----------------------------------------------------------------------- |
+| `==`                 | Equal-to eg. `%FOO == %BAR`                                             |
+| `!=`                 | Not-equal-to eg. `%FOO != %BAR`                                         |
+| `+`                  | Addition eg. `4 + 2 == 6`, string concatenation eg. `"Hello, " + %NAME` |
+| `-`                  | Subtraction eg. `3 - 6 == 3`, negation eg. `-5`                         |
+| `*`                  | Multiplication eg. `2 * 4 == 8`                                         |
+| `/`                  | Division eg. `6 / 3 == 2`                                               |
+| `^`                  | Exponentiate eg. `2^4 == 2 * 2 * 2 * 2`                                 |
+| `>`, `>=`, `<`, `<=` | Number comparison `3 < 6 == true`                                       |
+| `!`                  | Boolean not eg. `!true == false`                                        |
+| `and`                | Boolean and eg. `true and false == false`                               |
+| `or`                 | Boolean or eg. `true or false == true`                                  |
 
 ### Condition-value
-
-*NB: Currently not supported.*
 
 Condition-values are variable assignments. On the left of the `=` there is a variable, and on the right is an expression.
 
@@ -195,7 +192,7 @@ Condition-values are variable assignments. On the left of the `=` there is a var
 %FOO = 9;
 %BAR = true;
 %BAZ = %BAR;
-%BOO = %BAZ && %FOO < (2 + 3) * 2;
+%BOO = %BAZ and %FOO < (2 + 3) * 2;
 %STR = "a string";
 ```
 
@@ -209,11 +206,11 @@ Both the subject and the object are optional, you are able to specify either, bo
 
 **Rule dictionary**
 
-| Key | Values | Default |
-| --- | --- | --- |
-| `cf` | Integer | `100` |
-| `alt` | String | n/a |
-| `minimumRuleCertainty` | Integer | `20` |
+| Key                    | Values  | Default |
+| ---------------------- | ------- | ------- |
+| `cf`                   | Integer | `100`   |
+| `alt`                  | String  | n/a     |
+| `minimumRuleCertainty` | Integer | `20`    |
 
 **Examples:**
 
