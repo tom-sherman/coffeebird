@@ -1,5 +1,25 @@
 const P = require('parsimmon')
 const { _, Num, Str, Bool, Variable } = require('../shared')
+// const { FunctionCall } = require('./function')
+
+const FunctionArgumentSeparator = P.string(',')
+
+const Wildcard = P.string('*').trim(_)
+
+const FunctionName = P.regexp(/[a-zA-Z]+/)
+
+const FunctionArguments = P.lazy(() =>
+  P.alt(Wildcard, Expression)
+    .sepBy(FunctionArgumentSeparator)
+    .trim(_)
+)
+
+const FunctionCall = P.seqObj(
+  ['function', FunctionName],
+  P.string('('),
+  ['arguments', FunctionArguments],
+  P.string(')')
+)
 
 // This parser supports basic math with + - * / ^, unary negation, factorial,
 // and parentheses. It does not evaluate the math, just turn it into a series of
@@ -105,12 +125,9 @@ function BINARY_LEFT(operatorsParser, nextParser) {
   )
 }
 
-// Just match simple integers and turn them into JavaScript numbers. Wraps it up
-// in an array with a string tag so that our data is easy to manipulate at the
-// end and we don't have to use `typeof` to check it.
-let Value = P.alt(Num, Str, Bool, Variable)
+let Value = P.alt(Num, Str, Bool, Variable, FunctionCall)
 
-// A basic value is any parenthesized expression or a number.
+// A basic value is any parenthesized expression or a value.
 let Basic = P.lazy(() =>
   P.string('(')
     .then(Expression)
@@ -161,6 +178,10 @@ let tableParser = table.reduce(
 
 const Expression = tableParser.trim(_)
 
+Expression.tryParse('round(%FOO)')
+
 module.exports = {
-  Expression
+  Expression,
+  FunctionArguments,
+  FunctionCall
 }

@@ -2,7 +2,7 @@
 const {
   FunctionArguments,
   FunctionCall
-} = require('../../src/parser/condition/function')
+} = require('../../src/parser/condition/expression')
 
 describe('functions arguments', () => {
   it('should parse function arguments with 0 arguments', () => {
@@ -20,6 +20,8 @@ describe('functions arguments', () => {
     expect(FunctionArguments.tryParse('1')).toEqual([1])
     expect(FunctionArguments.tryParse('1.1')).toEqual([1.1])
     expect(FunctionArguments.tryParse('3 + 1')).toEqual([['Add', 3, 1]])
+
+    expect(FunctionArguments.tryParse('*')).toEqual(['*'])
   })
 
   it('should parse function arguments with multiple arguments', () => {
@@ -36,6 +38,9 @@ describe('functions arguments', () => {
     expect(FunctionArguments.tryParse(' "foo" , "bar" ')).toEqual(
       expectedTwoArguments
     )
+    expect(FunctionArguments.tryParse('*, 1')).toEqual(['*', 1])
+    expect(FunctionArguments.tryParse('1, *')).toEqual([1, '*'])
+    expect(FunctionArguments.tryParse('*, *')).toEqual(['*', '*'])
 
     expect(FunctionArguments.tryParse('3 + 1, 4 + 2')).toEqual([
       ['Add', 3, 1],

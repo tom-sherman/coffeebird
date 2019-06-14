@@ -183,13 +183,21 @@ describe('transform', () => {
       [
         '3 ^ 4 + 2',
         '\t\t<condition expression="((pow(3, 4)) + 2)" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        'round(%FOO)',
+        '\t\t<condition expression="round(%FOO)" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        'countRelationshipInstances(%S, "has outcome", *) > 0',
+        '\t\t<condition expression="(countRelationshipInstances(%S, \'has outcome\', \'*\') gt 0)" weight="100" behaviour="mandatory" />'
       ]
     ]
 
+    const conditionParser = Condition.map(transformCondition)
+
     for (const [input, expected] of inputs) {
-      const { status, value } = Condition.map(transformCondition).parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expected)
+      expect(conditionParser.tryParse(input)).toEqual(expected)
     }
   })
 

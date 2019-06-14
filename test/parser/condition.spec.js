@@ -206,6 +206,14 @@ describe('condition', () => {
         type: 'expr',
         options: {}
       }
+    ],
+    [
+      'round(%FOO)',
+      {
+        expression: { function: 'round', arguments: [{ name: 'FOO' }] },
+        type: 'expr',
+        options: {}
+      }
     ]
   ]
 
@@ -279,9 +287,7 @@ describe('condition', () => {
 
   it('should parse valid condition expressions', () => {
     for (const [input, expected] of validConditionExpr) {
-      const { status, value } = ConditionExpr.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expected)
+      expect(ConditionExpr.tryParse(input)).toEqual(expected)
     }
   })
 

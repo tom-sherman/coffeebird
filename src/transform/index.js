@@ -278,10 +278,17 @@ function transformValue(value) {
     value = value.replace('\\"', '"')
     return `'${value}'`
   }
-  if (value.name) {
+  if (value && value.name) {
     return '%' + value.name
   }
+  if (value && value.function) {
+    return transformFunction(value)
+  }
   return value
+}
+
+function transformFunction(fn) {
+  return `${fn.function}(${fn.arguments.map(transformValue).join(', ')})`
 }
 
 module.exports = {
