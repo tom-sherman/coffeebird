@@ -1,7 +1,7 @@
 /* global describe, it, expect */
 
 const { RBLANG_FUNCTIONS } = require('../src/transform/functions')
-const { round, countRelationshipInstances } = RBLANG_FUNCTIONS
+const { round, countRelationshipInstances, isSubset } = RBLANG_FUNCTIONS
 
 describe('round', () => {
   it('should be valid', () => {
@@ -56,5 +56,25 @@ describe('countRelationshipInstances', () => {
         arguments: [{ name: 'S' }, 'bar', '*']
       })
     ).not.toThrow()
+  })
+
+  it('should throw with invalid arguments', () => {
+    expect(() =>
+      countRelationshipInstances.validate({
+        function: 'countRelationshipInstances',
+        arguments: []
+      })
+    ).toThrow()
+  })
+})
+
+describe('isSubset', () => {
+  it('should be valid', () => {
+    expect(() =>
+      isSubset.validate({
+        function: 'isSubset',
+        arguments: [{ name: 'S' }, 'foo', '*', { name: 'O' }, 'bar', '*']
+      })
+    )
   })
 })
