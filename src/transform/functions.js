@@ -21,23 +21,29 @@ const functionArguments = args => ow.object.exactShape({ ...args })
 
 const functionValidator = shape => ow.create(ow.object.exactShape(shape))
 
-const variableValidator = ow.string.matches(/%[A-Z_]+/)
+const variable = ow.object.exactShape({ name: ow.string })
+
+const variableOrNumber = ow.any(variable, ow.number)
+const variableOrString = ow.any(variable, ow.string)
 
 const RBLANG_FUNCTIONS = {
   round: {
     transform: fn => `round(${fn.arguments.join(',')})`,
     validate: functionValidator({
       function: ow.string.equals('round'),
-      arguments: functionArguments([ow.number, ow.optional.number])
+      arguments: functionArguments([
+        variableOrNumber,
+        ow.any(variableOrNumber, ow.undefined)
+      ])
     })
   },
   countRelationshipInstances: {
     validate: functionValidator({
       function: ow.string.equals('countRelationshipInstances'),
       arguments: functionArguments([
-        ow.any(variableValidator, ow.string),
+        variableOrString,
         ow.string,
-        ow.any(variableValidator, ow.string)
+        variableOrString
       ])
     })
   }
