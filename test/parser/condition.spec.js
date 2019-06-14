@@ -1,4 +1,4 @@
-const assert = require('assert')
+/* global describe, it, expect */
 const {
   Condition,
   ConditionRel,
@@ -8,50 +8,51 @@ const {
   ConditionSubjectObject
 } = require('../../src/parser/condition')
 
-describe('condition :: dictionary', function() {
-  it('should parse valid dictionaries', function() {
+describe('condition :: dictionary', () => {
+  it('should parse valid dictionaries', () => {
     const validDictionaries = [
-      ['', {}],
       ['()', {}],
       [
-        '(behaviour = mandatory, weight = 100, alt = "Alt")',
+        '(behaviour: mandatory, weight: 100, alt: "Alt")',
         { behaviour: 'mandatory', weight: 100, alt: 'Alt' }
       ],
       [
-        '(behaviour = mandatory, weight = 100)',
+        '(behaviour: mandatory, weight: 100)',
         { behaviour: 'mandatory', weight: 100 }
       ],
-      ['(behaviour = mandatory)', { behaviour: 'mandatory' }],
-      ['(weight = 100)', { weight: 100 }],
-      ['(alt = "Alt text")', { alt: 'Alt text' }]
+      ['(behaviour: mandatory)', { behaviour: 'mandatory' }],
+      ['(weight: 100)', { weight: 100 }],
+      ['(alt: "Alt text")', { alt: 'Alt text' }]
     ]
 
     for (const [input, expected] of validDictionaries) {
       const { status, value } = ConditionDictionary.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid dictionaries', function() {
+  it('should not parse invalid dictionaries', () => {
     const invalidDictionaries = [
+      '(alt:)',
       '(alt)',
       '(behaviour=)',
       '(behaviour=test)',
       '(weight = "100")',
       '(alt = 100)',
       '(weight=behaviour)',
-      'weight = 100'
+      'weight = 100',
+      ''
     ]
 
     for (const input of invalidDictionaries) {
-      assert.ok(!ConditionDictionary.parse(input).status)
+      expect(ConditionDictionary.parse(input).status).toBe(false)
     }
   })
 })
 
-describe('condition :: subject/object', function() {
-  it('should parse valid subject/object', function() {
+describe('condition :: subject/object', () => {
+  it('should parse valid subject/object', () => {
     const validSubjectsObjects = [
       ['0', 0],
       ['1', 1],
@@ -67,13 +68,13 @@ describe('condition :: subject/object', function() {
 
     for (const [input, expected] of validSubjectsObjects) {
       const { status, value } = ConditionSubjectObject.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 })
 
-describe('condition', function() {
+describe('condition', () => {
   const validConditionRels = [
     [
       '%S - speaks - %LANG',
@@ -86,13 +87,13 @@ describe('condition', function() {
       }
     ],
     [
-      '%S - speaks - %LANG (behaviour= optional, weight = 20)',
+      '%S - speaks - %LANG (behaviour: optional, weight: 20)',
       {
         type: 'rel',
         subject: { name: 'S' },
         rel: 'speaks',
         object: { name: 'LANG' },
-        options: { weight: 20 }
+        options: { weight: 20, behaviour: 'optional' }
       }
     ],
     [
@@ -157,50 +158,158 @@ describe('condition', function() {
     ]
   ]
 
-  const validBooleanExpr = [
-    ['%FOO > 5', {}],
-    ['5 > %FOO', {}],
-    ['%FOO >= 5', {}],
-    ['%FOO < 5', {}],
-    ['%FOO <= 5', {}],
-    ['%FOO == 5', {}],
-    ['%FOO != 5', {}],
-    ['(%FOO > 5)', {}],
-    ['%FOO == "bar"', {}],
-    ['%FOO != "bar"', {}],
-    ['%FOO', {}],
-    ['true', {}],
-    ['false', {}],
-    ['true and false', {}],
-    ['true or false', {}],
-    ['%FOO == 3 or %FOO == 2', {}],
-    ['%FOO == 3 and %FOO == 2', {}],
-    ['%FOO == 3 and %BAR == 2', {}],
-    ['%FOO and (%BAR or %BAZ)', {}],
-    ['(%FOO == 1) and ((%BAR == 2) or (%BAZ == 3))', {}],
-    ['(%FOO == 1) and ((%BAR == 2) or (%BAZ == 3)) == false', {}],
-    ['%FOO != false', {}],
-    ['false == %FOO', {}],
-    ['%FOO == %BAR + 5', {}],
-    ['%BAR + 5 == %FOO', {}]
+  const validConditionExpr = [
+    [
+      '%FOO == 3 (weight: 50)',
+      {
+        expression: ['Equal', { name: 'FOO' }, 3],
+        type: 'expr',
+        options: { weight: 50 }
+      }
+    ],
+    [
+      '%FOO == 3',
+      {
+        expression: ['Equal', { name: 'FOO' }, 3],
+        type: 'expr',
+        options: {}
+      }
+    ],
+    [
+      '%FOO == 3 ()',
+      {
+        expression: ['Equal', { name: 'FOO' }, 3],
+        type: 'expr',
+        options: {}
+      }
+    ],
+    [
+      '(2 + 3) * 4 (weight: 50)',
+      {
+        expression: ['Multiply', ['Add', 2, 3], 4],
+        type: 'expr',
+        options: { weight: 50 }
+      }
+    ],
+    [
+      '((2 + 3) * 4) (weight: 50)',
+      {
+        expression: ['Multiply', ['Add', 2, 3], 4],
+        type: 'expr',
+        options: { weight: 50 }
+      }
+    ],
+    [
+      '((2 + 3) * 4) ()',
+      {
+        expression: ['Multiply', ['Add', 2, 3], 4],
+        type: 'expr',
+        options: {}
+      }
+    ],
+    [
+      'round(%FOO)',
+      {
+        expression: { function: 'round', arguments: [{ name: 'FOO' }] },
+        type: 'expr',
+        options: {}
+      }
+    ]
   ]
 
   const validConditionVal = [
-    ['%FOO = 1', {}],
-    ['%FOO = 0', {}],
-    ['%FOO = true', {}],
-    ['%FOO = false', {}],
-    ['%FOO = 1.1', {}],
-    ['%FOO = "bar"', {}],
-    ['%FOO = %BAR == 5', {}],
-    ['%FOO = %BAR * 6', {}]
+    [
+      '%FOO = 1',
+      { assignment: { name: 'FOO' }, expression: 1, type: 'val', options: {} }
+    ],
+    [
+      '%FOO = 0',
+      { assignment: { name: 'FOO' }, expression: 0, type: 'val', options: {} }
+    ],
+    [
+      '%FOO = true',
+      {
+        assignment: { name: 'FOO' },
+        expression: true,
+        type: 'val',
+        options: {}
+      }
+    ],
+    [
+      '%FOO = false',
+      {
+        assignment: { name: 'FOO' },
+        expression: false,
+        type: 'val',
+        options: {}
+      }
+    ],
+    [
+      '%FOO = 1.1',
+      { assignment: { name: 'FOO' }, expression: 1.1, type: 'val', options: {} }
+    ],
+    [
+      '%FOO = "bar"',
+      {
+        assignment: { name: 'FOO' },
+        expression: 'bar',
+        type: 'val',
+        options: {}
+      }
+    ],
+    [
+      '%FOO = %BAR == 5',
+      {
+        assignment: { name: 'FOO' },
+        expression: ['Equal', { name: 'BAR' }, 5],
+        type: 'val',
+        options: {}
+      }
+    ],
+    [
+      '%FOO = %BAR * 6',
+      {
+        assignment: { name: 'FOO' },
+        expression: ['Multiply', { name: 'BAR' }, 6],
+        type: 'val',
+        options: {}
+      }
+    ]
   ]
 
-  it.skip('should parse valid condition rels', function() {
+  it('should parse valid condition rels', () => {
     for (const [input, expected] of validConditionRels) {
       const { status, value } = ConditionRel.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
+    }
+  })
+
+  it('should parse valid condition expressions', () => {
+    for (const [input, expected] of validConditionExpr) {
+      expect(ConditionExpr.tryParse(input)).toEqual(expected)
+    }
+  })
+
+  it('should parse valid condition values', () => {
+    for (const [input, expected] of validConditionVal) {
+      const { status, value } = ConditionVal.parse(input)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
+    }
+  })
+
+  it('should parse valid conditions', () => {
+    const validConditions = [
+      ...validConditionRels,
+      ...validConditionExpr,
+      ...validConditionVal
+    ]
+
+    for (const [input, expected] of validConditions) {
+      const { status, value } = Condition.parse(input)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 })

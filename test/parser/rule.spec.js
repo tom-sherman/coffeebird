@@ -1,48 +1,43 @@
-const assert = require('assert')
-const {
-  Rule,
-  RuleDictionary,
-  RuleSubject,
-  RuleObject
-} = require('../../src/parser/rule')
+/* global describe, it, expect */
+const { Rule, RuleDictionary } = require('../../src/parser/rule')
 
-describe('rule :: dictionary', function() {
-  it('should parse valid dictionaries', function() {
+describe('rule :: dictionary', () => {
+  it('should parse valid dictionaries', () => {
     const validDictionaries = [
       ['()', {}],
-      ['(cf = 100)', { cf: 100 }],
+      ['(cf: 100)', { cf: 100 }],
       [
-        '(cf = 100, minimumRuleCertainty = 50)',
+        '(cf: 100, minimumRuleCertainty: 50)',
         { cf: 100, minimumRuleCertainty: 50 }
       ],
-      ['(alt = "Test")', { alt: 'Test' }]
+      ['(alt: "Test")', { alt: 'Test' }]
     ]
 
     for (const [input, expected] of validDictionaries) {
       const { status, value } = RuleDictionary.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid dictionaries', function() {
-    const invalidDictionaries = ['(', ')', '(alt=)', '(cf = 20.4)']
+  it('should not parse invalid dictionaries', () => {
+    const invalidDictionaries = ['(', ')', '(alt=)', '(alt:)', '(cf : 20.4)']
 
     for (const input of invalidDictionaries) {
-      assert.ok(!RuleDictionary.parse(input).status)
+      expect(RuleDictionary.parse(input).status).toBe(false)
     }
   })
 })
 
-describe('rule :: triple', function() {
-  it('should parse valid subjects')
-  it('should not parse invalid subjects')
-  it('should parse valid objects')
-  it('should not parse invalid objects')
+describe('rule :: triple', () => {
+  it.todo('should parse valid subjects')
+  it.todo('should not parse invalid subjects')
+  it.todo('should parse valid objects')
+  it.todo('should not parse invalid objects')
 })
 
-describe('rule', function() {
-  it('should parse valid rules', function() {
+describe('rule', () => {
+  it('should parse valid rules', () => {
     const validRules = [
       [
         'speaks {}',
@@ -118,12 +113,12 @@ describe('rule', function() {
 
     for (const [input, expected] of validRules) {
       const { status, value } = Rule.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid rules', function() {
+  it('should not parse invalid rules', () => {
     const invalidRules = [
       'speaks',
       'speaks - () {}',
@@ -134,7 +129,7 @@ describe('rule', function() {
     ]
 
     for (const input of invalidRules) {
-      assert.ok(!Rule.parse(input).status)
+      expect(Rule.parse(input).status).toBe(false)
     }
   })
 })

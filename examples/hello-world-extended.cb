@@ -1,11 +1,13 @@
+// The purpose of this example is to show all of the features of CoffeeBird.
+
 concept Person (type: string)
-concept Country (type: string)
+concept Country
 concept Language (type: string)
 
 rel Person - speaks - Language
 rel Person - lives in - Country
 rel Country - national language - Language (
-  askable: none
+  askable: secondFormObject
 )
 
 Person("Fred")
@@ -20,7 +22,13 @@ Country("Germany")
 "France" - national language - "French"
 "Fred" - lives in - "England"
 
-speaks (cf: 75, minimumRuleCertainty: 60) {
+speaks (cf: 50) {
+  %S - lives in - %COUNTRY (weight: 0);
+  %COUNTRY - has national language - %O
+}
+
+speaks (cf: 100) {
   %S - lives in - %COUNTRY;
-  %COUNTRY - national language - %O;
+  %COUNTRY == "Ireland";
+  %O = "Irish";
 }

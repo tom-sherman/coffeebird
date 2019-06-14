@@ -2,43 +2,45 @@ const P = require('parsimmon')
 const { InstanceName } = require('./instance')
 const { RelName } = require('./relationship')
 const { Condition, ConditionSep } = require('./condition')
-const { _, Dictionary, KeyValuePair, Int, Str } = require('./shared')
+const { _, Dictionary, Int, Str, Enum } = require('./shared')
 
-const RuleKeyValuePairs = {
+const RuleBehaviour = Enum('topDownStrict', 'topDown')
+
+const RuleDictionary = Dictionary({
   cf: Int,
   alt: Str,
-  minimumRuleCertainty: Int
-}
-
-const RuleDictionary = Dictionary(
-  Object.entries(RuleKeyValuePairs).map(([key, value]) =>
-    KeyValuePair(P.string(key), value)
-  )
-).fallback({})
+  minimumRuleCertainty: Int,
+  behaviour: RuleBehaviour
+})
 
 const RuleSubject = InstanceName.trim(_).skip(P.string('-'))
 
 const RuleObject = P.string('-').then(InstanceName.trim(_))
 
-const Rule = P.seqObj(
-  ['subject', RuleSubject.fallback(null)],
-  ['rel', RelName.trim(_)],
-  ['object', RuleObject.fallback(null)],
-  ['options', RuleDictionary],
-  P.string('{').trim(_),
-  [
-    'conditions',
-    Condition.sepBy(ConditionSep)
-      .skip(ConditionSep.times(0, 1))
-      .trim(_)
-  ],
-  P.string('}')
-)
+const createRuleParser = cond =>
+  P.seqObj(
+    ['subject', RuleSubject.fallback(null)],
+    ['rel', RelName.trim(_)],
+    ['object', RuleObject.fallback(null)],
+    ['options', RuleDictionary.fallback({})],
+    P.string('{').trim(_),
+    [
+      'conditions',
+      cond
+        .sepBy(ConditionSep)
+        .skip(ConditionSep.times(0, 1))
+        .trim(_)
+    ],
+    P.string('}')
+  )
+
+const Rule = createRuleParser(Condition)
+const RuleNode = createRuleParser(Condition.node('condition')).node('rule')
 
 module.exports = {
   Rule,
   RuleDictionary,
   RuleSubject,
   RuleObject,
-  Rule
+  RuleNode
 }

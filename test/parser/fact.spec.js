@@ -1,44 +1,43 @@
-const assert = require('assert')
+/* global describe, it, expect */
 const { Fact, FactDictionary } = require('../../src/parser/fact')
 
-describe('fact :: dictionary', function() {
-  it('should parse valid dictionaries', function() {
+describe('fact :: dictionary', () => {
+  it('should parse valid dictionaries', () => {
     const validDictionaries = [
-      ['', {}],
-      ['()', {}],
-      ['(cf=100)', { cf: 100 }],
-      ['(cf=99)', { cf: 99 }],
-      ['(cf=1)', { cf: 1 }]
+      ['(cf:100)', { cf: 100 }],
+      ['(cf:99)', { cf: 99 }],
+      ['(cf:1)', { cf: 1 }]
     ]
 
     for (const [input, expected] of validDictionaries) {
       const { status, value } = FactDictionary.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid dictionaries', function() {
+  it('should not parse invalid dictionaries', () => {
     const invalidDictionaries = [
-      '(certainty=100)',
+      '(certainty:100)',
       '(foo)',
-      '(cf=100',
-      'cf=100)',
-      '((cf=100))',
+      '(cf:100',
+      'cf:100)',
+      '((cf:100))',
       'foo',
       '0',
       '(',
-      ')'
+      ')',
+      ''
     ]
 
     for (const input of invalidDictionaries) {
-      assert.ok(!FactDictionary.parse(input).status)
+      expect(FactDictionary.parse(input).status).toBe(false)
     }
   })
 })
 
-describe('fact', function() {
-  it('should parse valid facts', function() {
+describe('fact', () => {
+  it('should parse valid facts', () => {
     const validFacts = [
       [
         '"Dave" - speaks - "English"',
@@ -49,7 +48,7 @@ describe('fact', function() {
         { subject: 'Dave', rel: 'speaks', object: 'English', options: {} }
       ],
       [
-        '"Dave" - speaks lang - "English" (cf=60)',
+        '"Dave" - speaks lang - "English" (cf: 60)',
         {
           subject: 'Dave',
           rel: 'speaks lang',
@@ -58,7 +57,7 @@ describe('fact', function() {
         }
       ],
       [
-        '"Dave" - speaks - "English" (cf=60)',
+        '"Dave" - speaks - "English" (cf: 60)',
         {
           subject: 'Dave',
           rel: 'speaks',
@@ -67,35 +66,62 @@ describe('fact', function() {
         }
       ],
       [
-        '"Dave" - speaks - "English" (\n\tcf=60\n)',
+        '"Dave" - speaks - "English" (\n\tcf: 60\n)',
         {
           subject: 'Dave',
           rel: 'speaks',
           object: 'English',
           options: { cf: 60 }
         }
+      ],
+      [
+        '"Dave" - speaks - "English"(\n\tcf: 60\n)',
+        {
+          subject: 'Dave',
+          rel: 'speaks',
+          object: 'English',
+          options: { cf: 60 }
+        }
+      ],
+      [
+        '"Dave" - has age - 18',
+        {
+          subject: 'Dave',
+          rel: 'has age',
+          object: 18,
+          options: {}
+        }
+      ],
+      [
+        '"Dave" - is eligible - true',
+        {
+          subject: 'Dave',
+          rel: 'is eligible',
+          object: true,
+          options: {}
+        }
       ]
     ]
 
     for (const [input, expected] of validFacts) {
       const { status, value } = Fact.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid facts', function() {
+  it('should not parse invalid facts', () => {
     const invalidFacts = [
       '',
       '()',
-      'rel "Dave" - speaks - "English" (cf=60)',
-      'Dave - speaks - English (cf=60)',
-      '"Dave" - speaks - "English"" (cf=60)',
-      '""Dave" - speaks - "English"" (cf=60)'
+      'rel "Dave" - speaks - "English" (cf:60)',
+      'Dave - speaks - English (cf:60)',
+      '"Dave" - speaks - "English"" (cf:60)',
+      '""Dave" - speaks - "English"" (cf:60)'
     ]
 
     for (const input of invalidFacts) {
-      assert.ok(!Fact.parse(input).status)
+      expect(Fact.parse(input).status).toBe(false)
     }
   })
 })

@@ -11,10 +11,14 @@ function Keyword() {
 }
 
 function KeyValuePair(key, value) {
-  return P.seq(key.trim(_).skip(P.string('=').trim(_)), value.trim(_))
+  return P.seq(key.trim(_).skip(P.string(':').trim(_)), value.trim(_))
 }
 
-function Dictionary(keyValuePairs) {
+function Dictionary(dict) {
+  const keyValuePairs = Object.entries(dict).map(([key, value]) =>
+    KeyValuePair(P.string(key), value)
+  )
+
   return P.string('(')
     .then(P.sepBy(P.alt(...keyValuePairs), P.string(',')))
     .skip(P.string(')'))
@@ -26,7 +30,7 @@ function Dictionary(keyValuePairs) {
     )
 }
 
-const Bool = Enum('true', 'false').map(b => (b === 'true' ? true : false))
+const Bool = Enum('true', 'false').map(b => b === 'true')
 
 function Enum(...strings) {
   return P.alt(...strings.map(s => P.string(s)))

@@ -1,38 +1,38 @@
-const assert = require('assert')
+/* global describe, it, expect */
 const { Concept, ConceptDictionary } = require('../../src/parser/concept')
 
-describe('concept :: dictionary', function() {
-  it('should parse valid dictionaries', function() {
+describe('concept :: dictionary', () => {
+  it('should parse valid dictionaries', () => {
     const validDictionaries = [
       ['()', {}],
-      ['', {}],
-      ['(type=string)', { type: 'string' }],
-      ['( type = string )', { type: 'string' }],
-      ['( type=string )', { type: 'string' }],
-      ['(type = string)', { type: 'string' }],
-      ['(type = number)', { type: 'number' }],
-      ['(type = truth)', { type: 'truth' }],
-      ['(type = date)', { type: 'date' }],
-      ['(behaviour = mutuallyExclusive)', { behaviour: 'mutuallyExclusive' }],
+      ['(type:string)', { type: 'string' }],
+      ['( type: string )', { type: 'string' }],
+      ['( type:string )', { type: 'string' }],
+      ['(type : string)', { type: 'string' }],
+      ['(type : number)', { type: 'number' }],
+      ['(type: truth)', { type: 'truth' }],
+      ['(type: date)', { type: 'date' }],
+      ['(behaviour: mutuallyExclusive)', { behaviour: 'mutuallyExclusive' }],
       [
-        '(type = string, behaviour = mutuallyExclusive)',
+        '(type : string, behaviour : mutuallyExclusive)',
         { behaviour: 'mutuallyExclusive', type: 'string' }
       ],
       [
-        '(behaviour = mutuallyExclusive, type = string)',
+        '(behaviour: mutuallyExclusive, type: string)',
         { behaviour: 'mutuallyExclusive', type: 'string' }
       ]
     ]
 
     for (const [input, expected] of validDictionaries) {
       const { status, value } = ConceptDictionary.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid dictionaries', function() {
+  it('should not parse invalid dictionaries', () => {
     const invalidDictionaries = [
+      '(:)',
       '(string)',
       '(type)',
       'type=string',
@@ -42,43 +42,44 @@ describe('concept :: dictionary', function() {
       '(true = string)',
       '(,)',
       '(,,)',
-      '(type = string,)'
+      '(type = string,)',
+      ''
     ]
 
     for (const input of invalidDictionaries) {
-      assert.ok(!ConceptDictionary.parse(input).status)
+      expect(ConceptDictionary.parse(input).status).toBe(false)
     }
   })
 })
 
-describe('concept', function() {
-  it('should parse valid concepts', function() {
+describe('concept', () => {
+  it('should parse valid concepts', () => {
     const validConcepts = [
       ['concept Language', { name: 'Language', options: {} }],
       ['concept Language ()', { name: 'Language', options: {} }],
       ['concept Language()', { name: 'Language', options: {} }],
       [
-        'concept Foo (type=string)',
+        'concept Foo (type: string)',
         { name: 'Foo', options: { type: 'string' } }
       ],
       [
-        'concept Foo( type=string )',
+        'concept Foo( type: string )',
         { name: 'Foo', options: { type: 'string' } }
       ],
       [
-        'concept Foo(\n\ttype=string\n)',
+        'concept Foo(\n\ttype: string\n)',
         { name: 'Foo', options: { type: 'string' } }
       ]
     ]
 
     for (const [input, expected] of validConcepts) {
       const { status, value } = Concept.parse(input)
-      assert.ok(status)
-      assert.deepEqual(value, expected)
+      expect(status).toBe(true)
+      expect(value).toEqual(expected)
     }
   })
 
-  it('should not parse invalid concepts', function() {
+  it('should not parse invalid concepts', () => {
     const invalidConcepts = [
       '',
       '()',
@@ -91,7 +92,7 @@ describe('concept', function() {
     ]
 
     for (const input of invalidConcepts) {
-      assert.ok(!Concept.parse(input).status)
+      expect(Concept.parse(input).status).toBe(false)
     }
   })
 })
