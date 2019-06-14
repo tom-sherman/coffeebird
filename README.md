@@ -11,9 +11,9 @@ RBLang is Rainbird's XML based language which is used to define concepts, relati
 Full syntax documentation can be found [here](syntax.md).
 
 ```
-concept Person (type = string)
-concept Country (type = string)
-concept Language (type = string)
+concept Person (type: string)
+concept Country (type: string)
+concept Language (type: string)
 
 rel Person - speaks - Language
 rel Person - lives in - Country
@@ -25,11 +25,11 @@ Language("German")
 Country("England")
 Country("France")
 
-"England" - national language - "English" (cf = 100)
+"England" - national language - "English" (cf: 100)
 "France" - national language - "French"
 
 // This is a comment
-speaks (cf = 75, minimumRuleCertainty = 60) {
+speaks (cf: 75, minimumRuleCertainty: 60) {
   %S - lives in - %COUNTRY;
   %COUNTRY - national language - %O;
 }
