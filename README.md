@@ -11,9 +11,9 @@ RBLang is Rainbird's XML based language which is used to define concepts, relati
 Full syntax documentation can be found [here](syntax.md).
 
 ```
-concept Person (type: string)
-concept Country (type: string)
-concept Language (type: string)
+concept Person (type = string)
+concept Country (type = string)
+concept Language (type = string)
 
 rel Person - speaks - Language
 rel Person - lives in - Country
@@ -25,11 +25,11 @@ Language("German")
 Country("England")
 Country("France")
 
-"England" - national language - "English" (cf: 100)
+"England" - national language - "English" (cf = 100)
 "France" - national language - "French"
 
 // This is a comment
-speaks (cf: 75, minimumRuleCertainty: 60) {
+speaks (cf = 75, minimumRuleCertainty = 60) {
   %S - lives in - %COUNTRY;
   %COUNTRY - national language - %O;
 }
@@ -38,7 +38,6 @@ speaks (cf: 75, minimumRuleCertainty: 60) {
 ## CLI
 
 You can install `coffeebird` globally to invoke the transpiler from the command line.
-
 
 ### Install it globally from NPM
 
@@ -64,8 +63,6 @@ Options:
   --version     Show version number                                    [boolean]
   --output, -o
 ```
-
-
 
 ## API
 
@@ -109,11 +106,11 @@ npm t
 
 ## Todo
 
-* Question wording for relationships
-* Condition-expressions
-* Condition-values
-* Built-in functions `countRelationshipInstances`, `now()` etc.
-* Preserve whitespace between entities
-* Preserve comments
-* Improve and document API
-* Expand tests
+- [x] Question wording for relationships
+- [x] Condition-expressions
+- [x] Condition-values
+- [ ] Built-in functions `countRelationshipInstances`, `now()` etc.
+- [x] Preserve whitespace between entities
+- [ ] Preserve comments
+- [ ] Improve and document API
+- [x] Expand tests
