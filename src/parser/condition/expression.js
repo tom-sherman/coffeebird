@@ -178,8 +178,6 @@ let tableParser = table.reduce(
 
 const Expression = tableParser.trim(_)
 
-Expression.tryParse('round(%FOO)')
-
 module.exports = {
   Expression,
   FunctionArguments,
