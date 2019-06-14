@@ -1,3 +1,5 @@
+const { RBLANG_FUNCTIONS } = require('./functions')
+
 const createAttrs = obj =>
   Object.entries(obj)
     .filter(([_, value]) => typeof value !== 'undefined' && value !== null)
@@ -288,6 +290,13 @@ function transformValue(value) {
 }
 
 function transformFunction(fn) {
+  const matchedFunction = RBLANG_FUNCTIONS[String(fn.function)]
+  if (typeof matchedFunction === 'undefined') {
+    throw new Error(`CB001: "${fn.function}" is not a function.`)
+  }
+
+  matchedFunction.validate(fn)
+
   return `${fn.function}(${fn.arguments.map(transformValue).join(', ')})`
 }
 
