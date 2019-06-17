@@ -1,12 +1,10 @@
 /* global describe, it, expect */
-const {
-  transformConcept,
-  transformRelationship,
-  transformFact,
-  transformInstance,
-  transformRule,
-  transformCondition
-} = require('../src/transform')
+const { transformConcept } = require('../src/transform/concept')
+const { transformRelationship } = require('../src/transform/relationship')
+const { transformInstance } = require('../src/transform/instance')
+const { transformFact } = require('../src/transform/fact')
+const { transformRule } = require('../src/transform/rule')
+const { transformCondition } = require('../src/transform/condition')
 const {
   Concept,
   Rel,
@@ -191,6 +189,10 @@ describe('transform', () => {
       [
         'countRelationshipInstances(%S, "has outcome", *) > 0',
         '\t\t<condition expression="(countRelationshipInstances(%S, \'has outcome\', \'*\') gt 0)" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        'round(%FOO + 3)',
+        '\t\t<condition expression="round((%FOO + 3))" weight="100" behaviour="mandatory" />'
       ]
     ]
 

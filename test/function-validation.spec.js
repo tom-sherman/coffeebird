@@ -1,7 +1,7 @@
 /* global describe, it, expect */
 
-const { RBLANG_FUNCTIONS } = require('../src/transform/functions')
-const { round, countRelationshipInstances, isSubset } = RBLANG_FUNCTIONS
+const { RBLANG_FUNCTIONS } = require('../src/transform/expression')
+const { round, countRelationshipInstances, isSubset, min } = RBLANG_FUNCTIONS
 
 describe('round', () => {
   it('should be valid', () => {
@@ -19,6 +19,9 @@ describe('round', () => {
         function: 'round',
         arguments: [{ name: 'FOO' }, { name: 'BAR' }]
       })
+    ).not.toThrow()
+    expect(() =>
+      round.validate({ function: 'round', arguments: [['Add', 3, 4]] })
     ).not.toThrow()
   })
 
@@ -76,5 +79,18 @@ describe('isSubset', () => {
         arguments: [{ name: 'S' }, 'foo', '*', { name: 'O' }, 'bar', '*']
       })
     )
+  })
+})
+
+describe('min/max', () => {
+  it('should be valid', () => {
+    min.validate({
+      function: 'min',
+      arguments: [4]
+    })
+    min.validate({
+      function: 'min',
+      arguments: [{ name: 'FOO' }]
+    })
   })
 })
