@@ -1,4 +1,4 @@
-// The purpose of this example is to show all of the features of CoffeeBird.
+// The purpose of this example is to show all of the features of Coffeebird.
 
 concept Person (type: string)
 concept Country

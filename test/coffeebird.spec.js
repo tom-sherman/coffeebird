@@ -39,7 +39,7 @@ it('transform', () => {
   expect(transpile(helloWorldExtended)).toMatchInlineSnapshot(`
     "<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
     <rbl:kb xmlns:rbl=\\"http://rbl.io/schema/RBLang\\">
-    <!--  The purpose of this example is to show all of the features of CoffeeBird. -->
+    <!--  The purpose of this example is to show all of the features of Coffeebird. -->
 
     	<concept name=\\"Person\\" type=\\"string\\" />
     	<concept name=\\"Country\\" type=\\"string\\" />

@@ -1,10 +1,10 @@
-# CoffeeBird
+# Coffeebird
 
 A DSL that compiles to RBLang.
 
 **This language is currently a work in progress. [See todo](#todo).**
 
-RBLang is Rainbird's XML based language which is used to define concepts, relationships, and rules to solve complex decision making problems. CoffeeBird replicates all of the features ([note](#todo)) of RBLang without the visual noise of XML.
+RBLang is Rainbird's XML based language which is used to define concepts, relationships, and rules to solve complex decision making problems. Coffeebird replicates all of the features ([note](#todo)) of RBLang without the visual noise of XML.
 
 ## Syntax
 
@@ -66,13 +66,13 @@ Options:
 
 ## API
 
-You can use CoffeeBird programmatically by installing it via NPM and requiring it.
+You can use Coffeebird programmatically by installing it via NPM and requiring it.
 
 ```
 npm i coffeebird
 ```
 
-The CoffeeBird module exports two functions `parse`, and `transpile`.
+The Coffeebird module exports two functions `parse`, and `transpile`.
 
 ```javascript
 const { parse, transpile } = require('coffeebird')
@@ -84,7 +84,7 @@ Take an `input` string and output the transpiled RBLang.
 
 ### `parse(input)`
 
-Take an `input` CoffeeBird string and outputs an AST.
+Take an `input` Coffeebird string and outputs an AST.
 
 ## Development
 

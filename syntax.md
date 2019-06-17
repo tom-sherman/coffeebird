@@ -1,4 +1,4 @@
-# CoffeeBird Syntax
+# Coffeebird Syntax
 
 **This language is currently a work in progress. [See todo](README.md#todo).**
 
