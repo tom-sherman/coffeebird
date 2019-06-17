@@ -2,6 +2,12 @@ const { createAttrs } = require('./shared')
 const { transformValue } = require('./expression')
 
 function transformCondition(condition) {
+  const {
+    subject,
+    rel,
+    object,
+    options: { weight = 100, behaviour = 'mandatory', alt }
+  } = condition
   if (condition.type === 'rel') {
     return transformConditionRel(condition)
   } else if (condition.type === 'expr') {
@@ -29,7 +35,10 @@ function transformConditionRel(condition) {
 }
 
 function transformConditionExpr(condition) {
-  const { expression, weight = 100, behaviour = 'mandatory', alt } = condition
+  const {
+    expression,
+    options: { weight = 100, behaviour = 'mandatory', alt }
+  } = condition
   return `\t\t<condition expression="${transformValue(
     expression
   )}" ${createAttrs({ weight, behaviour, alt })} />`

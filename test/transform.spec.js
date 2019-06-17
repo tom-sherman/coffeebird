@@ -197,6 +197,10 @@ describe('transform', () => {
       [
         'now()',
         '\t\t<condition expression="now()" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        '4 + 3 (behaviour: optional, weight: 50)',
+        '\t\t<condition expression="(4 + 3)" weight="50" behaviour="optional" />'
       ]
     ]
 
