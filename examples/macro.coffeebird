@@ -1,0 +1,8 @@
+// Macros can be used as a way to generate RBLang at compile time.
+// They are written in plain old Javascript. and wrapped in {{}}
+
+// Here we create a macro that outputs a list of facts!
+#macro#
+  const languages = ['English', 'French', 'German']
+  return languages.map(lang => `<relinst subject="Dave" object="${lang}" cf="100" />`).join('\n\t')
+#end#
