@@ -1,5 +1,7 @@
 # Coffeebird
 
+[![Build Status](https://travis-ci.org/tom-sherman/coffeebird.svg?branch=master)](https://travis-ci.org/tom-sherman/coffeebird)
+
 A DSL that compiles to RBLang.
 
 RBLang is Rainbird's XML based language which is used to define concepts, relationships, and rules to solve complex decision making problems. Coffeebird replicates all of the features ([note](#todo)) of RBLang without the visual noise of XML.
