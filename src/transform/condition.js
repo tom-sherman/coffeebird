@@ -3,17 +3,24 @@ const { transformValue } = require('./expression')
 
 function transformCondition(condition) {
   const {
-    subject,
-    rel,
-    object,
     options: { weight = 100, behaviour = 'mandatory', alt }
   } = condition
+
   if (condition.type === 'rel') {
-    return transformConditionRel(condition)
+    return transformConditionRel({
+      ...condition,
+      options: { weight, behaviour, alt }
+    })
   } else if (condition.type === 'expr') {
-    return transformConditionExpr(condition)
+    return transformConditionExpr({
+      ...condition,
+      options: { weight, behaviour, alt }
+    })
   } else if (condition.type === 'val') {
-    return transformConditionVal(condition)
+    return transformConditionVal({
+      ...condition,
+      options: { weight, behaviour, alt }
+    })
   }
 }
 
@@ -22,8 +29,9 @@ function transformConditionRel(condition) {
     subject,
     rel,
     object,
-    options: { weight = 100, behaviour = 'mandatory', alt }
+    options: { weight, behaviour, alt }
   } = condition
+
   return `\t\t<condition ${createAttrs({
     rel,
     subject: transformValue(subject),
@@ -37,8 +45,9 @@ function transformConditionRel(condition) {
 function transformConditionExpr(condition) {
   const {
     expression,
-    options: { weight = 100, behaviour = 'mandatory', alt }
+    options: { weight, behaviour, alt }
   } = condition
+
   return `\t\t<condition expression="${transformValue(
     expression
   )}" ${createAttrs({ weight, behaviour, alt })} />`
@@ -48,10 +57,9 @@ function transformConditionVal(condition) {
   const {
     expression,
     assignment,
-    weight = 100,
-    behaviour = 'mandatory',
-    alt
+    options: { weight, behaviour, alt }
   } = condition
+
   return `\t\t<condition expression="${transformValue(
     expression
   )}" value="${transformValue(assignment)}" ${createAttrs({
