@@ -7,7 +7,8 @@ const {
   isSubset,
   min,
   now,
-  today
+  today,
+  sumObjects
 } = RBLANG_FUNCTIONS
 
 describe('round', () => {
@@ -86,6 +87,26 @@ describe('isSubset', () => {
         arguments: [{ name: 'S' }, 'foo', '*', { name: 'O' }, 'bar', '*']
       })
     )
+  })
+})
+
+describe('sumObjects', () => {
+  it('should be valid', () => {
+    expect(() =>
+      sumObjects.validate({
+        function: 'sumObjects',
+        arguments: [{ name: 'S' }, 'has num', '*']
+      })
+    ).not.toThrow()
+  })
+
+  it('should be invalid', () => {
+    expect(() =>
+      sumObjects.validate({
+        function: 'sumObjects',
+        arguments: ['Dave', 'has num', { name: 'FOO' }]
+      })
+    ).toThrow()
   })
 })
 

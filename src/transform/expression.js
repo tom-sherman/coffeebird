@@ -128,6 +128,17 @@ const RBLANG_FUNCTIONS = {
       ])
     })
   },
+  sumObjects: {
+    transform: defaultFunctionTransform,
+    validate: functionValidator({
+      function: ow.string.equals('sumObjects'),
+      arguments: functionArguments([
+        variableOrString,
+        ow.string,
+        ow.string.equals('*')
+      ])
+    })
+  },
   isSubset: {
     transform: defaultFunctionTransform,
     validate: functionValidator({
