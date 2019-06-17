@@ -1,0 +1,5 @@
+// Comments have to sit on their own line
+concept Person
+
+// Block comments are not supported.
+// But you can always add multiple comments on separate lines.

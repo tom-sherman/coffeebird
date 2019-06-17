@@ -21,5 +21,8 @@ module.exports = function transformNode(node) {
     case 'rule': {
       return transformRule(node.value)
     }
+    case 'comment': {
+      return `<!-- ${node.value} -->`
+    }
   }
 }

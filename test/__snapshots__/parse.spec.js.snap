@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should parse comments at the end of the line 1`] = `
+Array [
+  Object {
+    "end": Object {
+      "column": 42,
+      "line": 1,
+      "offset": 41,
+    },
+    "name": "comment",
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+    "value": " Comments have to sit on their own line",
+  },
+  Object {
+    "end": Object {
+      "column": 15,
+      "line": 2,
+      "offset": 56,
+    },
+    "name": "concept",
+    "start": Object {
+      "column": 1,
+      "line": 2,
+      "offset": 42,
+    },
+    "value": Object {
+      "name": "Person",
+      "options": Object {},
+    },
+  },
+  Object {
+    "end": Object {
+      "column": 37,
+      "line": 4,
+      "offset": 94,
+    },
+    "name": "comment",
+    "start": Object {
+      "column": 1,
+      "line": 4,
+      "offset": 58,
+    },
+    "value": " Block comments are not supported.",
+  },
+  Object {
+    "end": Object {
+      "column": 63,
+      "line": 5,
+      "offset": 157,
+    },
+    "name": "comment",
+    "start": Object {
+      "column": 1,
+      "line": 5,
+      "offset": 95,
+    },
+    "value": " But you can always add multiple comments on separate lines.",
+  },
+]
+`;

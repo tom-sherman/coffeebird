@@ -34,13 +34,14 @@ A dictionary containing multiple pairs.
 
 ## Comments
 
-Comments are denoted with a preceding `//` and be placed at the end of a line or on a line of their own.
+Comments are denoted with a preceding `//` and must be placed on their own line. This is because some entities in Rainbird do not support comments on the same line.
 
 **Examples:**
 
 ```
 // This is a comment
-concept Person // Another comment
+concept Person
+// Another comment
 ```
 
 ## Concepts

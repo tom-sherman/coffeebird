@@ -4,6 +4,7 @@ const transformNode = require('./transform')
 const { _, Comment } = require('./parser/shared')
 
 const parsers = [
+  Comment.node('comment'),
   Concept.node('concept'),
   Fact.node('fact'),
   Instance.node('instance'),
@@ -11,18 +12,17 @@ const parsers = [
   RuleNode
 ]
 
+const CoffeebirdParser = P.alt(...parsers)
+  .sepBy(P.newline.many())
+  .trim(_)
+
 function parse(input) {
-  return P.alt(...parsers)
-    .skip(Comment.many())
-    .sepBy(P.newline.many())
-    .trim(_)
-    .parse(input)
+  return CoffeebirdParser.parse(input)
 }
 
 function transpile(input) {
   const transformParsers = parsers.map(p => p.map(transformNode))
   const result = P.alt(P.newline, ...transformParsers)
-    .skip(Comment.many())
     .many()
     .tie()
     .tryParse(input)
@@ -38,5 +38,6 @@ function transpile(input) {
 
 module.exports = {
   parse,
-  transpile
+  transpile,
+  CoffeebirdParser
 }
