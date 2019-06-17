@@ -1,6 +1,6 @@
 const P = require('parsimmon')
 const { Concept, Fact, Rel, Instance, RuleNode } = require('./parser')
-const { transformNode } = require('./transform')
+const transformNode = require('./transform')
 const { _, Comment } = require('./parser/shared')
 
 const parsers = [

@@ -176,11 +176,26 @@ Expressions follow the order of operations and support parenthesis.
 | `-`                  | Subtraction eg. `3 - 6 == 3`, negation eg. `-5`                         |
 | `*`                  | Multiplication eg. `2 * 4 == 8`                                         |
 | `/`                  | Division eg. `6 / 3 == 2`                                               |
+| `%`                  | Modulo eg. `22 % 10 == 2`                                               |
 | `^`                  | Exponentiate eg. `2^4 == 2 * 2 * 2 * 2`                                 |
 | `>`, `>=`, `<`, `<=` | Number comparison `3 < 6 == true`                                       |
 | `!`                  | Boolean not eg. `!true == false`                                        |
 | `and`                | Boolean and eg. `true and false == false`                               |
 | `or`                 | Boolean or eg. `true or false == true`                                  |
+
+#### Builtin functions
+
+You can call all of the supported functions that exist in RBLang using the expected syntax of `functionName(arg1, arg2, ...)`.
+
+The only exception to this is `mod(n)` function which is replaced with the `%` (modulo) operator.
+
+**Examples**
+
+```
+now();
+daysBetween(%DATE1, %DATE2);
+factorial(%N);
+```
 
 ### Condition-value
 

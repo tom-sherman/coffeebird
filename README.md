@@ -109,7 +109,7 @@ npm t
 - [x] Question wording for relationships
 - [x] Condition-expressions
 - [x] Condition-values
-- [ ] Built-in functions `countRelationshipInstances`, `now()` etc.
+- [x] Built-in functions `countRelationshipInstances`, `now()` etc.
 - [x] Preserve whitespace between entities
 - [ ] Preserve comments
 - [ ] Improve and document API
