@@ -1,6 +1,6 @@
 # Coffeebird Syntax
 
-**This language is currently a work in progress. [See todo](README.md#todo).**
+**Note:** Coffeebird natively supports pretty much all of the syntax that is available via RBLang. The only exceptions to this is are **compounds** and **datasources**.
 
 ## Types
 

@@ -2,8 +2,6 @@
 
 A DSL that compiles to RBLang.
 
-**This language is currently a work in progress. [See todo](#todo).**
-
 RBLang is Rainbird's XML based language which is used to define concepts, relationships, and rules to solve complex decision making problems. Coffeebird replicates all of the features ([note](#todo)) of RBLang without the visual noise of XML.
 
 ## Syntax
@@ -103,14 +101,3 @@ npm i
 # Run tests
 npm t
 ```
-
-## Todo
-
-- [x] Question wording for relationships
-- [x] Condition-expressions
-- [x] Condition-values
-- [x] Built-in functions `countRelationshipInstances`, `now()` etc.
-- [x] Preserve whitespace between entities
-- [ ] Preserve comments
-- [ ] Improve and document API
-- [x] Expand tests
