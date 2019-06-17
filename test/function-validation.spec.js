@@ -1,7 +1,14 @@
 /* global describe, it, expect */
 
 const { RBLANG_FUNCTIONS } = require('../src/transform/expression')
-const { round, countRelationshipInstances, isSubset, min } = RBLANG_FUNCTIONS
+const {
+  round,
+  countRelationshipInstances,
+  isSubset,
+  min,
+  now,
+  today
+} = RBLANG_FUNCTIONS
 
 describe('round', () => {
   it('should be valid', () => {
@@ -84,13 +91,49 @@ describe('isSubset', () => {
 
 describe('min/max', () => {
   it('should be valid', () => {
-    min.validate({
-      function: 'min',
-      arguments: [4]
-    })
-    min.validate({
-      function: 'min',
-      arguments: [{ name: 'FOO' }]
-    })
+    expect(() =>
+      min.validate({
+        function: 'min',
+        arguments: [4]
+      })
+    ).not.toThrow()
+    expect(() =>
+      min.validate({
+        function: 'min',
+        arguments: [{ name: 'FOO' }]
+      })
+    ).not.toThrow()
+  })
+})
+
+describe('now/today', () => {
+  it('should be valid', () => {
+    expect(() =>
+      now.validate({
+        function: 'now',
+        arguments: []
+      })
+    ).not.toThrow()
+    expect(() =>
+      today.validate({
+        function: 'today',
+        arguments: []
+      })
+    ).not.toThrow()
+  })
+
+  it('should be invalid with > 0 arguments', () => {
+    expect(() =>
+      now.validate({
+        function: 'now',
+        arguments: [1]
+      })
+    ).toThrow()
+    expect(() =>
+      now.validate({
+        function: 'today',
+        arguments: [1]
+      })
+    ).toThrow()
   })
 })

@@ -193,6 +193,10 @@ describe('transform', () => {
       [
         'round(%FOO + 3)',
         '\t\t<condition expression="round((%FOO + 3))" weight="100" behaviour="mandatory" />'
+      ],
+      [
+        'now()',
+        '\t\t<condition expression="now()" weight="100" behaviour="mandatory" />'
       ]
     ]
 

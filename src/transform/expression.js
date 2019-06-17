@@ -235,6 +235,153 @@ const RBLANG_FUNCTIONS = {
       function: ow.string.equals('atan'),
       arguments: functionArguments([variableOrExpression])
     })
+  },
+  now: {
+    transform: defaultFunctionTransform,
+    validate: functionValidator({
+      function: ow.string.equals('now'),
+      arguments: ow.array.maxLength(0)
+    })
+  },
+  today: {
+    transform: defaultFunctionTransform,
+    validate: functionValidator({
+      function: ow.string.equals('today'),
+      arguments: ow.array.maxLength(0)
+    }),
+    addDays: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('addDays'),
+        arguments: functionArguments([variableOrString, variableOrExpression])
+      })
+    },
+    addWeeks: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('addWeeks'),
+        arguments: functionArguments([variableOrString, variableOrExpression])
+      })
+    },
+    addMonths: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('addMonths'),
+        arguments: functionArguments([variableOrString, variableOrExpression])
+      })
+    },
+    addYears: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('addYears'),
+        arguments: functionArguments([variableOrString, variableOrExpression])
+      })
+    },
+    dayOfWeek: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('dayOfWeek'),
+        arguments: functionArguments([variableOrString])
+      })
+    },
+    dayOfMonth: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('dayOfMonth'),
+        arguments: functionArguments([variableOrString])
+      })
+    },
+    dayOfYear: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('dayOfYear'),
+        arguments: functionArguments([variableOrString])
+      })
+    },
+    monthOfYear: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('monthOfYear'),
+        arguments: functionArguments([variableOrString])
+      })
+    },
+    year: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('year'),
+        arguments: functionArguments([variableOrString])
+      })
+    },
+    daysBetween: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('daysBetween'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    weeksBetween: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('weeksBetween'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    monthsBetween: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('monthsBetween'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    yearsBetween: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('yearsBetween'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    secondsBetween: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('secondsBetween'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    minutesBetween: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('minutesBetween'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    hoursBetween: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('hoursBetween'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    isBeforeDate: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('isBeforeDate'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    isAfterDate: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('isAfterDate'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    },
+    isSameDate: {
+      transform: defaultFunctionTransform,
+      validate: functionValidator({
+        function: ow.string.equals('isSameDate'),
+        arguments: functionArguments([variableOrString, variableOrString])
+      })
+    }
   }
 }
 
