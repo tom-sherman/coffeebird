@@ -1,0 +1,67 @@
+// Let's setup out concepts, relationships, and facts
+
+concept Person
+concept Country
+concept Language
+concept DOB (type: date)
+
+rel Person - speaks - Language
+rel Person - lives in - Country
+rel Country - national language - Language
+rel Person - date of birth - DOB
+
+Person("Fred")
+Language("English")
+Language("French")
+Language("German")
+Country("England")
+Country("France")
+Country("Germany")
+Country("Shakespearean")
+
+"England" - national language - "English" (cf: 100)
+"France" - national language - "French"
+"Fred" - lives in - "England"
+
+// Now on to the rules
+
+// We've all seen this before
+// Semicolon on the last condition is optional and is omitted here.
+speaks {
+  %S - lives in - %COUNTRY;
+  %COUNTRY - national language - %O
+}
+
+// An object specific rule
+speaks - "German" {
+  %S - lives in - "Germany";
+}
+
+// A subject specific rule
+"Fred" - speaks {
+  "Fred" - lives in - "German";
+}
+
+// A subject and object specific rule
+"Fred" - speaks - "French" {
+  "Fred" - lives in - "Germany";
+}
+
+// Using a transformative expression
+speaks {
+  %O = "A language";
+}
+
+// Using a comparative and transformative expression
+speaks {
+  %S - lives in - %COUNTRY;
+  %COUNTRY == "Italy";
+  %O = "A language";
+}
+
+// Date functions
+speaks - "Shakespearean" {
+  %S - date of birth - %DOB;
+  %TODAY = today();
+  yearsBetween(%TODAY, %DOB) > 500;
+}

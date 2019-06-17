@@ -6,10 +6,10 @@ const { _, Comment } = require('./parser/shared')
 const parsers = [
   Comment.node('comment'),
   Concept.node('concept'),
+  RuleNode,
   Fact.node('fact'),
   Instance.node('instance'),
-  Rel.node('relationship'),
-  RuleNode
+  Rel.node('relationship')
 ]
 
 const CoffeebirdParser = P.alt(...parsers)
