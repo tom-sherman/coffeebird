@@ -38,6 +38,7 @@ describe('expression', () => {
     expect(Expression.tryParse('%FOO')).toMatchSnapshot()
     expect(Expression.tryParse('%FOO + %BAR')).toMatchSnapshot()
     expect(Expression.tryParse('%FOO == %BAR')).toMatchSnapshot()
+    expect(Expression.tryParse('%FOO1 % %BAR2')).toMatchSnapshot()
   })
 
   it('should parse mixed expressions', () => {

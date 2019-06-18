@@ -125,13 +125,14 @@ Create a fact between a subject and an object instance.
 
 ## Variables
 
-Variables are denoted by a preceding `%` and are written in UPPER_SNAKE_CASE. They are used inside of conditions.
+Used inside of conditions, variables are denoted by a preceding `%`, are written in UPPER_SNAKE_CASE, and can only contain characters A-Z and 0-9 (plus the underscore ofcourse). A variable must start with a letter.
 
 **Examples:**
 
 ```
 %FOO
 %FOO_BAR
+%PERSON1
 ```
 
 ## Conditions

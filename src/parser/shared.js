@@ -41,7 +41,7 @@ const Comment = P.string('//')
   .map(result => result.join(''))
 
 const Variable = P.string('%')
-  .then(P.regex(/[A-Z_]+/))
+  .then(P.regex(/[A-Z_][A-Z\d_]*/))
   .map(result => ({ name: result }))
 
 module.exports = {
