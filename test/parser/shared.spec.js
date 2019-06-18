@@ -148,13 +148,13 @@ describe('shared :: Variables', () => {
     const validVars = [
       ['%FOO', { name: 'FOO' }],
       ['%FOO_BAR', { name: 'FOO_BAR' }],
-      ['%_FOO_BAR', { name: '_FOO_BAR' }]
+      ['%_FOO_BAR', { name: '_FOO_BAR' }],
+      ['%FOO1', { name: 'FOO1' }]
     ]
 
     for (const [input, expected] of validVars) {
-      const { status, value } = Variable.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expected)
+      expect(() => Variable.tryParse(input)).not.toThrow()
+      expect(Variable.tryParse(input)).toEqual(expected)
     }
   })
 
@@ -170,12 +170,14 @@ describe('shared :: Variables', () => {
       '%FOO_%BAR',
       'FOO',
       '% FOO',
-      '%FOO1',
-      '%Foo'
+      '%Foo',
+      '%1',
+      '%FOO 1',
+      '%1FOO'
     ]
 
     for (const input of invalidVars) {
-      expect(Variable.parse(input).status).toBe(false)
+      expect(() => Variable.tryParse(input)).toThrow()
     }
   })
 })

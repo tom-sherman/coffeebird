@@ -264,3 +264,15 @@ Array [
   },
 ]
 `;
+
+exports[`expression should parse with variables 4`] = `
+Array [
+  "Modulus",
+  Object {
+    "name": "FOO1",
+  },
+  Object {
+    "name": "BAR2",
+  },
+]
+`;
