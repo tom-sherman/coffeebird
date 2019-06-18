@@ -22,6 +22,7 @@
   "dependencies": {
     "ow": "^0.13.2",
     "parsimmon": "^1.12.0",
+    "rblang-parser": "^1.0.0",
     "yargs": "^13.2.2"
   },
   "devDependencies": {
