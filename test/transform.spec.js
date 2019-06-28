@@ -53,15 +53,17 @@ describe('transform', () => {
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" />'
       ],
       [
+        'rel Person - speaks - Language (askable: none, group: "a,b")',
+        '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" group="a,b" />'
+      ],
+      [
         'rel Person - speaks - Language (\n\taskable: none,\n\tcanAdd: none\n)',
         '\t<rel name="speaks" subject="Person" object="Language" plural="false" allowUnknown="false" askable="none" canAdd="none" />'
       ]
     ]
 
     for (const [input, expected] of inputs) {
-      const { status, value } = Rel.map(transformRelationship).parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expected)
+      expect(Rel.map(transformRelationship).tryParse(input)).toEqual(expected)
     }
   })
 

@@ -75,13 +75,17 @@ Create a relationship with a subject and object concept.
 
 **Relationship dictionary**
 
-| Key            | Values                                                 | Default |
-| -------------- | ------------------------------------------------------ | ------- |
-| `plural`       | Boolean                                                | `true`  |
-| `allowUnknown` | Boolean                                                | `false` |
-| `askable`      | `all`\|`none`\|`secondFormObject`\|`secondFormSubject` | `all`   |
-| `allowCf`      | Boolean                                                | `true`  |
-| `canAdd`       | `all`\|`none`\|`object`\|`subject`                     | `all`   |
+| Key                                                  | Values                                                 | Default |
+| ---------------------------------------------------- | ------------------------------------------------------ | ------- |
+| `plural`                                             | Boolean                                                | `true`  |
+| `allowUnknown`                                       | Boolean                                                | `false` |
+| `askable`                                            | `all`\|`none`\|`secondFormObject`\|`secondFormSubject` | `all`   |
+| `allowCf`                                            | Boolean                                                | `true`  |
+| `canAdd`                                             | `all`\|`none`\|`object`\|`subject`                     | `all`   |
+| `group`                                              | String                                                 | None    |
+| `firstForm`, `secondFormObject`, `secondFormSubject` | String                                                 | None    |
+
+The `firstForm`, `secondFormObject`, and `secondFormSubject` keys are used to specify question wordings for the relationship.
 
 **Examples:**
 
