@@ -11,6 +11,7 @@ const transformRelationship = rel => {
       allowUnknown = false,
       canAdd,
       allowCf,
+      group,
       firstForm,
       secondFormObject,
       secondFormSubject
@@ -25,7 +26,8 @@ const transformRelationship = rel => {
     allowUnknown,
     askable,
     canAdd,
-    allowCf
+    allowCf,
+    group
   })}`
 
   if (firstForm || secondFormObject || secondFormSubject) {

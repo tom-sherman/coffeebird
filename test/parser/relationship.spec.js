@@ -13,13 +13,12 @@ describe('relationship :: dictionary', () => {
       [
         '(askable : all, firstForm : "Does %S live in %O?")',
         { askable: 'all', firstForm: 'Does %S live in %O?' }
-      ]
+      ],
+      ['(group: "a,b")', { group: 'a,b' }]
     ]
 
     for (const [input, expected] of validDictionaries) {
-      const { status, value } = RelDictionary.parse(input)
-      expect(status).toBe(true)
-      expect(value).toEqual(expected)
+      expect(RelDictionary.tryParse(input)).toEqual(expected)
     }
   })
 

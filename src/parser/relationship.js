@@ -14,6 +14,7 @@ const RelDictionary = Dictionary({
   askable: Askable,
   allowCf: Bool,
   canAdd: CanAdd,
+  group: Str,
   firstForm: Str,
   secondFormObject: Str,
   secondFormSubject: Str

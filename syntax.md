@@ -82,6 +82,7 @@ Create a relationship with a subject and object concept.
 | `askable`      | `all`\|`none`\|`secondFormObject`\|`secondFormSubject` | `all`   |
 | `allowCf`      | Boolean                                                | `true`  |
 | `canAdd`       | `all`\|`none`\|`object`\|`subject`                     | `all`   |
+| `group`        | String                                                 | None    |
 
 **Examples:**
 
